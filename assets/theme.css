@@ -6078,12 +6078,16 @@ product-rerender {
   display: none;
 }
 
-.product-info__block-item:is([data-block-type="vendor"], [data-block-type="title"], [data-block-type="sku"], [data-block-type="price"]) {
+.product-info__block-item:is([data-block-type="vendor"], [data-block-type="title"], [data-block-type="sku"], [data-block-type="price"], [data-block-type="rating"]) {
   --product-info-gap: .5rem;
 }
 
-.product-info__block-group:has(.product-info__block-item:is([data-block-type="vendor"], [data-block-type="title"], [data-block-type="sku"], [data-block-type="price"])) {
+.product-info__block-group:has(.product-info__block-item:is([data-block-type="vendor"], [data-block-type="title"], [data-block-type="sku"], [data-block-type="price"], [data-block-type="rating"])) {
   --product-info-gap: .5rem;
+}
+
+.product-info__block-item[data-block-type="rating"] .rating-badge {
+  justify-content: flex-start;
 }
 
 .product-info__block-item:is([data-block-type="variant-picker"], [data-block-type="product-variations"], [data-block-type="separator"], [data-block-type="description"], [data-block-type="text"], [data-block-type="liquid"], [data-block-type="share-buttons"]) {

@@ -106,6 +106,27 @@
   </div>
 </div>
 
+<script>
+  (function () {
+    // Hide inventory on page load when no variant is explicitly selected via URL
+    if (!window.location.search.includes('variant=')) {
+      var rerender = document.getElementById('product-info-{{ product.id }}-{{ section.id }}');
+      if (!rerender) return;
+
+      var inv = rerender.querySelector('variant-inventory');
+      if (inv) inv.style.visibility = 'hidden';
+
+      // When the user explicitly picks a variant, product-rerender replaces the inventory
+      // element with fresh visible HTML — no manual unhide needed.
+      // But if the re-render doesn't fire (e.g. single-variant product), unhide on any form change.
+      rerender.addEventListener('variant:change', function () {
+        var freshInv = rerender.querySelector('variant-inventory');
+        if (freshInv) freshInv.style.visibility = '';
+      }, { once: true, capture: true });
+    }
+  })();
+</script>
+
 {%- if section.settings.show_sticky_add_to_cart and product.available -%}
   <product-rerender id="{{ product_form_id }}-sticky-bar" observe-form="{{ product_form_id }}">
     <product-sticky-bar form="{{ product_form_id }}" class="product-sticky-bar">
