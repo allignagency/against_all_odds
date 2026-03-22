@@ -247,6 +247,36 @@
       background: #222;
     }
 
+    .lookbook-product__variant-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.25rem;
+    }
+
+    .lookbook-product__variant-btn {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      border: 1.5px solid #000;
+      background: #fff;
+      color: #000;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .lookbook-product__variant-btn:hover:not(:disabled) {
+      background: #000;
+      color: #fff;
+    }
+
+    .lookbook-product__variant-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+
     @media screen and (max-width: 700px) {
       .lookbook-modal__body {
         flex-direction: column;
@@ -382,9 +412,28 @@
                             {%- endform -%}
                           </product-form>
                         {%- else -%}
-                          {%- capture qb_id -%}lookbook-qb-{{ block.id }}-{{ modal_product.id }}{%- endcapture -%}
-                          <button type="button" aria-controls="{{ qb_id }}" class="lookbook-product__atc">Add to cart</button>
-                          <quick-buy-modal handle="{{ modal_product.handle }}?variant={{ modal_variant.id }}" class="quick-buy-modal modal" id="{{ qb_id }}"></quick-buy-modal>
+                          <div class="lookbook-product__atc-wrap">
+                            <button type="button" class="lookbook-product__atc lookbook-product__atc--toggle">Add to cart</button>
+                            <div class="lookbook-product__variants" hidden>
+                              <product-form>
+                                {%- form 'product', modal_product -%}
+                                  <input type="hidden" name="on_success" value="force_open_drawer">
+                                  <input type="hidden" name="quantity" value="1">
+                                  <div class="lookbook-product__variant-btns">
+                                    {%- for variant in modal_product.variants -%}
+                                      <button
+                                        type="submit"
+                                        name="id"
+                                        value="{{ variant.id }}"
+                                        class="lookbook-product__variant-btn"
+                                        {% unless variant.available %}disabled{% endunless %}
+                                      >{{ variant.title }}</button>
+                                    {%- endfor -%}
+                                  </div>
+                                {%- endform -%}
+                              </product-form>
+                            </div>
+                          </div>
                         {%- endif -%}
                       {%- else -%}
                         <span class="lookbook-product__atc" style="background:#999;cursor:default;">Sold out</span>
@@ -417,6 +466,24 @@
         if (e.target.tagName === 'DIALOG') {
           e.target.close();
         }
+        // Inline variant picker toggle
+        if (e.target.classList.contains('lookbook-product__atc--toggle')) {
+          var wrap = e.target.closest('.lookbook-product__atc-wrap');
+          e.target.hidden = true;
+          wrap.querySelector('.lookbook-product__variants').hidden = false;
+        }
+      });
+
+      // Reset variant pickers when modal closes
+      document.querySelectorAll('.lookbook-modal').forEach(function (modal) {
+        modal.addEventListener('close', function () {
+          modal.querySelectorAll('.lookbook-product__atc--toggle').forEach(function (btn) {
+            btn.hidden = false;
+          });
+          modal.querySelectorAll('.lookbook-product__variants').forEach(function (el) {
+            el.hidden = true;
+          });
+        });
       });
     })();
   </script>
