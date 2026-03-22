@@ -46,42 +46,15 @@
             "border_color": "",
             "gradient_overlay": "linear-gradient(180deg, rgba(54, 54, 54, 0.2), rgba(4, 4, 4, 0.65) 100%)"
           }
-        },
-        "image_tKafPz": {
-          "type": "image",
-          "disabled": true,
-          "settings": {
-            "subheading": "Tell your story",
-            "title": "Slide 2",
-            "mobile_text_position": "place-self-center text-center",
-            "desktop_text_position": "sm:place-self-center sm:text-center",
-            "content_max_width": 780,
-            "button_1_text": "",
-            "button_1_link": "",
-            "button_1_style": "solid",
-            "button_1_background": "#ffffff",
-            "button_1_text_color": "#000000",
-            "button_2_text": "",
-            "button_2_link": "",
-            "button_2_style": "outline",
-            "button_2_background": "#ffffff",
-            "button_2_text_color": "#000000",
-            "background": "",
-            "background_opacity": 50,
-            "text_color": "#ffffff",
-            "border_color": "",
-            "gradient_overlay": "linear-gradient(180deg, rgba(54, 54, 54, 0.2) 0%, rgba(4, 4, 4, 0.65) 100%)"
-          }
         }
       },
       "block_order": [
-        "image_tcnmBw",
-        "image_tKafPz"
+        "image_tcnmBw"
       ],
       "settings": {
         "allow_transparent_header": true,
         "show_next_section_button": true,
-        "media_size": "auto",
+        "media_size": "lg",
         "show_initial_transition": false,
         "autoplay": true,
         "autoplay_pause_on_video": true,
@@ -139,13 +112,6 @@
             "text": "Subheading"
           }
         },
-        "heading_WM997X": {
-          "type": "heading",
-          "settings": {
-            "text": "{{ page.title }}",
-            "heading_tag": "h1"
-          }
-        },
         "richtext_mzL7rk": {
           "type": "richtext",
           "settings": {
@@ -165,7 +131,6 @@
       },
       "block_order": [
         "subheading_6xiQgt",
-        "heading_WM997X",
         "richtext_mzL7rk",
         "button_kmVt8G"
       ],
