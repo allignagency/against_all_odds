@@ -117,7 +117,7 @@
       if (inv) inv.style.visibility = 'hidden';
 
       var pulse = rerender.querySelector('.instock-pulse');
-      if (pulse) pulse.style.visibility = 'hidden';
+      if (pulse) pulse.style.display = 'none';
 
       // When the user explicitly picks a variant, product-rerender replaces these
       // elements with fresh visible HTML — no manual unhide needed.
@@ -126,7 +126,7 @@
         var freshInv = rerender.querySelector('variant-inventory');
         if (freshInv) freshInv.style.visibility = '';
         var freshPulse = rerender.querySelector('.instock-pulse');
-        if (freshPulse) freshPulse.style.visibility = '';
+        if (freshPulse) freshPulse.style.display = '';
       }, { once: true, capture: true });
     }
   })();
