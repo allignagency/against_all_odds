@@ -419,12 +419,12 @@
                                 {%- form 'product', modal_product -%}
                                   <input type="hidden" name="on_success" value="force_open_drawer">
                                   <input type="hidden" name="quantity" value="1">
+                                  <input type="hidden" name="id" value="">
                                   <div class="lookbook-product__variant-btns">
                                     {%- for variant in modal_product.variants -%}
                                       <button
-                                        type="submit"
-                                        name="id"
-                                        value="{{ variant.id }}"
+                                        type="button"
+                                        data-variant-id="{{ variant.id }}"
                                         class="lookbook-product__variant-btn"
                                         {% unless variant.available %}disabled{% endunless %}
                                       >{{ variant.title }}</button>
@@ -471,6 +471,12 @@
           var wrap = e.target.closest('.lookbook-product__atc-wrap');
           e.target.hidden = true;
           wrap.querySelector('.lookbook-product__variants').hidden = false;
+        }
+        // Variant size button: set hidden id input and submit form
+        if (e.target.classList.contains('lookbook-product__variant-btn') && e.target.dataset.variantId) {
+          var form = e.target.closest('form');
+          form.querySelector('input[name="id"]').value = e.target.dataset.variantId;
+          form.requestSubmit();
         }
       });
 
