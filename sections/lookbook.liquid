@@ -382,7 +382,9 @@
                             {%- endform -%}
                           </product-form>
                         {%- else -%}
-                          <a href="{{ modal_product.url }}" class="lookbook-product__atc">Select options</a>
+                          {%- capture qb_id -%}lookbook-qb-{{ block.id }}-{{ modal_product.id }}{%- endcapture -%}
+                          <button type="button" aria-controls="{{ qb_id }}" class="lookbook-product__atc">Add to cart</button>
+                          <quick-buy-modal handle="{{ modal_product.handle }}?variant={{ modal_variant.id }}" class="quick-buy-modal modal" id="{{ qb_id }}"></quick-buy-modal>
                         {%- endif -%}
                       {%- else -%}
                         <span class="lookbook-product__atc" style="background:#999;cursor:default;">Sold out</span>
