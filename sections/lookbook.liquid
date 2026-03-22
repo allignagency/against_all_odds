@@ -125,19 +125,143 @@
       opacity: 1;
     }
 
-    .lookbook-modal__products {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1.5rem;
-      padding: 1.75rem;
-      overflow-y: auto;
+    .lookbook-modal__body {
+      display: flex;
+      flex-direction: row;
+      overflow: hidden;
+      flex: 1;
+      min-height: 0;
     }
 
-    @media screen and (max-width: 600px) {
+    .lookbook-modal__image {
+      width: 50%;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .lookbook-modal__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lookbook-modal__products {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      overflow-y: auto;
+      padding: 1.25rem 1.5rem;
+      gap: 1rem;
+    }
+
+    /* Individual product row */
+    .lookbook-product {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .lookbook-product:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .lookbook-product__image {
+      width: 80px;
+      flex-shrink: 0;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .lookbook-product__image img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lookbook-product__info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .lookbook-product__title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: currentColor;
+      line-height: 1.3;
+    }
+
+    .lookbook-product__title:hover {
+      text-decoration: underline;
+    }
+
+    .lookbook-product__prices {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .lookbook-product__price {
+      font-size: 0.875rem;
+    }
+
+    .lookbook-product__price--sale {
+      color: #c0392b;
+    }
+
+    .lookbook-product__price--compare {
+      font-size: 0.8125rem;
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    .lookbook-product__atc {
+      margin-top: 0.25rem;
+      display: inline-block;
+      padding: 0.45rem 1rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      width: 100%;
+    }
+
+    .lookbook-product__atc:hover {
+      background: #222;
+    }
+
+    @media screen and (max-width: 700px) {
+      .lookbook-modal__body {
+        flex-direction: column;
+        overflow-y: auto;
+      }
+
+      .lookbook-modal__image {
+        width: 100%;
+        max-height: 40vh;
+        flex-shrink: 0;
+      }
+
       .lookbook-modal__products {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        padding: 1rem;
+        width: 100%;
+        overflow-y: unset;
       }
     }
   </style>
@@ -212,14 +336,62 @@
             <p class="lookbook-modal__title">Shop the look</p>
             <button class="lookbook-modal__close" aria-label="Close dialog">&#x2715;</button>
           </div>
-          <div class="lookbook-modal__products">
-            {%- for i in (1..6) -%}
-              {%- assign product_key = 'product_' | append: i -%}
-              {%- assign modal_product = block.settings[product_key] -%}
-              {%- if modal_product != blank -%}
-                {%- render 'product-card', product: modal_product, show_quick_buy: true, quick_buy_context: block.id -%}
-              {%- endif -%}
-            {%- endfor -%}
+          <div class="lookbook-modal__body">
+            {%- if block.settings.logo != blank -%}
+              <div class="lookbook-modal__image">
+                {{- block.settings.logo | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400,600,800,1000,1200' -}}
+              </div>
+            {%- endif -%}
+
+            <div class="lookbook-modal__products">
+              {%- for i in (1..6) -%}
+                {%- assign product_key = 'product_' | append: i -%}
+                {%- assign modal_product = block.settings[product_key] -%}
+                {%- if modal_product != blank -%}
+                  {%- assign modal_variant = modal_product.selected_or_first_available_variant -%}
+                  <div class="lookbook-product">
+                    {%- if modal_product.featured_media != blank -%}
+                      <a href="{{ modal_product.url }}" class="lookbook-product__image" tabindex="-1" aria-hidden="true">
+                        {{- modal_product.featured_media | image_url: width: 200 | image_tag: loading: 'lazy', widths: '100,150,200' -}}
+                      </a>
+                    {%- endif -%}
+                    <div class="lookbook-product__info">
+                      <a href="{{ modal_product.url }}" class="lookbook-product__title">{{ modal_product.title }}</a>
+                      <div class="lookbook-product__prices">
+                        {%- if modal_variant.compare_at_price > modal_variant.price -%}
+                          <span class="lookbook-product__price lookbook-product__price--sale">
+                            {{- modal_variant.price | money -}}
+                          </span>
+                          <span class="lookbook-product__price lookbook-product__price--compare">
+                            {{- modal_variant.compare_at_price | money -}}
+                          </span>
+                        {%- else -%}
+                          <span class="lookbook-product__price">
+                            {{- modal_variant.price | money -}}
+                          </span>
+                        {%- endif -%}
+                      </div>
+                      {%- if modal_product.available -%}
+                        {%- if modal_product.variants.size == 1 and modal_product.selling_plan_groups.size == 0 -%}
+                          <product-form>
+                            {%- form 'product', modal_product -%}
+                              <input type="hidden" name="on_success" value="force_open_drawer">
+                              <input type="hidden" name="quantity" value="1">
+                              <input type="hidden" name="id" value="{{ modal_variant.id }}">
+                              <button type="submit" class="lookbook-product__atc">Add to cart</button>
+                            {%- endform -%}
+                          </product-form>
+                        {%- else -%}
+                          <a href="{{ modal_product.url }}" class="lookbook-product__atc">Select options</a>
+                        {%- endif -%}
+                      {%- else -%}
+                        <span class="lookbook-product__atc" style="background:#999;cursor:default;">Sold out</span>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
           </div>
         </div>
       </dialog>
