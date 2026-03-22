@@ -11,7 +11,6 @@
       --logo-list-gap: {{section.settings.gap}}px;
     }
     .sec-{{ section.id }} .logo-list__item img {
-
         border-radius: {{section.settings.radius}}px;
     }
 
@@ -40,6 +39,107 @@
             max-width: 250px;
         }
     }
+
+    /* Lookbook trigger button */
+    .sec-{{ section.id }} .lookbook-trigger {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      text-align: left;
+      position: relative;
+    }
+
+    .sec-{{ section.id }} .lookbook-trigger:hover .lookbook-trigger__overlay {
+      opacity: 1;
+    }
+
+    .sec-{{ section.id }} .lookbook-trigger__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      border-radius: {{ section.settings.radius }}px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.8125rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Lookbook modal */
+    .lookbook-modal {
+      border: none;
+      border-radius: 12px;
+      padding: 0;
+      max-width: min(92vw, 960px);
+      width: 100%;
+      max-height: 88vh;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+    }
+
+    .lookbook-modal::backdrop {
+      background: rgba(0, 0, 0, 0.55);
+    }
+
+    .lookbook-modal__inner {
+      display: flex;
+      flex-direction: column;
+      max-height: 88vh;
+    }
+
+    .lookbook-modal__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      flex-shrink: 0;
+    }
+
+    .lookbook-modal__title {
+      margin: 0;
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    .lookbook-modal__close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      font-size: 1.25rem;
+      line-height: 1;
+      color: currentColor;
+      opacity: 0.6;
+    }
+
+    .lookbook-modal__close:hover {
+      opacity: 1;
+    }
+
+    .lookbook-modal__products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      padding: 1.75rem;
+      overflow-y: auto;
+    }
+
+    @media screen and (max-width: 600px) {
+      .lookbook-modal__products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 1rem;
+      }
+    }
   </style>
 
   {%- assign color_scheme_hash = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background | md5 -%}
@@ -51,6 +151,14 @@
 
         <div class="logo-list {% if section.settings.stack_on_mobile == false %}scroll-area bleed sm:unbleed{% endif %}">
           {%- for block in section.blocks -%}
+            {%- assign has_products = false -%}
+            {%- for i in (1..6) -%}
+              {%- assign product_key = 'product_' | append: i -%}
+              {%- if block.settings[product_key] != blank -%}
+                {%- assign has_products = true -%}
+              {%- endif -%}
+            {%- endfor -%}
+
             {%- capture block_content -%}
               {%- if block.settings.logo != blank -%}
                 {%- capture sizes -%}{{ block.settings.logo_width }}px{%- endcapture -%}
@@ -62,7 +170,17 @@
               {%- endif -%}
             {%- endcapture -%}
 
-            {%- if block.settings.link != blank -%}
+            {%- if has_products -%}
+              <button
+                class="logo-list__item lookbook-trigger"
+                data-lookbook-trigger="lookbook-modal-{{ block.id }}"
+                style="{% render 'surface', background: section.settings.logo_item_background %}"
+                {{ block.shopify_attributes }}
+              >
+                {{- block_content -}}
+                <span class="lookbook-trigger__overlay">Shop the look</span>
+              </button>
+            {%- elsif block.settings.link != blank -%}
               <a class="logo-list__item" href="{{ block.settings.link }}" style="{% render 'surface', background: section.settings.logo_item_background %}" {{ block.shopify_attributes }}>
                 {{- block_content -}}
               </a>
@@ -76,6 +194,59 @@
       </div>
     </div>
   </div>
+
+  {%- comment -%} Render a modal for each block that has products {%- endcomment -%}
+  {%- for block in section.blocks -%}
+    {%- assign has_products = false -%}
+    {%- for i in (1..6) -%}
+      {%- assign product_key = 'product_' | append: i -%}
+      {%- if block.settings[product_key] != blank -%}
+        {%- assign has_products = true -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if has_products -%}
+      <dialog class="lookbook-modal" id="lookbook-modal-{{ block.id }}" aria-modal="true" aria-label="Shop the look">
+        <div class="lookbook-modal__inner">
+          <div class="lookbook-modal__header">
+            <p class="lookbook-modal__title">Shop the look</p>
+            <button class="lookbook-modal__close" aria-label="Close dialog">&#x2715;</button>
+          </div>
+          <div class="lookbook-modal__products">
+            {%- for i in (1..6) -%}
+              {%- assign product_key = 'product_' | append: i -%}
+              {%- assign modal_product = block.settings[product_key] -%}
+              {%- if modal_product != blank -%}
+                {%- render 'product-card', product: modal_product, show_quick_buy: true, quick_buy_context: block.id -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </dialog>
+    {%- endif -%}
+  {%- endfor -%}
+
+  <script>
+    (function () {
+      document.querySelectorAll('[data-lookbook-trigger]').forEach(function (trigger) {
+        trigger.addEventListener('click', function () {
+          var modal = document.getElementById(trigger.dataset.lookbookTrigger);
+          if (modal) modal.showModal();
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('lookbook-modal__close')) {
+          e.target.closest('dialog').close();
+        }
+        // Close on backdrop click
+        if (e.target.tagName === 'DIALOG') {
+          e.target.close();
+        }
+      });
+    })();
+  </script>
+
 {%- endif -%}
 
 {% schema %}
@@ -170,7 +341,46 @@
         {
           "type": "url",
           "id": "link",
-          "label": "t:global.text.link"
+          "label": "t:global.text.link",
+          "info": "Only used if no products are selected below."
+        },
+        {
+          "type": "header",
+          "content": "Products in this look"
+        },
+        {
+          "type": "paragraph",
+          "content": "Select up to 6 products to show in the popup when this image is clicked."
+        },
+        {
+          "type": "product",
+          "id": "product_1",
+          "label": "Product 1"
+        },
+        {
+          "type": "product",
+          "id": "product_2",
+          "label": "Product 2"
+        },
+        {
+          "type": "product",
+          "id": "product_3",
+          "label": "Product 3"
+        },
+        {
+          "type": "product",
+          "id": "product_4",
+          "label": "Product 4"
+        },
+        {
+          "type": "product",
+          "id": "product_5",
+          "label": "Product 5"
+        },
+        {
+          "type": "product",
+          "id": "product_6",
+          "label": "Product 6"
         }
       ]
     }
