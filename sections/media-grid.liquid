@@ -200,41 +200,51 @@
               </div>
             {%- endcapture -%}
 
-            {%- assign hotspot_product = block.settings.dot_product -%}
+            {%- comment -%} Build a list of active hotspots for this block {%- endcomment -%}
             {%- assign has_hotspot = false -%}
-            {%- if hotspot_product != blank and block.type == 'image' -%}
-              {%- assign has_hotspot = true -%}
+            {%- if block.type == 'image' -%}
+              {%- for n in (1..5) -%}
+                {%- assign dot_key = 'dot_product_' | append: n -%}
+                {%- if block.settings[dot_key] != blank -%}
+                  {%- assign has_hotspot = true -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endfor -%}
             {%- endif -%}
+
+            {%- capture hotspot_nodes -%}
+              {%- for n in (1..5) -%}
+                {%- assign dot_key = 'dot_product_' | append: n -%}
+                {%- assign dot_x_key = 'dot_x_' | append: n -%}
+                {%- assign dot_y_key = 'dot_y_' | append: n -%}
+                {%- assign hs_product = block.settings[dot_key] -%}
+                {%- if hs_product != blank -%}
+                  {%- assign hs_x = block.settings[dot_x_key] | default: 50 -%}
+                  {%- assign hs_y = block.settings[dot_y_key] | default: 50 -%}
+                  {%- assign preview_pos = 'above' -%}
+                  {%- if hs_y < 35 -%}{%- assign preview_pos = 'below' -%}{%- endif -%}
+                  <div class="media-grid-hotspot" style="left: {{ hs_x }}%; top: {{ hs_y }}%;">
+                    <a href="{{ hs_product.url }}" class="media-grid-hotspot__dot" aria-label="{{ hs_product.title }}"></a>
+                    <a href="{{ hs_product.url }}" class="media-grid-hotspot__preview media-grid-hotspot__preview--{{ preview_pos }}" tabindex="-1" aria-hidden="true">
+                      {{- hs_product.featured_media | image_url: width: 260 | image_tag: loading: 'lazy', widths: '130,260' -}}
+                      <span class="media-grid-hotspot__preview-name">{{ hs_product.title }}</span>
+                    </a>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endcapture -%}
 
             {%- if block.settings.link_url -%}
               <a href="{{ block.settings.link_url }}" class="media-grid__item{% if has_hotspot %} media-grid__item--has-hotspot{% endif %}" style="--media-grid-item-column-span: {{ block.settings.column_count }}; --media-grid-item-row-span: {{ block.settings.row_count }}" {{ block.shopify_attributes }}>
                 {{- block_content -}}
                 {%- if has_hotspot -%}
-                  {%- assign preview_position = 'above' -%}
-                  {%- if block.settings.dot_y < 35 -%}{%- assign preview_position = 'below' -%}{%- endif -%}
-                  <div class="media-grid-hotspot" style="left: {{ block.settings.dot_x }}%; top: {{ block.settings.dot_y }}%;" onclick="event.preventDefault();">
-                    <span class="media-grid-hotspot__dot" aria-hidden="true"></span>
-                    <a href="{{ hotspot_product.url }}" class="media-grid-hotspot__preview media-grid-hotspot__preview--{{ preview_position }}">
-                      {{- hotspot_product.featured_media | image_url: width: 260 | image_tag: loading: 'lazy', widths: '130,260' -}}
-                      <span class="media-grid-hotspot__preview-name">{{ hotspot_product.title }}</span>
-                    </a>
-                  </div>
+                  <div onclick="event.preventDefault();">{{- hotspot_nodes -}}</div>
                 {%- endif -%}
               </a>
             {%- else -%}
               <div class="media-grid__item{% if has_hotspot %} media-grid__item--has-hotspot{% endif %}" style="--media-grid-item-column-span: {{ block.settings.column_count }}; --media-grid-item-row-span: {{ block.settings.row_count }}" {{ block.shopify_attributes }}>
                 {{- block_content -}}
-                {%- if has_hotspot -%}
-                  {%- assign preview_position = 'above' -%}
-                  {%- if block.settings.dot_y < 35 -%}{%- assign preview_position = 'below' -%}{%- endif -%}
-                  <div class="media-grid-hotspot" style="left: {{ block.settings.dot_x }}%; top: {{ block.settings.dot_y }}%;">
-                    <a href="{{ hotspot_product.url }}" class="media-grid-hotspot__dot" aria-label="{{ hotspot_product.title }}"></a>
-                    <a href="{{ hotspot_product.url }}" class="media-grid-hotspot__preview media-grid-hotspot__preview--{{ preview_position }}" tabindex="-1" aria-hidden="true">
-                      {{- hotspot_product.featured_media | image_url: width: 260 | image_tag: loading: 'lazy', widths: '130,260' -}}
-                      <span class="media-grid-hotspot__preview-name">{{ hotspot_product.title }}</span>
-                    </a>
-                  </div>
-                {%- endif -%}
+                {%- if has_hotspot -%}{{- hotspot_nodes -}}{%- endif -%}
               </div>
             {%- endif -%}
           {%- endfor -%}
@@ -460,36 +470,136 @@
         },
         {
           "type": "header",
-          "content": "Product hotspot"
+          "content": "Product hotspots"
         },
         {
           "type": "paragraph",
-          "content": "Add a clickable dot on this image that previews a product on hover."
+          "content": "Add up to 5 clickable dots on this image. Each dot previews a product on hover and links to it on click."
         },
         {
           "type": "product",
-          "id": "dot_product",
-          "label": "Product"
+          "id": "dot_product_1",
+          "label": "Hotspot 1 — Product"
         },
         {
           "type": "range",
-          "id": "dot_x",
+          "id": "dot_x_1",
           "min": 5,
           "max": 95,
           "step": 1,
           "unit": "%",
-          "label": "Dot horizontal position",
-          "default": 50
+          "label": "Hotspot 1 — Horizontal position",
+          "default": 30
         },
         {
           "type": "range",
-          "id": "dot_y",
+          "id": "dot_y_1",
           "min": 5,
           "max": 95,
           "step": 1,
           "unit": "%",
-          "label": "Dot vertical position",
+          "label": "Hotspot 1 — Vertical position",
           "default": 50
+        },
+        {
+          "type": "product",
+          "id": "dot_product_2",
+          "label": "Hotspot 2 — Product"
+        },
+        {
+          "type": "range",
+          "id": "dot_x_2",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Hotspot 2 — Horizontal position",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "dot_y_2",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Hotspot 2 — Vertical position",
+          "default": 50
+        },
+        {
+          "type": "product",
+          "id": "dot_product_3",
+          "label": "Hotspot 3 — Product"
+        },
+        {
+          "type": "range",
+          "id": "dot_x_3",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Hotspot 3 — Horizontal position",
+          "default": 70
+        },
+        {
+          "type": "range",
+          "id": "dot_y_3",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Hotspot 3 — Vertical position",
+          "default": 50
+        },
+        {
+          "type": "product",
+          "id": "dot_product_4",
+          "label": "Hotspot 4 — Product"
+        },
+        {
+          "type": "range",
+          "id": "dot_x_4",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Hotspot 4 — Horizontal position",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "dot_y_4",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Hotspot 4 — Vertical position",
+          "default": 70
+        },
+        {
+          "type": "product",
+          "id": "dot_product_5",
+          "label": "Hotspot 5 — Product"
+        },
+        {
+          "type": "range",
+          "id": "dot_x_5",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Hotspot 5 — Horizontal position",
+          "default": 70
+        },
+        {
+          "type": "range",
+          "id": "dot_y_5",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Hotspot 5 — Vertical position",
+          "default": 70
         }
       ]
     },
