@@ -26,7 +26,7 @@
           "settings": {
             "image": "shopify://shop_images/Untitled-2_25089219-22f2-4a48-97be-d41e83d353cb.png",
             "subheading": "Againstallodds",
-            "title": "ABOUT US",
+            "title": "{{ page.title }}ABOUT US",
             "mobile_text_position": "place-self-center text-center",
             "desktop_text_position": "sm:place-self-center sm:text-center",
             "content_max_width": 780,
