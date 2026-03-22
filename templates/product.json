@@ -100,6 +100,10 @@
           "type": "payment_terms",
           "settings": {}
         },
+        "fit_quiz_for_clothes_and_shoes_fitquiz_block_3kDV8V": {
+          "type": "shopify://apps/fit-quiz-for-clothes-and-shoes/blocks/fitquiz-block/b10c5f36-d033-4d47-9f46-97864f785a5a",
+          "settings": {}
+        },
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {}
@@ -157,6 +161,7 @@
         "clearpay_on_site_messaging_payments_messaging_HDmgHf",
         "liquid_EgfaWg",
         "payment_terms",
+        "fit_quiz_for_clothes_and_shoes_fitquiz_block_3kDV8V",
         "quantity_selector",
         "variant_picker",
         "buy_buttons",
@@ -261,6 +266,8 @@
         "loox_reviews_loox_dynamic_section_hh9UCM": {
           "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
           "settings": {
+            "reviews_to_display": "",
+            "default_tab": "automatic",
             "only_photos": false,
             "aggregated": false,
             "limit": 25,
