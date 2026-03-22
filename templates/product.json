@@ -24,12 +24,6 @@
             "page": ""
           }
         },
-        "liquid_MA7wqY": {
-          "type": "liquid",
-          "settings": {
-            "liquid": "{%- assign cv = product.selected_or_first_available_variant -%}\n{%- if request.query_string contains 'variant=' -%}\n  {%- if cv.available -%}\n    {%- if cv.inventory_management and cv.inventory_policy == 'deny' -%}\n      {%- if cv.inventory_quantity <= 2 -%}\n        {%- assign pulse_color = '#e53e3e' -%}\n        {%- assign pulse_text = 'Only ' | append: cv.inventory_quantity | append: ' available' -%}\n      {%- elsif cv.inventory_quantity < 5 -%}\n        {%- assign pulse_color = '#e08330' -%}\n        {%- assign pulse_text = 'Low on stock' -%}\n      {%- else -%}\n        {%- assign pulse_color = '#54c63a' -%}\n        {%- assign pulse_text = 'In stock, ready to ship' -%}\n      {%- endif -%}\n    {%- else -%}\n      {%- assign pulse_color = '#54c63a' -%}\n      {%- assign pulse_text = 'In stock, ready to ship' -%}\n    {%- endif -%}\n    <div class=\"instock-pulse\" style=\"--pulse-color: {{ pulse_color }};\">\n      <span class=\"icon--pulsing\"></span>\n      <span>{{ pulse_text }}</span>\n    </div>\n  {%- endif -%}\n{%- endif -%}\n\n<style>\n.instock-pulse {\n  display: flex;\n  flex-wrap: nowrap;\n  align-items: center;\n}\n.icon--pulsing {\n  position: relative;\n  width: 20px;\n  height: 20px;\n  margin-right: 10px;\n}\n.icon--pulsing:after,\n.icon--pulsing:before {\n  background: var(--pulse-color, #54c63a);\n  width: 10px;\n  height: 10px;\n  border-radius: 10px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  content: \"\";\n  margin: 5px;\n}\n@keyframes inventory-pulse {\n  0% { opacity: 0.5; }\n  to { transform: scale(2.5); opacity: 0; }\n}\n.icon--pulsing:before {\n  animation: inventory-pulse 2s linear infinite;\n}\n</style>"
-          }
-        },
         "accordion_7ziYbi": {
           "type": "accordion",
           "settings": {
@@ -114,6 +108,12 @@
             "size_chart_page": ""
           }
         },
+        "liquid_MA7wqY": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "{%- assign cv = product.selected_or_first_available_variant -%}\n{%- if request.query_string contains 'variant=' -%}\n  {%- if cv.available -%}\n    {%- if cv.inventory_management and cv.inventory_policy == 'deny' -%}\n      {%- if cv.inventory_quantity <= 2 -%}\n        {%- assign pulse_color = '#e53e3e' -%}\n        {%- assign pulse_text = 'Only ' | append: cv.inventory_quantity | append: ' available' -%}\n      {%- elsif cv.inventory_quantity < 5 -%}\n        {%- assign pulse_color = '#e08330' -%}\n        {%- assign pulse_text = 'Low on stock' -%}\n      {%- else -%}\n        {%- assign pulse_color = '#54c63a' -%}\n        {%- assign pulse_text = 'In stock, ready to ship' -%}\n      {%- endif -%}\n    {%- else -%}\n      {%- assign pulse_color = '#54c63a' -%}\n      {%- assign pulse_text = 'In stock, ready to ship' -%}\n    {%- endif -%}\n    <div class=\"instock-pulse\" style=\"--pulse-color: {{ pulse_color }};\">\n      <span class=\"icon--pulsing\"></span>\n      <span>{{ pulse_text }}</span>\n    </div>\n  {%- endif -%}\n{%- endif -%}\n\n<style>\n.instock-pulse {\n  display: flex;\n  flex-wrap: nowrap;\n  align-items: center;\n}\n.icon--pulsing {\n  position: relative;\n  width: 20px;\n  height: 20px;\n  margin-right: 10px;\n}\n.icon--pulsing:after,\n.icon--pulsing:before {\n  background: var(--pulse-color, #54c63a);\n  width: 10px;\n  height: 10px;\n  border-radius: 10px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  content: \"\";\n  margin: 5px;\n}\n@keyframes inventory-pulse {\n  0% { opacity: 0.5; }\n  to { transform: scale(2.5); opacity: 0; }\n}\n.icon--pulsing:before {\n  animation: inventory-pulse 2s linear infinite;\n}\n</style>"
+          }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -149,7 +149,6 @@
       },
       "block_order": [
         "accordion_rdLwBW",
-        "liquid_MA7wqY",
         "accordion_7ziYbi",
         "accordion_kr4yep",
         "title",
@@ -159,6 +158,7 @@
         "payment_terms",
         "quantity_selector",
         "variant_picker",
+        "liquid_MA7wqY",
         "buy_buttons",
         "separator",
         "description",
@@ -197,7 +197,22 @@
             "link_style": "link",
             "text_position": "place-self-center text-center",
             "overlay_color": "#000000",
-            "overlay_opacity": 0
+            "overlay_opacity": 0,
+            "dot_product_1": "",
+            "dot_x_1": 30,
+            "dot_y_1": 50,
+            "dot_product_2": "",
+            "dot_x_2": 50,
+            "dot_y_2": 50,
+            "dot_product_3": "",
+            "dot_x_3": 70,
+            "dot_y_3": 50,
+            "dot_product_4": "",
+            "dot_x_4": 30,
+            "dot_y_4": 70,
+            "dot_product_5": "",
+            "dot_x_5": 70,
+            "dot_y_5": 70
           }
         },
         "image_mCh8VW": {
@@ -215,7 +230,22 @@
             "link_style": "link",
             "text_position": "place-self-center text-center",
             "overlay_color": "#000000",
-            "overlay_opacity": 0
+            "overlay_opacity": 0,
+            "dot_product_1": "",
+            "dot_x_1": 30,
+            "dot_y_1": 50,
+            "dot_product_2": "",
+            "dot_x_2": 50,
+            "dot_y_2": 50,
+            "dot_product_3": "",
+            "dot_x_3": 70,
+            "dot_y_3": 50,
+            "dot_product_4": "",
+            "dot_x_4": 30,
+            "dot_y_4": 70,
+            "dot_product_5": "",
+            "dot_x_5": 70,
+            "dot_y_5": 70
           }
         },
         "image_4QTjFw": {
@@ -233,7 +263,22 @@
             "link_style": "link",
             "text_position": "place-self-center text-center",
             "overlay_color": "#000000",
-            "overlay_opacity": 0
+            "overlay_opacity": 0,
+            "dot_product_1": "",
+            "dot_x_1": 30,
+            "dot_y_1": 50,
+            "dot_product_2": "",
+            "dot_x_2": 50,
+            "dot_y_2": 50,
+            "dot_product_3": "",
+            "dot_x_3": 70,
+            "dot_y_3": 50,
+            "dot_product_4": "",
+            "dot_x_4": 30,
+            "dot_y_4": 70,
+            "dot_product_5": "",
+            "dot_x_5": 70,
+            "dot_y_5": 70
           }
         }
       },
@@ -261,6 +306,8 @@
         "loox_reviews_loox_dynamic_section_hh9UCM": {
           "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
           "settings": {
+            "reviews_to_display": "",
+            "default_tab": "automatic",
             "only_photos": false,
             "aggregated": false,
             "limit": 25,
