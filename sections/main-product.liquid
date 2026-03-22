@@ -116,12 +116,17 @@
       var inv = rerender.querySelector('variant-inventory');
       if (inv) inv.style.visibility = 'hidden';
 
-      // When the user explicitly picks a variant, product-rerender replaces the inventory
-      // element with fresh visible HTML — no manual unhide needed.
+      var pulse = rerender.querySelector('.instock-pulse');
+      if (pulse) pulse.style.visibility = 'hidden';
+
+      // When the user explicitly picks a variant, product-rerender replaces these
+      // elements with fresh visible HTML — no manual unhide needed.
       // But if the re-render doesn't fire (e.g. single-variant product), unhide on any form change.
       rerender.addEventListener('variant:change', function () {
         var freshInv = rerender.querySelector('variant-inventory');
         if (freshInv) freshInv.style.visibility = '';
+        var freshPulse = rerender.querySelector('.instock-pulse');
+        if (freshPulse) freshPulse.style.visibility = '';
       }, { once: true, capture: true });
     }
   })();
