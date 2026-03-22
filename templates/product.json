@@ -30,6 +30,28 @@
             "liquid": "{% if product.available %}\n\n<div class=\"instock-pulse\">\n  <span class=\"icon--pulsing\"></span>\n  <span>In stock, ready to ship</span>\n</div>\n\n<style>\n\n.instock-pulse {\n  display: flex;\n  flex-wrap: nowrap;\n  align-items: center;\n}\n\n.icon--pulsing {\n  position: relative;\n  width: 20px;\n  height: 20px;\n  margin-right: 10px;\n}\n\n.icon--pulsing:after, \n.icon--pulsing:before {\n    background: #54c63a;\n    width: 10px;\n    height: 10px;\n    border-radius: 10px;\n    position: absolute;\n    left: 0;\n    top: 0;\n    content: \"\";\n    margin: 5px;\n}\n\n@keyframes inventory-pulse{\n  0%{\n    opacity:0.5;\n  }\n  to{\n    transform:scale(2.5);\n    opacity:0;\n  }\n}\n\n.icon--pulsing:before {\n    animation: inventory-pulse 2s linear infinite;\n}\n\n</style>\n\n{% endif %}"
           }
         },
+        "loox_reviews_loox_trust_badge_ymn9Gg": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-trust-badge/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "layout": "horizontal",
+            "alignment": "left",
+            "scheme-type": "default",
+            "review-title": "reviews",
+            "rating-icon": true,
+            "average-rating": true,
+            "loox-branding": false,
+            "review-count": false,
+            "open-reviews": false,
+            "show-border": false,
+            "border-radius": 8,
+            "font-size": 14,
+            "background-color": "",
+            "secondary-background-color": "",
+            "text-color": "",
+            "rating-icon-color": "",
+            "border-color": ""
+          }
+        },
         "accordion_7ziYbi": {
           "type": "accordion",
           "settings": {
@@ -150,6 +172,7 @@
       "block_order": [
         "accordion_rdLwBW",
         "liquid_MA7wqY",
+        "loox_reviews_loox_trust_badge_ymn9Gg",
         "accordion_7ziYbi",
         "accordion_kr4yep",
         "title",
@@ -261,6 +284,8 @@
         "loox_reviews_loox_dynamic_section_hh9UCM": {
           "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
           "settings": {
+            "reviews_to_display": "",
+            "default_tab": "automatic",
             "only_photos": false,
             "aggregated": false,
             "limit": 25,
