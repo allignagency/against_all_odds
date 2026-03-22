@@ -1,0 +1,59 @@
+{%- if block.settings.text != blank -%}
+  {%- assign text_position = block.settings.text_position | replace: 'left', 'start' | replace: 'right', 'end' -%}
+  
+    <div class="container container--{{ block.settings.content_width }}" {{ block.shopify_attributes }}>
+      <div class="prose text-{{ text_position }}">
+        {{- block.settings.text -}}
+      </div>
+    </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:blocks.rich_text.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:global.text.content",
+      "default": "<p>Write some text about your products or your brand.</p>"
+    },
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "t:global.sizes.content_width",
+      "options": [
+        {
+          "value": "xs",
+          "label": "t:global.sizes.x_small"
+        },
+        {
+          "value": "sm",
+          "label": "t:global.sizes.small"
+        },
+        {
+          "value": "md",
+          "label": "t:global.sizes.medium"
+        },
+        {
+          "value": "lg",
+          "label": "t:global.sizes.large"
+        }
+      ],
+      "default": "sm"
+    },
+    {
+        "type": "text_alignment",
+        "id": "text_position",
+        "label": "t:global.position.content_position",
+        "default": "center"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.rich_text.name"
+    }
+  ]
+}
+{% endschema %}

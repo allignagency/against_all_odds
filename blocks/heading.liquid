@@ -1,0 +1,96 @@
+{%- if block.settings.text != blank -%}
+  {%- assign html_tag = block.settings.html_tag -%}
+
+  <{{ html_tag }} class="{{ block.settings.style }}" {{ block.shopify_attributes }}>
+    {{ block.settings.text }}
+  </{{ html_tag }}>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:blocks.heading.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:global.text.text",
+      "default": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:global.text.style",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "select",
+      "id": "html_tag",
+      "label": "t:blocks.heading.html_tag",
+      "info": "t:blocks.heading.html_tag_info",
+      "options": [
+        {
+          "value": "p",
+          "label": "Paragraph"
+        },
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        }
+      ],
+      "default": "p"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.heading.name"
+    }
+  ]
+}
+{% endschema %}

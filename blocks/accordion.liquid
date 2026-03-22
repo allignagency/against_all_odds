@@ -1,0 +1,342 @@
+{%- if block.settings.title != blank and block.settings.content != blank or block.settings.page.content != blank -%}
+  {%- assign accordion_title = block.settings.page.title | default: block.settings.title -%}
+  {%- capture accordion_content -%}<div class="prose">{{ block.settings.page.content | default: block.settings.liquid | default: block.settings.content }}</div>{%- endcapture -%}
+
+  {%- render 'accordion', title: accordion_title, content: accordion_content, size: 'lg', prose_content: true, icon: block.settings.icon, custom_icon: block.settings.custom_icon, block: block -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Accordion",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "t:global.icons.icon",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:global.icons.none"
+        },
+        {
+          "value": "picto-award-gift",
+          "label": "t:global.icons.award_gift",
+          "group": "t:global.icons.shop_category"
+        },
+        {
+          "value": "picto-bag-handle",
+          "label": "t:global.icons.bag_handle",
+          "group": "t:global.icons.shop_category"
+        },
+        {
+          "value": "picto-building",
+          "label": "t:global.icons.building",
+          "group": "t:global.icons.shop_category"
+        },
+        {
+          "value": "picto-coupon",
+          "label": "t:global.icons.coupon",
+          "group": "t:global.icons.shop_category"
+        },
+        {
+          "value": "picto-gift",
+          "label": "t:global.icons.gift",
+          "group": "t:global.icons.shop_category"
+        },
+        {
+          "value": "picto-info",
+          "label": "t:global.icons.info",
+          "group": "t:global.icons.shop_category"
+        },
+        {
+          "value": "picto-love",
+          "label": "t:global.icons.love",
+          "group": "t:global.icons.shop_category"
+        },
+        {
+          "value": "picto-percent",
+          "label": "t:global.icons.percent",
+          "group": "t:global.icons.shop_category"
+        },
+        {
+          "value": "picto-star",
+          "label": "t:global.icons.star",
+          "group": "t:global.icons.shop_category"
+        },
+        {
+          "value": "picto-box",
+          "label": "t:global.icons.box",
+          "group": "t:global.icons.shipping_category"
+        },
+        {
+          "value": "picto-delivery-truck",
+          "label": "t:global.icons.delivery_truck",
+          "group": "t:global.icons.shipping_category"
+        },
+        {
+          "value": "picto-pin",
+          "label": "t:global.icons.pin",
+          "group": "t:global.icons.shipping_category"
+        },
+        {
+          "value": "picto-plane",
+          "label": "t:global.icons.plane",
+          "group": "t:global.icons.shipping_category"
+        },
+        {
+          "value": "picto-return",
+          "label": "t:global.icons.return",
+          "group": "t:global.icons.shipping_category"
+        },
+        {
+          "value": "picto-credit-card",
+          "label": "t:global.icons.credit_card",
+          "group": "t:global.icons.payment_and_security_category"
+        },
+        {
+          "value": "picto-lock",
+          "label": "t:global.icons.lock",
+          "group": "t:global.icons.payment_and_security_category"
+        },
+        {
+          "value": "picto-money",
+          "label": "t:global.icons.money",
+          "group": "t:global.icons.payment_and_security_category"
+        },
+        {
+          "value": "picto-secure-profile",
+          "label": "t:global.icons.secure_profile",
+          "group": "t:global.icons.payment_and_security_category"
+        },
+        {
+          "value": "picto-shield",
+          "label": "t:global.icons.shield",
+          "group": "t:global.icons.payment_and_security_category"
+        },
+        {
+          "value": "picto-earth",
+          "label": "t:global.icons.earth",
+          "group": "t:global.icons.ecology_category"
+        },
+        {
+          "value": "picto-leaf",
+          "label": "t:global.icons.leaf",
+          "group": "t:global.icons.ecology_category"
+        },
+        {
+          "value": "picto-recycle",
+          "label": "t:global.icons.recycle",
+          "group": "t:global.icons.ecology_category"
+        },
+        {
+          "value": "picto-tree",
+          "label": "t:global.icons.tree",
+          "group": "t:global.icons.ecology_category"
+        },
+        {
+          "value": "picto-at-sign",
+          "label": "t:global.icons.at_sign",
+          "group": "t:global.icons.tech_category"
+        },
+        {
+          "value": "picto-bluetooth",
+          "label": "t:global.icons.bluetooth",
+          "group": "t:global.icons.tech_category"
+        },
+        {
+          "value": "picto-camera",
+          "label": "t:global.icons.camera",
+          "group": "t:global.icons.tech_category"
+        },
+        {
+          "value": "picto-printer",
+          "label": "t:global.icons.printer",
+          "group": "t:global.icons.tech_category"
+        },
+        {
+          "value": "picto-smart-watch",
+          "label": "t:global.icons.smart_watch",
+          "group": "t:global.icons.tech_category"
+        },
+        {
+          "value": "picto-wifi",
+          "label": "t:global.icons.wifi",
+          "group": "t:global.icons.tech_category"
+        },
+        {
+          "value": "picto-avatar",
+          "label": "t:global.icons.avatar",
+          "group": "t:global.icons.communication_category"
+        },
+        {
+          "value": "picto-chat",
+          "label": "t:global.icons.chat",
+          "group": "t:global.icons.communication_category"
+        },
+        {
+          "value": "picto-calendar",
+          "label": "t:global.icons.calendar",
+          "group": "t:global.icons.communication_category"
+        },
+        {
+          "value": "picto-comment",
+          "label": "t:global.icons.comment",
+          "group": "t:global.icons.communication_category"
+        },
+        {
+          "value": "picto-customer-support",
+          "label": "t:global.icons.customer_support",
+          "group": "t:global.icons.communication_category"
+        },
+        {
+          "value": "picto-happy-face",
+          "label": "t:global.icons.happy_face",
+          "group": "t:global.icons.communication_category"
+        },
+        {
+          "value": "picto-mailbox",
+          "label": "t:global.icons.mailbox",
+          "group": "t:global.icons.communication_category"
+        },
+        {
+          "value": "picto-mobile-phone",
+          "label": "t:global.icons.mobile_phone",
+          "group": "t:global.icons.communication_category"
+        },
+        {
+          "value": "picto-operator",
+          "label": "t:global.icons.operator",
+          "group": "t:global.icons.communication_category"
+        },
+        {
+          "value": "picto-phone",
+          "label": "t:global.icons.phone",
+          "group": "t:global.icons.communication_category"
+        },
+        {
+          "value": "picto-send",
+          "label": "t:global.icons.send",
+          "group": "t:global.icons.communication_category"
+        },
+        {
+          "value": "picto-user",
+          "label": "t:global.icons.user",
+          "group": "t:global.icons.communication_category"
+        },
+        {
+          "value": "picto-burger",
+          "label": "t:global.icons.burger",
+          "group": "t:global.icons.food_category"
+        },
+        {
+          "value": "picto-beer",
+          "label": "t:global.icons.beer",
+          "group": "t:global.icons.food_category"
+        },
+        {
+          "value": "picto-coffee",
+          "label": "t:global.icons.coffee",
+          "group": "t:global.icons.food_category"
+        },
+        {
+          "value": "picto-pizza",
+          "label": "t:global.icons.pizza",
+          "group": "t:global.icons.food_category"
+        },
+        {
+          "value": "picto-bottle",
+          "label": "t:global.icons.bottle",
+          "group": "t:global.icons.food_category"
+        },
+        {
+          "value": "picto-document",
+          "label": "t:global.icons.document",
+          "group": "t:global.icons.other_category"
+        },
+        {
+          "value": "picto-error",
+          "label": "t:global.icons.error",
+          "group": "t:global.icons.other_category"
+        },
+        {
+          "value": "picto-file",
+          "label": "t:global.icons.file",
+          "group": "t:global.icons.other_category"
+        },
+        {
+          "value": "picto-jewelry",
+          "label": "t:global.icons.jewelry",
+          "group": "t:global.icons.other_category"
+        },
+        {
+          "value": "picto-mask",
+          "label": "t:global.icons.mask",
+          "group": "t:global.icons.other_category"
+        },
+        {
+          "value": "picto-music",
+          "label": "t:global.icons.music",
+          "group": "t:global.icons.other_category"
+        },
+        {
+          "value": "picto-not-allowed",
+          "label": "t:global.icons.not_allowed",
+          "group": "t:global.icons.other_category"
+        },
+        {
+          "value": "picto-target",
+          "label": "t:global.icons.target",
+          "group": "t:global.icons.other_category"
+        },
+        {
+          "value": "picto-timer",
+          "label": "t:global.icons.timer",
+          "group": "t:global.icons.other_category"
+        },
+        {
+          "value": "picto-success",
+          "label": "t:global.icons.success",
+          "group": "t:global.icons.other_category"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_icon",
+      "label": "t:global.icons.custom_icon",
+      "info": "t:global.icons.custom_icon_info"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:global.text.title",
+      "default": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "t:global.text.content",
+      "default": "<p>Write content about your brand or products.</p>"
+    },
+    {
+      "type": "liquid",
+      "id": "liquid",
+      "label": "t:global.code.liquid",
+      "info": "t:blocks.accordion.liquid_info"
+    },
+    {
+      "type": "page",
+      "id": "page",
+      "label": "t:blocks.accordion.page",
+      "info": "t:blocks.accordion.page_info"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Accordion"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,119 @@
+{%- if block.settings.video != blank -%}
+
+  <div {{ block.shopify_attributes }}>
+    <div class="content-over-media {% if block.settings.video_size != 'auto' %}content-over-media--{{ block.settings.video_size }}{% endif %}" style="{% render 'surface', text_color: section.settings.color %}">
+      {%- capture poster -%}
+        {%- assign poster_image = block.settings.poster | default: block.settings.video.preview_image -%}
+  
+        {%- if block.settings.autoplay == false and poster_image != blank -%}
+          {%- capture sizes -%}(max-width: 740px) calc(100vw - 40px), (max-width: 999px) calc(100vw - 64px), {{ settings.page_width }}px{%- endcapture -%}
+          {{- poster_image | image_url: width: poster_image.width | image_tag: sizes: sizes, widths: '200,300,400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000,3200' -}}
+        {%- endif -%}
+      {%- endcapture -%}
+  
+      {%- if block.settings.mobile_video != blank -%}
+        {%- assign poster_image = block.settings.poster | default: block.settings.mobile_video.preview_image -%}
+  
+        <video-media {% if block.settings.autoplay %}autoplay{% endif %} class="sm:hidden" style="--aspect-ratio: {{ block.settings.video_size }}">
+          {{- block.settings.mobile_video | video_tag: class: 'object-cover sm:hidden', controls: block.settings.show_controls, playsinline: true, muted: block.settings.autoplay, loop: block.settings.autoplay, preload: 'metadata', image_size: '400x' -}}
+          {{- poster_image | image_url: width: poster_image.width | image_tag: sizes: '100vw', widths: '200,300,400,500,600,700,800,900,1000,1200' -}}
+        </video-media>
+      {%- endif -%}
+  
+      <video-media {% if block.settings.autoplay %}autoplay{% endif %} {% if block.settings.mobile_video != blank %}class="object-cover hidden sm:block"{% endif %} style="--aspect-ratio: {{ block.settings.video_size }}">
+        {{- block.settings.video | video_tag: playsinline: true, preload: 'metadata', muted: block.settings.autoplay, loop: block.settings.autoplay, controls: block.settings.show_controls, image_size: '800x' -}}
+        {{- poster -}}
+      </video-media>
+  
+      {%- unless block.settings.autoplay -%}
+        <button class="play-button" type="button">
+          <span class="sr-only">{{ 'general.accessibility.play_video' | t }}</span>
+
+          <svg fill="none" width="48" height="48" viewBox="0 0 48 48">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M48 24c0 13.255-10.745 24-24 24S0 37.255 0 24 10.745 0 24 0s24 10.745 24 24Zm-18 0-9-6.6v13.2l9-6.6Z" fill="{{ block.settings.color }}"/>
+          </svg>
+        </button>
+      {%- endunless -%}
+    </div>
+  </div>
+{%- endif -%}
+  
+{% schema %}
+{
+  "name": "t:blocks.video.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:global.video.autoplay",
+      "info": "t:global.video.autoplay_info",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_controls",
+      "label": "t:global.video.show_controls",
+      "default": true
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:global.video.video"
+    },
+    {
+      "type": "video",
+      "id": "mobile_video",
+      "label": "t:global.video.mobile_video",
+      "info": "t:global.video.video_info"
+    },
+    {
+      "type": "select",
+      "id": "video_size",
+      "label": "t:global.video.video_size",
+      "info": "t:global.video.ratio_avoid_cropping_info",
+      "options": [
+        {
+          "value": "auto",
+          "label": "t:global.sizes.original_video_ratio"
+        },
+        {
+          "value": "sm",
+          "label": "t:global.sizes.small"
+        },
+        {
+          "value": "md",
+          "label": "t:global.sizes.medium"
+        },
+        {
+          "value": "lg",
+          "label": "t:global.sizes.large"
+        },
+        {
+          "value": "fill",
+          "label": "t:global.sizes.fit_screen"
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "t:sections.video.poster_image",
+      "info": "t:sections.video.poster_image_info",
+      "visible_if": "{{ block.settings.autoplay == false }}"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "t:blocks.video.color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.video.name"
+    }
+  ]
+}
+{% endschema %}
