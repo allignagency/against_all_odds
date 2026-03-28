@@ -193,7 +193,7 @@
         "product_info_size": 35,
         "show_sticky_add_to_cart": true,
         "center_basic_info": false,
-        "desktop_media_layout": "grid",
+        "desktop_media_layout": "carousel_thumbnails_bottom",
         "desktop_media_grid_gap": 30,
         "mobile_controls": "dots",
         "enable_media_autoplay": false,
