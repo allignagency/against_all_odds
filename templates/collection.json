@@ -13,9 +13,8 @@
       "type": "collection-banner",
       "settings": {
         "color_scheme": "scheme-3",
-        "image": "shopify://shop_images/226ff61b-9b97-4616-a790-f8d253996875.webp",
-        "mobile_image": "shopify://shop_images/JH.png",
-        "image_size": "auto",
+        "image": "shopify://shop_images/EE3A0380_6fd977dc-b21a-4a17-99a1-ac8aafde93f4.jpg",
+        "image_size": "sm",
         "allow_transparent_header": true,
         "show_image": true,
         "reveal": true,
@@ -24,8 +23,8 @@
         "show_collection_description": true,
         "show_breadcrumb": true,
         "content_width": "xs",
-        "overlay_color": "#ffffff",
-        "overlay_opacity": 0
+        "overlay_color": "#1c1c1c",
+        "overlay_opacity": 70
       }
     },
     "main": {
