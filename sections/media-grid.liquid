@@ -38,28 +38,23 @@
       }
     }
 
-    /* Override fixed row heights — show images at natural aspect ratio */
+    /* Override fixed row heights — use aspect-ratio so images display fully without cropping */
     #shopify-section-{{ section.id }} .media-grid {
+      display: grid !important;
+      grid-template-columns: repeat(12, 1fr);
       grid-template-rows: auto !important;
       grid-auto-rows: auto !important;
     }
 
     #shopify-section-{{ section.id }} .media-grid__item {
       grid-row: span 1 !important;
-      height: auto !important;
-    }
-
-    #shopify-section-{{ section.id }} .content-over-media {
-      height: auto !important;
-      min-height: 0 !important;
     }
 
     #shopify-section-{{ section.id }} .content-over-media > img,
     #shopify-section-{{ section.id }} .content-over-media > picture img {
-      height: auto !important;
       width: 100% !important;
-      object-fit: contain !important;
-      position: relative !important;
+      height: auto !important;
+      object-fit: cover !important;
     }
 
     /* Hotspot styles */
