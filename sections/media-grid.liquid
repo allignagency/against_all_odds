@@ -38,11 +38,8 @@
       }
     }
 
-    /* Override fixed row heights — use aspect-ratio so images display fully without cropping */
+    /* Show images at natural aspect ratio by setting aspect-ratio on the container */
     #shopify-section-{{ section.id }} .media-grid {
-      display: grid !important;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: auto !important;
       grid-auto-rows: auto !important;
     }
 
@@ -50,11 +47,9 @@
       grid-row: span 1 !important;
     }
 
-    #shopify-section-{{ section.id }} .content-over-media > img,
-    #shopify-section-{{ section.id }} .content-over-media > picture img {
-      width: 100% !important;
+    #shopify-section-{{ section.id }} .media-grid__item .content-over-media[data-aspect-ratio] {
+      aspect-ratio: var(--image-aspect-ratio);
       height: auto !important;
-      object-fit: cover !important;
     }
 
     /* Hotspot styles */
@@ -193,7 +188,7 @@
             {%- endif -%}
 
             {%- capture block_content -%}
-              <div class="content-over-media color-scheme color-scheme--{{ block.settings.color_scheme.id }} group" reveal-on-scroll="true" style="--content-over-media-overlay: {{ block.settings.overlay_color.rgb }} / {{ block.settings.overlay_opacity | divided_by: 100.0 }};">
+              <div class="content-over-media color-scheme color-scheme--{{ block.settings.color_scheme.id }} group" reveal-on-scroll="true" {% if block.settings.image %}data-aspect-ratio style="--image-aspect-ratio: {{ block.settings.image.aspect_ratio }}; --content-over-media-overlay: {{ block.settings.overlay_color.rgb }} / {{ block.settings.overlay_opacity | divided_by: 100.0 }};"{% else %}style="--content-over-media-overlay: {{ block.settings.overlay_color.rgb }} / {{ block.settings.overlay_opacity | divided_by: 100.0 }};"{% endif %}>
                 {%- if block.type == 'image' -%}
                   {%- if section.settings.section_width == 'full' -%}
                     {%- capture sizes_attribute -%}(max-width: 699px) 100vw, {{ 100.0 | divided_by: 12.0 | times: block.settings.column_count | round }}vw{%- endcapture -%}
