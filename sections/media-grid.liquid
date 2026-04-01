@@ -38,7 +38,7 @@
       }
     }
 
-    /* Force auto row heights so images show at natural aspect ratio */
+    /* Auto row heights + aspect-ratio containers for natural image display */
     #shopify-section-{{ section.id }} .media-grid {
       grid-auto-rows: auto !important;
     }
@@ -46,6 +46,19 @@
     #shopify-section-{{ section.id }} .media-grid__item {
       grid-row: span 1 !important;
       overflow: hidden;
+    }
+
+    #shopify-section-{{ section.id }} .content-over-media[style*="aspect-ratio"] {
+      min-height: 0 !important;
+    }
+
+    #shopify-section-{{ section.id }} .content-over-media[style*="aspect-ratio"] > img,
+    #shopify-section-{{ section.id }} .content-over-media[style*="aspect-ratio"] > picture img {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
     }
 
     /* Hotspot styles */
