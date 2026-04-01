@@ -246,7 +246,7 @@
       "settings": {
         "color_scheme": "scheme-2",
         "separate_section_with_border": true,
-        "desktop_row_height": 290,
+        "desktop_row_height": 350,
         "mobile_row_height": 230,
         "section_width": "lg",
         "spacing": "md",

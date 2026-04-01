@@ -38,28 +38,6 @@
       }
     }
 
-    /* Auto row heights + aspect-ratio containers for natural image display */
-    #shopify-section-{{ section.id }} .media-grid {
-      grid-auto-rows: auto !important;
-    }
-
-    #shopify-section-{{ section.id }} .media-grid__item {
-      grid-row: span 1 !important;
-      overflow: hidden;
-    }
-
-    #shopify-section-{{ section.id }} .content-over-media[style*="aspect-ratio"] {
-      min-height: 0 !important;
-    }
-
-    #shopify-section-{{ section.id }} .content-over-media[style*="aspect-ratio"] > img,
-    #shopify-section-{{ section.id }} .content-over-media[style*="aspect-ratio"] > picture img {
-      position: absolute !important;
-      inset: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: cover !important;
-    }
 
     /* Hotspot styles */
     .media-grid__item--has-hotspot {
@@ -197,7 +175,7 @@
             {%- endif -%}
 
             {%- capture block_content -%}
-              <div class="content-over-media color-scheme color-scheme--{{ block.settings.color_scheme.id }} group" reveal-on-scroll="true" style="--content-over-media-overlay: {{ block.settings.overlay_color.rgb }} / {{ block.settings.overlay_opacity | divided_by: 100.0 }}; {% if block.settings.image %}aspect-ratio: {{ block.settings.image.aspect_ratio }};{% endif %}">
+              <div class="content-over-media color-scheme color-scheme--{{ block.settings.color_scheme.id }} group" reveal-on-scroll="true" style="--content-over-media-overlay: {{ block.settings.overlay_color.rgb }} / {{ block.settings.overlay_opacity | divided_by: 100.0 }};">
                 {%- if block.type == 'image' -%}
                   {%- if section.settings.section_width == 'full' -%}
                     {%- capture sizes_attribute -%}(max-width: 699px) 100vw, {{ 100.0 | divided_by: 12.0 | times: block.settings.column_count | round }}vw{%- endcapture -%}
