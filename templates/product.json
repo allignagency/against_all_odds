@@ -1,0 +1,325 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "accordion_rdLwBW": {
+          "type": "accordion",
+          "disabled": true,
+          "settings": {
+            "show_below_gallery": true,
+            "icon": "none",
+            "title": "DETAILS",
+            "content": "<ul><li>100% ORGANIC COTTON JERSEY, 240GSM\u00a0</li><li>SOFT-TOUCH AGAINSTALLODDS LOGO</li><li>OVERSIZED FIT</li><li>DROPPED SHOULDERS</li><li>MADE IN PORTUGAL </li><li>HAND FINISHED IN ENGLAND</li></ul>",
+            "liquid": "",
+            "page": ""
+          }
+        },
+        "liquid_MA7wqY": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "{% if product.available %}\n\n<div class=\"instock-pulse\">\n  <span class=\"icon--pulsing\"></span>\n  <span>In stock, ready to ship</span>\n</div>\n\n<style>\n\n.instock-pulse {\n  display: flex;\n  flex-wrap: nowrap;\n  align-items: center;\n}\n\n.icon--pulsing {\n  position: relative;\n  width: 20px;\n  height: 20px;\n  margin-right: 10px;\n}\n\n.icon--pulsing:after, \n.icon--pulsing:before {\n    background: #54c63a;\n    width: 10px;\n    height: 10px;\n    border-radius: 10px;\n    position: absolute;\n    left: 0;\n    top: 0;\n    content: \"\";\n    margin: 5px;\n}\n\n@keyframes inventory-pulse{\n  0%{\n    opacity:0.5;\n  }\n  to{\n    transform:scale(2.5);\n    opacity:0;\n  }\n}\n\n.icon--pulsing:before {\n    animation: inventory-pulse 2s linear infinite;\n}\n\n</style>\n\n{% endif %}"
+          }
+        },
+        "accordion_7ziYbi": {
+          "type": "accordion",
+          "settings": {
+            "show_below_gallery": true,
+            "icon": "none",
+            "title": "SHIPPING POLICY",
+            "content": "",
+            "liquid": "",
+            "page": "shipping"
+          }
+        },
+        "accordion_kr4yep": {
+          "type": "accordion",
+          "settings": {
+            "show_below_gallery": true,
+            "icon": "none",
+            "title": "SIZE CHART",
+            "content": "",
+            "liquid": "",
+            "page": "size-chart"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "heading_tag": "h3"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_taxes_notice": false
+          }
+        },
+        "clearpay_on_site_messaging_payments_messaging_HDmgHf": {
+          "type": "shopify://apps/clearpay-on-site-messaging/blocks/payments-messaging/5d763983-d3e6-4888-9966-4e1170b26ae9",
+          "settings": {
+            "text_align": "inherit",
+            "margin_top": 16,
+            "margin_bottom": 16,
+            "color": "",
+            "size": "sm",
+            "intro_text": "or",
+            "show_interest_free": true,
+            "payment_amount_is_bold": true,
+            "show_with": true,
+            "logo_type": "badge",
+            "logo_theme": "black-on-mint",
+            "modal_link_style": "circled-info-icon",
+            "modal_theme": "mint",
+            "breakpoint": 749,
+            "text_align_mobile": "inherit",
+            "margin_top_mobile": 16,
+            "margin_bottom_mobile": 16,
+            "show_lower_limit": true,
+            "show_upper_limit": true,
+            "show_if_outside_limits": true,
+            "product": "{{product}}"
+          }
+        },
+        "liquid_EgfaWg": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "<div style=\"margin-bottom: 20px;\">\n\n<div class=\"icon_container\">\n                        <svg class=\"icon\" stroke-width=\"1\" aria-hidden=\"true\" focusable=\"false\" role=\"presentation\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\"><path fill=\"currentColor\" d=\"M15.64 6.92L9.5 5.12V4a.5.5 0 00-.5-.5H1a.5.5 0 00-.5.5v8.5c0 .28.22.5.5.5h1.27a2.1 2.1 0 004.06 0h3.94a2.1 2.1 0 004.06 0h1.17a.5.5 0 00.5-.5V7.4a.5.5 0 00-.36-.48zM4.3 13.6a1.1 1.1 0 110-2.2 1.1 1.1 0 010 2.2zM6.33 12a2.1 2.1 0 00-4.06 0H1.5V4.5h7V12H6.33zm5.97 1.6a1.1 1.1 0 110-2.2 1.1 1.1 0 010 2.2zM15 12h-.67a2.1 2.1 0 00-4.06 0H9.5V6.17l5.5 1.6V12z\"></path></svg>\n                      \n                      <span class=\"with-icon__beside\">1-2 days delivery time (within the UK)</span></div>\n\n<div class=\"icon_container\">\n                        <svg class=\"icon\" stroke-width=\"1\" aria-hidden=\"true\" focusable=\"false\" role=\"presentation\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\"><path fill=\"currentColor\" d=\"M14.41 3.37L8.27 1.41a1 1 0 00-.61 0L1.52 3.37a1 1 0 00-.7.95v7.86c0 .41.25.78.63.93l6.14 2.46c.24.1.5.1.75 0l6.14-2.46a1 1 0 00.62-.93V4.32a1 1 0 00-.69-.95zM7.96 2.36l6.05 1.93-2.7.9L5.35 3.2l2.63-.84zm-.46 12.1l-5.68-2.28V5.3L7.5 7.2v7.26zM8 6.3L1.96 4.28l2.58-.82 5.99 2L8 6.3zm6.1 5.89l-5.6 2.24V7.19l5.6-1.87v6.87z\"></path></svg>\n                      \n                      <span class=\"with-icon__beside\">30-day money back guarantee</span></div>\n\n\n</div>\n\n  <style>\n  .icon_container {\n  display: flex;\n  align-items: center;\n  justify-content: left;\npadding: 7px 0;\n}\n\n.icon{\nwidth: 35px;\npadding-right: 10px;\n}\n  </style>"
+          }
+        },
+        "payment_terms": {
+          "type": "payment_terms",
+          "settings": {}
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "hide_sold_out_variants": false,
+            "selector_style": "dropdown",
+            "swatch_selector_style": "swatch",
+            "variant_image_options": "",
+            "size_chart_page": ""
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_payment_button": false,
+            "show_gift_card_recipient": false,
+            "atc_button_background": "#1c1c1c",
+            "atc_button_text_color": "",
+            "payment_button_background": "",
+            "payment_button_text_color": ""
+          }
+        },
+        "separator": {
+          "type": "separator",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "collapse_content": false,
+            "show_below_gallery": false
+          }
+        },
+        "complementary_products": {
+          "type": "complementary_products",
+          "settings": {
+            "title": "Pairs well with",
+            "products_count": 2,
+            "show_below_gallery": true,
+            "stack_products": false,
+            "show_quick_buy": true
+          }
+        }
+      },
+      "block_order": [
+        "accordion_rdLwBW",
+        "liquid_MA7wqY",
+        "accordion_7ziYbi",
+        "accordion_kr4yep",
+        "title",
+        "price",
+        "clearpay_on_site_messaging_payments_messaging_HDmgHf",
+        "liquid_EgfaWg",
+        "payment_terms",
+        "quantity_selector",
+        "variant_picker",
+        "buy_buttons",
+        "separator",
+        "description",
+        "complementary_products"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "container_size": "lg",
+        "product_info_size": 35,
+        "show_sticky_add_to_cart": true,
+        "center_basic_info": false,
+        "desktop_media_layout": "grid",
+        "desktop_media_grid_gap": 30,
+        "mobile_controls": "dots",
+        "enable_media_autoplay": false,
+        "enable_video_looping": true,
+        "enable_image_zoom": true,
+        "max_image_zoom_level": 3
+      }
+    },
+    "media_grid_GURbbE": {
+      "type": "media-grid",
+      "blocks": {
+        "image_77LBki": {
+          "type": "image",
+          "settings": {
+            "color_scheme": "",
+            "image": "{{ product.metafields.custom.file_1.value }}",
+            "column_count": "12",
+            "row_count": 2,
+            "title": "",
+            "heading_tag": "h4",
+            "content": "",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_position": "place-self-center text-center",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "image_mCh8VW": {
+          "type": "image",
+          "settings": {
+            "color_scheme": "",
+            "image": "{{ product.metafields.custom.file_2.value }}",
+            "column_count": "6",
+            "row_count": 2,
+            "title": "",
+            "heading_tag": "h4",
+            "content": "",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_position": "place-self-center text-center",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "image_4QTjFw": {
+          "type": "image",
+          "settings": {
+            "color_scheme": "",
+            "image": "{{ product.metafields.custom.file_3.value }}",
+            "column_count": "6",
+            "row_count": 2,
+            "title": "",
+            "heading_tag": "h4",
+            "content": "",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_position": "place-self-center text-center",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        }
+      },
+      "block_order": [
+        "image_77LBki",
+        "image_mCh8VW",
+        "image_4QTjFw"
+      ],
+      "name": "t:sections.media_grid.presets.media_grid.name",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "desktop_row_height": 290,
+        "mobile_row_height": 230,
+        "section_width": "lg",
+        "spacing": "md",
+        "subheading": "",
+        "title": "",
+        "content": ""
+      }
+    },
+    "173593565665a6d37f": {
+      "type": "apps",
+      "blocks": {
+        "loox_reviews_loox_dynamic_section_hh9UCM": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "only_photos": false,
+            "aggregated": false,
+            "limit": 25,
+            "hide_thumbnails": false,
+            "maxwidth": 1080,
+            "is_sample": true
+          }
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_dynamic_section_hh9UCM"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "hide_product_information": false,
+        "stack_products": true,
+        "recommendations_count": 10,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": "",
+        "title": "You might also like these",
+        "content": ""
+      }
+    },
+    "recently_viewed_products_kbhUdg": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "separate_section_with_border": true,
+        "color_scheme": "scheme-2",
+        "hide_product_information": false,
+        "stack_products": false,
+        "products_count": 9,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": "",
+        "title": "Recently viewed products",
+        "content": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "media_grid_GURbbE",
+    "173593565665a6d37f",
+    "related-products",
+    "recently_viewed_products_kbhUdg"
+  ]
+}
