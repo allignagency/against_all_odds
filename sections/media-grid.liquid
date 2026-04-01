@@ -38,6 +38,15 @@
       }
     }
 
+    /* Force auto row heights so images show at natural aspect ratio */
+    #shopify-section-{{ section.id }} .media-grid {
+      grid-auto-rows: auto !important;
+    }
+
+    #shopify-section-{{ section.id }} .media-grid__item {
+      grid-row: span 1 !important;
+      overflow: hidden;
+    }
 
     /* Hotspot styles */
     .media-grid__item--has-hotspot {
@@ -46,7 +55,7 @@
 
     .media-grid-hotspot {
       position: absolute;
-      z-index: 4;
+      z-index: 2;
       transform: translate(-50%, -50%);
       pointer-events: auto;
       height: auto;
@@ -175,7 +184,7 @@
             {%- endif -%}
 
             {%- capture block_content -%}
-              <div class="content-over-media color-scheme color-scheme--{{ block.settings.color_scheme.id }} group" reveal-on-scroll="true" style="{% if block.settings.image %}--content-over-media-height: calc(100cqi / {{ block.settings.image.aspect_ratio }});{% endif %} --content-over-media-overlay: {{ block.settings.overlay_color.rgb }} / {{ block.settings.overlay_opacity | divided_by: 100.0 }};">
+              <div class="content-over-media color-scheme color-scheme--{{ block.settings.color_scheme.id }} group" reveal-on-scroll="true" style="--content-over-media-overlay: {{ block.settings.overlay_color.rgb }} / {{ block.settings.overlay_opacity | divided_by: 100.0 }}; {% if block.settings.image %}aspect-ratio: {{ block.settings.image.aspect_ratio }};{% endif %}">
                 {%- if block.type == 'image' -%}
                   {%- if section.settings.section_width == 'full' -%}
                     {%- capture sizes_attribute -%}(max-width: 699px) 100vw, {{ 100.0 | divided_by: 12.0 | times: block.settings.column_count | round }}vw{%- endcapture -%}
