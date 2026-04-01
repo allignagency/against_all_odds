@@ -38,6 +38,30 @@
       }
     }
 
+    /* When hotspots are active (product page), use auto row heights so images display at natural aspect ratio */
+    .media-grid--natural-height {
+      grid-template-rows: auto !important;
+      grid-auto-rows: auto !important;
+    }
+
+    .media-grid--natural-height .media-grid__item {
+      grid-row: span 1 !important;
+      height: auto !important;
+    }
+
+    .media-grid--natural-height .content-over-media {
+      height: auto !important;
+      min-height: 0 !important;
+    }
+
+    .media-grid--natural-height .content-over-media > img,
+    .media-grid--natural-height .content-over-media > picture img {
+      height: auto !important;
+      width: 100% !important;
+      object-fit: contain !important;
+      position: relative !important;
+    }
+
     /* Hotspot styles */
     .media-grid__item--has-hotspot {
       position: relative;
@@ -158,7 +182,12 @@
       <div class="section-stack">
         {%- render 'section-header', subheading: section.settings.subheading, heading: section.settings.title, content: section.settings.content -%}
 
-        <media-grid class="media-grid">
+        {%- assign has_product_hotspots = false -%}
+        {%- if product != blank and product.metafields.custom.media_grid_hotspots.value != blank -%}
+          {%- assign has_product_hotspots = true -%}
+        {%- endif -%}
+
+        <media-grid class="media-grid{% if has_product_hotspots %} media-grid--natural-height{% endif %}">
           {%- assign image_slot_index = 0 -%}
           {%- for block in section.blocks -%}
             {%- comment -%} Skip blocks with no media — no placeholder {%- endcomment -%}
