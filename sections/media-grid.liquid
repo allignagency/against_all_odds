@@ -39,6 +39,37 @@
     }
 
 
+    /* Full-image display: override fixed grid rows so images show uncropped */
+    #shopify-section-{{ section.id }} .media-grid {
+      grid-template-rows: none !important;
+      grid-auto-rows: auto !important;
+    }
+    #shopify-section-{{ section.id }} .media-grid__item {
+      grid-row: span 1 !important;
+      height: auto !important;
+      overflow: hidden;
+      border-radius: var(--media-grid-gap, 0);
+    }
+    #shopify-section-{{ section.id }} .media-grid__item .content-over-media {
+      position: relative !important;
+      display: block !important;
+      overflow: hidden;
+    }
+    #shopify-section-{{ section.id }} .media-grid__item .content-over-media > picture,
+    #shopify-section-{{ section.id }} .media-grid__item .content-over-media > picture img {
+      display: block !important;
+      width: 100% !important;
+      height: auto !important;
+      position: relative !important;
+      object-fit: contain !important;
+    }
+    /* Re-layer the overlay on top */
+    #shopify-section-{{ section.id }} .media-grid__item .content-over-media::before {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
     /* Hotspot styles */
     .media-grid__item--has-hotspot {
       position: relative;
