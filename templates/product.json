@@ -19,7 +19,7 @@
             "show_below_gallery": true,
             "icon": "none",
             "title": "DETAILS",
-            "content": "<ul><li>100% ORGANIC COTTON JERSEY, 240GSM\u00a0</li><li>SOFT-TOUCH AGAINSTALLODDS LOGO</li><li>OVERSIZED FIT</li><li>DROPPED SHOULDERS</li><li>MADE IN PORTUGAL </li><li>HAND FINISHED IN ENGLAND</li></ul>",
+            "content": "<ul><li>100% ORGANIC COTTON JERSEY, 240GSM </li><li>SOFT-TOUCH AGAINSTALLODDS LOGO</li><li>OVERSIZED FIT</li><li>DROPPED SHOULDERS</li><li>MADE IN PORTUGAL </li><li>HAND FINISHED IN ENGLAND</li></ul>",
             "liquid": "",
             "page": ""
           }
@@ -63,6 +63,10 @@
           "settings": {
             "show_taxes_notice": false
           }
+        },
+        "fit_quiz_for_clothes_and_shoes_fitquiz_block_7CFL8V": {
+          "type": "shopify://apps/fit-quiz-for-clothes-and-shoes/blocks/fitquiz-block/b10c5f36-d033-4d47-9f46-97864f785a5a",
+          "settings": {}
         },
         "clearpay_on_site_messaging_payments_messaging_HDmgHf": {
           "type": "shopify://apps/clearpay-on-site-messaging/blocks/payments-messaging/5d763983-d3e6-4888-9966-4e1170b26ae9",
@@ -154,6 +158,7 @@
         "accordion_kr4yep",
         "title",
         "price",
+        "fit_quiz_for_clothes_and_shoes_fitquiz_block_7CFL8V",
         "clearpay_on_site_messaging_payments_messaging_HDmgHf",
         "liquid_EgfaWg",
         "payment_terms",
@@ -261,6 +266,8 @@
         "loox_reviews_loox_dynamic_section_hh9UCM": {
           "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
           "settings": {
+            "reviews_to_display": "",
+            "default_tab": "automatic",
             "only_photos": false,
             "aggregated": false,
             "limit": 25,
