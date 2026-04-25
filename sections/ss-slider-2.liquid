@@ -11,6 +11,8 @@ For inquiries or permissions, contact daniel@section.store
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  media="print"
+  onload="this.media='all'; this.onload=null"
 />
 
 {%- liquid 
@@ -605,7 +607,7 @@ For inquiries or permissions, contact daniel@section.store
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
 
 <script>
   function initSlider2() {
@@ -644,7 +646,7 @@ For inquiries or permissions, contact daniel@section.store
     });
   }
 
-  document.addEventListener('DOMContentLoaded', initSlider2);
+  window.addEventListener('load', initSlider2);
   
   if (Shopify.designMode) {
      document.addEventListener('shopify:section:unload', initSlider2);
