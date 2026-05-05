@@ -1,0 +1,615 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+COMPLETE THE LOOK SECTION
+----------------------------------------------------------------------------------------------------------------------
+Shows the current product + a paired/complementary product side by side with a "+" icon between them.
+Users can select sizes for both products and add both to cart with one click.
+
+Uses product.metafields.custom.paired_product to determine the paired product.
+Falls back to Shopify complementary product recommendations if no metafield is set.
+{%- endcomment -%}
+
+{%- assign paired_product = product.metafields.custom.paired_product.value -%}
+
+{%- if paired_product != blank -%}
+<div id="complete-the-look-{{ section.id }}" class="section-spacing color-scheme color-scheme--scheme-2 {% if section.settings.separate_section_with_border %}bordered-section{% endif %}">
+  <div class="container container--lg">
+    <div class="section-stack">
+      {%- if section.settings.title != blank -%}
+        <div class="section-header text-center">
+          <h2 class="h3">{{ section.settings.title }}</h2>
+          {%- if section.settings.subtitle != blank -%}
+            <p class="ctl-subtitle">{{ section.settings.subtitle }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="ctl-wrapper">
+        {%- comment -%} Current Product Card {%- endcomment -%}
+        <div class="ctl-product ctl-product--current">
+          <div class="ctl-product__image">
+            <a href="{{ product.url }}">
+              {%- if product.featured_media -%}
+                <img
+                  src="{{ product.featured_media | image_url: width: 600 }}"
+                  alt="{{ product.featured_media.alt | escape }}"
+                  width="600"
+                  height="{{ 600 | divided_by: product.featured_media.aspect_ratio | round }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'ctl-placeholder' }}
+              {%- endif -%}
+            </a>
+          </div>
+          <div class="ctl-product__info">
+            <h3 class="ctl-product__title">
+              <a href="{{ product.url }}">{{ product.title }}</a>
+            </h3>
+            <div class="ctl-product__price">
+              {%- if product.compare_at_price > product.price -%}
+                <span class="ctl-price--compare">{{ product.compare_at_price | money }}</span>
+              {%- endif -%}
+              <span class="ctl-price--current {% if product.compare_at_price > product.price %}ctl-price--sale{% endif %}">
+                {{ product.price | money }}
+              </span>
+            </div>
+
+            {%- comment -%} Size selector for current product {%- endcomment -%}
+            {%- unless product.has_only_default_variant -%}
+              <div class="ctl-variants" data-product-id="{{ product.id }}" data-product-handle="{{ product.handle }}">
+                <p class="ctl-variants__label">Size</p>
+                <div class="ctl-variants__buttons">
+                  {%- for variant in product.variants -%}
+                    {%- assign size_option = variant.title -%}
+                    <button
+                      type="button"
+                      class="ctl-size-btn {% if variant == product.selected_or_first_available_variant %}ctl-size-btn--active{% endif %} {% unless variant.available %}ctl-size-btn--sold-out{% endunless %}"
+                      data-variant-id="{{ variant.id }}"
+                      data-available="{{ variant.available }}"
+                      {% unless variant.available %}disabled{% endunless %}
+                    >
+                      {{ size_option }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endunless -%}
+          </div>
+        </div>
+
+        {%- comment -%} Plus Icon {%- endcomment -%}
+        <div class="ctl-plus">
+          <div class="ctl-plus__circle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </div>
+        </div>
+
+        {%- comment -%} Paired Product Card {%- endcomment -%}
+        <div class="ctl-product ctl-product--paired">
+          <div class="ctl-product__image">
+            <a href="{{ paired_product.url }}">
+              {%- if paired_product.featured_media -%}
+                <img
+                  src="{{ paired_product.featured_media | image_url: width: 600 }}"
+                  alt="{{ paired_product.featured_media.alt | escape }}"
+                  width="600"
+                  height="{{ 600 | divided_by: paired_product.featured_media.aspect_ratio | round }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {{ 'product-2' | placeholder_svg_tag: 'ctl-placeholder' }}
+              {%- endif -%}
+            </a>
+          </div>
+          <div class="ctl-product__info">
+            <h3 class="ctl-product__title">
+              <a href="{{ paired_product.url }}">{{ paired_product.title }}</a>
+            </h3>
+            <div class="ctl-product__price">
+              {%- if paired_product.compare_at_price > paired_product.price -%}
+                <span class="ctl-price--compare">{{ paired_product.compare_at_price | money }}</span>
+              {%- endif -%}
+              <span class="ctl-price--current {% if paired_product.compare_at_price > paired_product.price %}ctl-price--sale{% endif %}">
+                {{ paired_product.price | money }}
+              </span>
+            </div>
+
+            {%- comment -%} Size selector for paired product {%- endcomment -%}
+            {%- unless paired_product.has_only_default_variant -%}
+              <div class="ctl-variants" data-product-id="{{ paired_product.id }}" data-product-handle="{{ paired_product.handle }}">
+                <p class="ctl-variants__label">Size</p>
+                <div class="ctl-variants__buttons">
+                  {%- for variant in paired_product.variants -%}
+                    {%- assign size_option = variant.title -%}
+                    <button
+                      type="button"
+                      class="ctl-size-btn {% if variant == paired_product.selected_or_first_available_variant %}ctl-size-btn--active{% endif %} {% unless variant.available %}ctl-size-btn--sold-out{% endunless %}"
+                      data-variant-id="{{ variant.id }}"
+                      data-available="{{ variant.available }}"
+                      {% unless variant.available %}disabled{% endunless %}
+                    >
+                      {{ size_option }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endunless -%}
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Combined Total & Add Both to Cart {%- endcomment -%}
+      <div class="ctl-footer">
+        <div class="ctl-total">
+          <span class="ctl-total__label">Bundle Total:</span>
+          <span class="ctl-total__price" data-current-price="{{ product.price }}" data-paired-price="{{ paired_product.price }}">
+            {{ product.price | plus: paired_product.price | money }}
+          </span>
+        </div>
+        <button
+          type="button"
+          class="ctl-add-both button button--lg"
+          data-current-variant="{{ product.selected_or_first_available_variant.id }}"
+          data-paired-variant="{{ paired_product.selected_or_first_available_variant.id }}"
+          {% unless product.available and paired_product.available %}disabled{% endunless %}
+        >
+          {%- if product.available and paired_product.available -%}
+            Add Both to Cart
+          {%- else -%}
+            Unavailable
+          {%- endif -%}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ctl-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ctl-wrapper {
+      flex-wrap: nowrap;
+      gap: 40px;
+    }
+  }
+
+  .ctl-product {
+    flex: 1 1 300px;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .ctl-product__image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #f7f7f7;
+    margin-bottom: 16px;
+  }
+
+  .ctl-product__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 3/4;
+  }
+
+  .ctl-product__image a {
+    display: block;
+  }
+
+  .ctl-product__title {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 8px;
+  }
+
+  .ctl-product__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ctl-product__title a:hover {
+    text-decoration: underline;
+  }
+
+  .ctl-product__price {
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  .ctl-price--compare {
+    text-decoration: line-through;
+    opacity: 0.6;
+    margin-right: 8px;
+  }
+
+  .ctl-price--sale {
+    color: #c00;
+  }
+
+  .ctl-subtitle {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-top: 4px;
+  }
+
+  /* Plus icon */
+  .ctl-plus {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ctl-plus__circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #1c1c1c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1c1c1c;
+  }
+
+  /* Variant / Size buttons */
+  .ctl-variants {
+    margin-top: 8px;
+  }
+
+  .ctl-variants__label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 8px;
+    font-weight: 500;
+  }
+
+  .ctl-variants__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+  }
+
+  .ctl-size-btn {
+    min-width: 40px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid #1c1c1c;
+    background: transparent;
+    color: #1c1c1c;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, opacity 0.2s;
+    border-radius: 0;
+  }
+
+  .ctl-size-btn:hover:not(:disabled) {
+    background: #1c1c1c;
+    color: #fff;
+  }
+
+  .ctl-size-btn--active {
+    background: #1c1c1c;
+    color: #fff;
+  }
+
+  .ctl-size-btn--sold-out {
+    opacity: 0.35;
+    text-decoration: line-through;
+    cursor: not-allowed;
+    border-style: dashed;
+  }
+
+  /* Footer: total + button */
+  .ctl-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+
+  @media screen and (min-width: 750px) {
+    .ctl-footer {
+      flex-direction: row;
+      justify-content: center;
+      gap: 32px;
+    }
+  }
+
+  .ctl-total {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .ctl-total__label {
+    margin-right: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 13px;
+  }
+
+  .ctl-total__price {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .ctl-add-both {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 220px;
+    height: 50px;
+    padding: 0 32px;
+    background: #1c1c1c;
+    color: #fff;
+    border: none;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: opacity 0.2s, background 0.2s;
+  }
+
+  .ctl-add-both:hover:not(:disabled) {
+    background: #333;
+  }
+
+  .ctl-add-both:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .ctl-add-both--loading {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  /* Placeholder SVG */
+  .ctl-placeholder {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3/4;
+    background: #f0f0f0;
+  }
+
+  /* Mobile adjustments */
+  @media screen and (max-width: 749px) {
+    .ctl-product {
+      flex: 1 1 calc(50% - 40px);
+      max-width: calc(50% - 30px);
+    }
+
+    .ctl-plus__circle {
+      width: 36px;
+      height: 36px;
+    }
+
+    .ctl-plus__circle svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .ctl-product__title {
+      font-size: 12px;
+    }
+
+    .ctl-product__price {
+      font-size: 12px;
+    }
+
+    .ctl-size-btn {
+      min-width: 32px;
+      height: 30px;
+      padding: 0 8px;
+      font-size: 11px;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    const section = document.getElementById('complete-the-look-{{ section.id }}');
+    if (!section) return;
+
+    const addBothBtn = section.querySelector('.ctl-add-both');
+    const totalPriceEl = section.querySelector('.ctl-total__price');
+    const variantGroups = section.querySelectorAll('.ctl-variants');
+
+    // Handle size button clicks
+    variantGroups.forEach(function(group) {
+      const buttons = group.querySelectorAll('.ctl-size-btn');
+      buttons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          // Remove active from siblings
+          buttons.forEach(function(b) { b.classList.remove('ctl-size-btn--active'); });
+          // Set active
+          btn.classList.add('ctl-size-btn--active');
+
+          // Update the correct variant ID on the add-both button
+          const variantId = btn.getAttribute('data-variant-id');
+          const productContainer = btn.closest('.ctl-product');
+
+          if (productContainer.classList.contains('ctl-product--current')) {
+            addBothBtn.setAttribute('data-current-variant', variantId);
+          } else {
+            addBothBtn.setAttribute('data-paired-variant', variantId);
+          }
+
+          updateButtonState();
+        });
+      });
+    });
+
+    function updateButtonState() {
+      const currentVariant = addBothBtn.getAttribute('data-current-variant');
+      const pairedVariant = addBothBtn.getAttribute('data-paired-variant');
+
+      // Check if both selected variants are available
+      let bothAvailable = true;
+
+      if (currentVariant) {
+        const currentBtn = section.querySelector('.ctl-product--current .ctl-size-btn--active');
+        if (currentBtn && currentBtn.getAttribute('data-available') === 'false') {
+          bothAvailable = false;
+        }
+      }
+
+      if (pairedVariant) {
+        const pairedBtn = section.querySelector('.ctl-product--paired .ctl-size-btn--active');
+        if (pairedBtn && pairedBtn.getAttribute('data-available') === 'false') {
+          bothAvailable = false;
+        }
+      }
+
+      addBothBtn.disabled = !bothAvailable;
+      addBothBtn.textContent = bothAvailable ? 'Add Both to Cart' : 'Unavailable';
+    }
+
+    // Listen for variant changes on the main product form (sync from main product page)
+    document.addEventListener('variant:changed', function(event) {
+      if (!event.detail || !event.detail.variant) return;
+      const variant = event.detail.variant;
+
+      // Check if this variant belongs to the current product
+      const currentGroup = section.querySelector('.ctl-product--current .ctl-variants');
+      if (!currentGroup) return;
+
+      const productId = currentGroup.getAttribute('data-product-id');
+      if (String(variant.product_id) !== String(productId)) return;
+
+      // Update active state
+      const buttons = currentGroup.querySelectorAll('.ctl-size-btn');
+      buttons.forEach(function(btn) {
+        btn.classList.remove('ctl-size-btn--active');
+        if (btn.getAttribute('data-variant-id') === String(variant.id)) {
+          btn.classList.add('ctl-size-btn--active');
+        }
+      });
+
+      addBothBtn.setAttribute('data-current-variant', variant.id);
+      updateButtonState();
+    });
+
+    // Add Both to Cart handler
+    addBothBtn.addEventListener('click', function() {
+      const currentVariantId = addBothBtn.getAttribute('data-current-variant');
+      const pairedVariantId = addBothBtn.getAttribute('data-paired-variant');
+
+      if (!currentVariantId || !pairedVariantId) return;
+
+      addBothBtn.classList.add('ctl-add-both--loading');
+      addBothBtn.textContent = 'Adding...';
+
+      const items = [
+        { id: parseInt(currentVariantId), quantity: 1 },
+        { id: parseInt(pairedVariantId), quantity: 1 }
+      ];
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: items })
+      })
+      .then(function(response) {
+        if (!response.ok) throw new Error('Add to cart failed');
+        return response.json();
+      })
+      .then(function() {
+        addBothBtn.textContent = 'Added!';
+        addBothBtn.classList.remove('ctl-add-both--loading');
+
+        // Refresh cart count / open cart drawer if theme supports it
+        document.dispatchEvent(new CustomEvent('cart:refresh'));
+
+        // Also try to trigger the theme's native cart update
+        fetch('/cart.js')
+          .then(function(r) { return r.json(); })
+          .then(function(cart) {
+            document.dispatchEvent(new CustomEvent('cart:change', { detail: { cart: cart } }));
+            // Update cart count badge if exists
+            var cartCounts = document.querySelectorAll('[data-cart-count], .cart-count');
+            cartCounts.forEach(function(el) {
+              el.textContent = cart.item_count;
+              if (cart.item_count > 0) el.removeAttribute('hidden');
+            });
+          });
+
+        setTimeout(function() {
+          addBothBtn.textContent = 'Add Both to Cart';
+        }, 2000);
+      })
+      .catch(function() {
+        addBothBtn.textContent = 'Error - Try Again';
+        addBothBtn.classList.remove('ctl-add-both--loading');
+        setTimeout(function() {
+          addBothBtn.textContent = 'Add Both to Cart';
+        }, 2500);
+      });
+    });
+  })();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Complete the Look",
+  "class": "shopify-section--complete-the-look",
+  "tag": "section",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "This section displays a paired product alongside the current product. Set the paired product using the 'paired_product' metafield (custom.paired_product) on each product."
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Complete the Look"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "These two pieces were made to go together."
+    },
+    {
+      "type": "checkbox",
+      "id": "separate_section_with_border",
+      "label": "Separate with border",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Complete the Look"
+    }
+  ]
+}
+{% endschema %}
