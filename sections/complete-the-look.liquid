@@ -152,13 +152,14 @@ Falls back to Shopify complementary product recommendations if no metafield is s
         </div>
         <button
           type="button"
-          class="ctl-add-both button button--lg"
+          class="ctl-add-both button w-full"
+          style="--button-background: 28, 28, 28; --button-text-color: 255, 255, 255; max-width: 400px;"
           data-current-variant="{{ product.selected_or_first_available_variant.id }}"
           data-paired-variant="{{ paired_product.selected_or_first_available_variant.id }}"
           {% unless product.available and paired_product.available %}disabled{% endunless %}
         >
           {%- if product.available and paired_product.available -%}
-            Add Both to Cart
+            ADD BOTH TO CART
           {%- else -%}
             Unavailable
           {%- endif -%}
