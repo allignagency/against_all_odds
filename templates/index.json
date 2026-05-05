@@ -79,8 +79,8 @@
           "settings": {
             "image": "shopify://shop_images/website_e7a5f8f4-4b24-49e4-9368-d4903dff48ec.webp",
             "mobile_image": "shopify://shop_images/Untitled-2_471a8d15-6aa1-499e-9563-7040e1bbfce1.webp",
-            "subheading": "",
-            "title": "",
+            "subheading": "Premium UK streetwear",
+            "title": "Built for Fighters. Worn by Champions.",
             "mobile_text_position": "place-self-center text-center",
             "desktop_text_position": "sm:place-self-center sm:text-center",
             "content_max_width": 780,
@@ -89,14 +89,14 @@
             "button_1_style": "link",
             "button_1_background": "#ffffff",
             "button_1_text_color": "#000000",
-            "button_2_text": "",
-            "button_2_link": "",
+            "button_2_text": "Shop now",
+            "button_2_link": "shopify://collections/for-the-fighters",
             "button_2_style": "outline",
             "button_2_background": "#ffffff",
             "button_2_text_color": "#000000",
             "background": "",
             "background_opacity": 50,
-            "text_color": "#1c1c1c",
+            "text_color": "#eeeeee",
             "border_color": "",
             "gradient_overlay": "linear-gradient(180deg, rgba(NaN, NaN, NaN, 0), rgba(254, 91, 124, 1) 49%, rgba(255, 140, 162, 1) 100%)"
           }
