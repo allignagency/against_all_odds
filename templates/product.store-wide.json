@@ -1,0 +1,563 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "accordion_rdLwBW": {
+          "type": "accordion",
+          "disabled": true,
+          "settings": {
+            "show_below_gallery": true,
+            "icon": "none",
+            "title": "DETAILS",
+            "content": "<ul><li>100% ORGANIC COTTON JERSEY, 240GSM </li><li>SOFT-TOUCH AGAINSTALLODDS LOGO</li><li>OVERSIZED FIT</li><li>DROPPED SHOULDERS</li><li>MADE IN PORTUGAL </li><li>HAND FINISHED IN ENGLAND</li></ul>",
+            "liquid": "",
+            "page": ""
+          }
+        },
+        "accordion_7ziYbi": {
+          "type": "accordion",
+          "disabled": true,
+          "settings": {
+            "show_below_gallery": true,
+            "icon": "none",
+            "title": "SHIPPING POLICY",
+            "content": "",
+            "liquid": "",
+            "page": "shipping"
+          }
+        },
+        "accordion_kr4yep": {
+          "type": "accordion",
+          "disabled": true,
+          "settings": {
+            "show_below_gallery": true,
+            "icon": "none",
+            "title": "SIZE CHART",
+            "content": "",
+            "liquid": "",
+            "page": "size-chart"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "heading_tag": "h3"
+          }
+        },
+        "loox_reviews_loox_rating_Jph4X9": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-rating/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "contentSize": 14,
+            "pattern": "",
+            "hideText": false,
+            "alignment": "",
+            "layout": "",
+            "textColor": "",
+            "starColor": "",
+            "showAllReviews": false,
+            "looxOpenFloatingWidget": false,
+            "emptyRatingWidget": false
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_taxes_notice": false
+          }
+        },
+        "clearpay_on_site_messaging_payments_messaging_HDmgHf": {
+          "type": "shopify://apps/clearpay-on-site-messaging/blocks/payments-messaging/5d763983-d3e6-4888-9966-4e1170b26ae9",
+          "settings": {
+            "text_align": "inherit",
+            "margin_top": 16,
+            "margin_bottom": 16,
+            "color": "",
+            "size": "sm",
+            "intro_text": "or",
+            "show_interest_free": true,
+            "payment_amount_is_bold": true,
+            "show_with": true,
+            "logo_type": "badge",
+            "logo_theme": "black-on-mint",
+            "modal_link_style": "circled-info-icon",
+            "modal_theme": "mint",
+            "breakpoint": 749,
+            "text_align_mobile": "inherit",
+            "margin_top_mobile": 16,
+            "margin_bottom_mobile": 16,
+            "show_lower_limit": true,
+            "show_upper_limit": true,
+            "show_if_outside_limits": true,
+            "product": "{{product}}"
+          }
+        },
+        "liquid_EgfaWg": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "<div style=\"margin-bottom: 20px;\">\n\n<div class=\"icon_container\">\n                        <svg class=\"icon\" stroke-width=\"1\" aria-hidden=\"true\" focusable=\"false\" role=\"presentation\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\"><path fill=\"currentColor\" d=\"M15.64 6.92L9.5 5.12V4a.5.5 0 00-.5-.5H1a.5.5 0 00-.5.5v8.5c0 .28.22.5.5.5h1.27a2.1 2.1 0 004.06 0h3.94a2.1 2.1 0 004.06 0h1.17a.5.5 0 00.5-.5V7.4a.5.5 0 00-.36-.48zM4.3 13.6a1.1 1.1 0 110-2.2 1.1 1.1 0 010 2.2zM6.33 12a2.1 2.1 0 00-4.06 0H1.5V4.5h7V12H6.33zm5.97 1.6a1.1 1.1 0 110-2.2 1.1 1.1 0 010 2.2zM15 12h-.67a2.1 2.1 0 00-4.06 0H9.5V6.17l5.5 1.6V12z\"></path></svg>\n                      \n                      <span class=\"with-icon__beside\">1-2 days delivery time (within the UK)</span></div>\n\n<div class=\"icon_container\">\n                        <svg class=\"icon\" stroke-width=\"1\" aria-hidden=\"true\" focusable=\"false\" role=\"presentation\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\"><path fill=\"currentColor\" d=\"M14.41 3.37L8.27 1.41a1 1 0 00-.61 0L1.52 3.37a1 1 0 00-.7.95v7.86c0 .41.25.78.63.93l6.14 2.46c.24.1.5.1.75 0l6.14-2.46a1 1 0 00.62-.93V4.32a1 1 0 00-.69-.95zM7.96 2.36l6.05 1.93-2.7.9L5.35 3.2l2.63-.84zm-.46 12.1l-5.68-2.28V5.3L7.5 7.2v7.26zM8 6.3L1.96 4.28l2.58-.82 5.99 2L8 6.3zm6.1 5.89l-5.6 2.24V7.19l5.6-1.87v6.87z\"></path></svg>\n                      \n                      <span class=\"with-icon__beside\">30-day money back guarantee</span></div>\n\n\n</div>\n\n  <style>\n  .icon_container {\n  display: flex;\n  align-items: center;\n  justify-content: left;\npadding: 7px 0;\n}\n\n.icon{\nwidth: 35px;\npadding-right: 10px;\n}\n  </style>"
+          }
+        },
+        "payment_terms": {
+          "type": "payment_terms",
+          "settings": {}
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {},
+          "disabled": true
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "hide_sold_out_variants": false,
+            "selector_style": "dropdown",
+            "swatch_selector_style": "swatch",
+            "variant_image_options": "",
+            "size_chart_page": ""
+          }
+        },
+        "liquid_MA7wqY": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "{% if product.available %}\n\n<div class=\"instock-pulse\">\n  <span class=\"icon--pulsing\"></span>\n  <span>In stock, ready to ship</span>\n</div>\n\n<style>\n\n.instock-pulse {\n  display: flex;\n  flex-wrap: nowrap;\n  align-items: center;\n}\n\n.icon--pulsing {\n  position: relative;\n  width: 20px;\n  height: 20px;\n  margin-right: 10px;\n}\n\n.icon--pulsing:after, \n.icon--pulsing:before {\n    background: #54c63a;\n    width: 10px;\n    height: 10px;\n    border-radius: 10px;\n    position: absolute;\n    left: 0;\n    top: 0;\n    content: \"\";\n    margin: 5px;\n}\n\n@keyframes inventory-pulse{\n  0%{\n    opacity:0.5;\n  }\n  to{\n    transform:scale(2.5);\n    opacity:0;\n  }\n}\n\n.icon--pulsing:before {\n    animation: inventory-pulse 2s linear infinite;\n}\n\n</style>\n\n{% endif %}"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_payment_button": false,
+            "show_gift_card_recipient": false,
+            "atc_button_background": "#1c1c1c",
+            "atc_button_text_color": "",
+            "payment_button_background": "",
+            "payment_button_text_color": ""
+          }
+        },
+        "separator": {
+          "type": "separator",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "collapse_content": false,
+            "show_below_gallery": false
+          },
+          "disabled": true
+        },
+        "complementary_products": {
+          "type": "complementary_products",
+          "settings": {
+            "title": "Pairs well with",
+            "products_count": 2,
+            "show_below_gallery": true,
+            "stack_products": false,
+            "show_quick_buy": true
+          }
+        },
+        "f7cdb2c3ee1aba87": {
+          "type": "shopify://apps/section-store/blocks/block-review-summary/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "settings": {
+            "star_style": "sharp",
+            "stars_count": 4.5,
+            "stars_size": 14.0,
+            "stars_gap": 2.0,
+            "stars_color": "#e32c2b",
+            "stars_bg_color": "#e32c2b",
+            "stars_bg_half_color": "#D9D9D9",
+            "avatars_position": "none",
+            "avatars_size": 20.0,
+            "avatars_animate": false,
+            "first_text": "<p>&nbsp;</p>",
+            "first_text_size": 12.0,
+            "first_text_color": "#1c1c1c",
+            "second_text": "<p>Rated 4.7 excellent | <strong>2,340+ reviews</strong></p>",
+            "second_text_size": 12.0,
+            "second_text_color": "#1c1c1c",
+            "border": "none",
+            "border_thickness": 1.0,
+            "border_color": "#1c1c1c",
+            "radius": 0.0,
+            "effect": "none",
+            "block_padding_top": 0.0,
+            "block_padding_bottom": 0.0,
+            "padding_vertical": 6.0,
+            "padding_horizontal": 0.0
+          }
+        },
+        "ea01d12e7788d667": {
+          "type": "shopify://apps/section-store/blocks/block-badge/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "settings": {
+            "first_icon": "shield_check",
+            "first_title": "Trusted Brand",
+            "first_bg_color": "#1c1c1c",
+            "first_title_color": "#ffffff",
+            "second_icon": "star_sparkle",
+            "second_title": "Top Rated",
+            "second_bg_color": "#e32c2b",
+            "second_title_color": "#ffffff",
+            "third_icon": "none",
+            "third_title": "​",
+            "third_bg_color": "#1c1c1c",
+            "third_title_color": "#ffffff",
+            "title_size": 11.0,
+            "icon_size": 15.0,
+            "font_weight": "600",
+            "effect": "glow",
+            "card_border": "none",
+            "card_border_width": 1.0,
+            "card_border_color": "#E5E7EB",
+            "card_radius": 10.0,
+            "card_align": "left",
+            "padding_vertical": 0.0,
+            "padding_sides": 0.0,
+            "card_padding_horizontal": 12.0,
+            "card_padding_vertical": 6.0
+          }
+        },
+        "c7dc64051cd11cb1": {
+          "type": "shopify://apps/section-store/blocks/block-benefits-list/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "settings": {
+            "items_gap": 10.0,
+            "first_text": "<p><strong>Premium quality</strong> — rigorously tested materials</p>",
+            "second_text": "<p><strong>Satisfaction guarantee</strong> — hassle-free returns</p>",
+            "third_text": "<p><strong>Secure checkout</strong> — encrypted payment processing</p>",
+            "fourth_text": "<p><strong>Fast EU delivery</strong> — dispatched within 48 hours</p>",
+            "icon_selection": "icon_5",
+            "icon_size": 18.0,
+            "icon_color": "#e32c2b",
+            "text_size": 13.0,
+            "text_color": "#1c1c1c",
+            "content_align": "left",
+            "border": "none",
+            "border_thickness": 1.0,
+            "border_color": "#1c1c1c",
+            "radius": 0.0,
+            "padding_vertical": 0.0,
+            "padding_horizontal": 0.0
+          }
+        },
+        "5a57c7c0c100c5f5": {
+          "type": "shopify://apps/section-store/blocks/block-shipping-info/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "settings": {
+            "use_dot": true,
+            "icon_color": "#15C625",
+            "icon_size": 10.0,
+            "ships_by_text": "Receive by",
+            "shipping_within_days": 5,
+            "include_weekend": true,
+            "ships_by_font_size": 11.0,
+            "ships_by_text_color": "#1c1c1c",
+            "fast_shipping_text": "COUNTRY_FLAG <strong>Fast</strong> COUNTRY_CODE Shipping",
+            "allow_all_countries": true,
+            "allowed_countries": "AD,AL,AM,AT,AX,BA,BE,BG,BY,CH",
+            "fast_shipping_text_for_rest_countries": "Fast European Shipping",
+            "fast_shipping_text_color": "#1c1c1c",
+            "border_style": "solid",
+            "border_width": 0.5,
+            "border_color": "#CFCECE",
+            "border_radius": 14.0,
+            "bg_color": "#FCFCFC",
+            "padding_vertical": 6.0,
+            "padding_horizontal": 15.0
+          }
+        },
+        "f6103032c5efb732": {
+          "type": "shopify://apps/section-store/blocks/block-atc-style/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "settings": {
+            "background_color": "#1c1c1c",
+            "text_color": "#ffffff",
+            "hover_background_color": "#e32c2b",
+            "hover_text_color": "#ffffff",
+            "font_size": 13.0,
+            "font_weight": "600",
+            "border_style": "none",
+            "border_width": 1.0,
+            "border_color": "#1c1c1c",
+            "border_radius": 16.0,
+            "background_effect": "lift",
+            "gradient_color_end": "#333333",
+            "hover_effect": "shine_lift",
+            "animation": "none",
+            "button_icon": "lightning",
+            "use_custom_text": false,
+            "button_text": "Add to cart",
+            "show_price": true,
+            "round_price": false,
+            "compare_at_price_color": "#999999"
+          }
+        },
+        "08592e5e7adb039f": {
+          "type": "shopify://apps/section-store/blocks/block-benefits-boxes-2/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "settings": {
+            "cards_design": "horizontal",
+            "cards_row": "2",
+            "card_align": "center",
+            "first_icon": "heart",
+            "first_title": "Satisfaction Promise",
+            "first_sub_title": "",
+            "second_icon": "lock",
+            "second_title": "Secure Payments",
+            "second_sub_title": "",
+            "third_icon": "none",
+            "third_title": "",
+            "third_sub_title": "",
+            "all_size": 14.0,
+            "all_color": "#1c1c1c",
+            "font_weight": "400",
+            "border": "none",
+            "border_thickness": 1.0,
+            "border_color": "#1c1c1c",
+            "radius": 0.0,
+            "padding_vertical": 0.0,
+            "padding_horizontal": 24.0
+          }
+        },
+        "d740379abb7d49aa": {
+          "type": "shopify://apps/section-store/blocks/block-tabs/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "settings": {
+            "default_tab": "first",
+            "tab_layout": "filled",
+            "enable_fourth_tab": false,
+            "product_description_tab": "second",
+            "review_tab": "first",
+            "show_payment_icons": "first",
+            "first_title": "Expert Review",
+            "first_text": "<p>Carefully evaluated for build quality, ingredient integrity, and real-world performance. This product delivers on its promise with no unnecessary fillers or shortcuts. Recommended for anyone who values what goes into what they buy.</p>",
+            "second_title": "Description",
+            "second_text": "<p>Full product details provided by the manufacturer. Scroll through for complete specifications, usage guidance, and ingredient transparency.</p>",
+            "third_title": "Delivery Info",
+            "third_text": "<p><strong>Processing:</strong> Orders are packed and dispatched within 1–2 business days.</p><p><strong>Shipping:</strong> Standard European delivery arrives in 3–7 business days depending on location.</p><p><strong>Tracking:</strong> A tracking number is emailed once your order ships so you can follow it every step of the way.</p><p><strong>Returns:</strong> Not satisfied? Reach out within 30 days for a hassle-free return.</p>",
+            "fourth_title": "Specifications",
+            "fourth_text": "<p>Built for everyday use with a straightforward format that is easy to understand and easy to trust.</p>",
+            "star_style": "sharp",
+            "stars_count": 5.0,
+            "stars_color": "#e32c2b",
+            "stars_bg_half_color": "#E5E7EB",
+            "reviewer_name": "Dr. James Whitfield",
+            "review_date": "March 10, 2025",
+            "reviewer_subtext": "Independent Product Analyst",
+            "show_verified_badge": true,
+            "verified_badge_color": "#e32c2b",
+            "tab_text_size": 13.0,
+            "tab_font_weight": 500.0,
+            "content_text_size": 12.0,
+            "light_color": "#FFFFFF",
+            "dark_color": "#F7F7F7",
+            "tab_text_color": "#555555",
+            "text_color": "#1c1c1c",
+            "muted_text_color": "#6B6B6B",
+            "effect": "none",
+            "border": "solid",
+            "border_thickness": 1.0,
+            "border_color": "#DFDFDF",
+            "radius": 8.0,
+            "padding_vertical": 18.0,
+            "padding_horizontal": 18.0,
+            "reviewer_image": "shopify://shop_images/ai-block-tabs-reviewer-image-1.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "f7cdb2c3ee1aba87",
+        "accordion_rdLwBW",
+        "accordion_7ziYbi",
+        "accordion_kr4yep",
+        "title",
+        "loox_reviews_loox_rating_Jph4X9",
+        "price",
+        "ea01d12e7788d667",
+        "c7dc64051cd11cb1",
+        "clearpay_on_site_messaging_payments_messaging_HDmgHf",
+        "liquid_EgfaWg",
+        "payment_terms",
+        "quantity_selector",
+        "variant_picker",
+        "liquid_MA7wqY",
+        "5a57c7c0c100c5f5",
+        "buy_buttons",
+        "f6103032c5efb732",
+        "08592e5e7adb039f",
+        "d740379abb7d49aa",
+        "separator",
+        "description",
+        "complementary_products"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "container_size": "lg",
+        "product_info_size": 35,
+        "show_sticky_add_to_cart": true,
+        "center_basic_info": false,
+        "desktop_media_layout": "grid",
+        "desktop_media_grid_gap": 30,
+        "mobile_controls": "dots",
+        "enable_media_autoplay": false,
+        "enable_video_looping": true,
+        "enable_image_zoom": true,
+        "max_image_zoom_level": 3
+      }
+    },
+    "media_grid_GURbbE": {
+      "type": "media-grid",
+      "blocks": {
+        "image_77LBki": {
+          "type": "image",
+          "settings": {
+            "color_scheme": "",
+            "image": "{{ product.metafields.custom.file_1.value }}",
+            "column_count": "12",
+            "row_count": 2,
+            "title": "",
+            "heading_tag": "h4",
+            "content": "",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_position": "place-self-center text-center",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "image_mCh8VW": {
+          "type": "image",
+          "settings": {
+            "color_scheme": "",
+            "image": "{{ product.metafields.custom.file_2.value }}",
+            "column_count": "6",
+            "row_count": 2,
+            "title": "",
+            "heading_tag": "h4",
+            "content": "",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_position": "place-self-center text-center",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "image_4QTjFw": {
+          "type": "image",
+          "settings": {
+            "color_scheme": "",
+            "image": "{{ product.metafields.custom.file_3.value }}",
+            "column_count": "6",
+            "row_count": 2,
+            "title": "",
+            "heading_tag": "h4",
+            "content": "",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_position": "place-self-center text-center",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        }
+      },
+      "block_order": [
+        "image_77LBki",
+        "image_mCh8VW",
+        "image_4QTjFw"
+      ],
+      "name": "t:sections.media_grid.presets.media_grid.name",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "desktop_row_height": 350,
+        "mobile_row_height": 230,
+        "section_width": "lg",
+        "spacing": "md",
+        "subheading": "",
+        "title": "",
+        "content": ""
+      }
+    },
+    "complete_the_look": {
+      "type": "complete-the-look",
+      "settings": {
+        "title": "Complete the Look",
+        "subtitle": "These two pieces were made to go together.",
+        "separate_section_with_border": true
+      }
+    },
+    "173593565665a6d37f": {
+      "type": "apps",
+      "blocks": {
+        "loox_reviews_loox_dynamic_section_hh9UCM": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "only_photos": false,
+            "aggregated": false,
+            "limit": 25,
+            "hide_thumbnails": false,
+            "maxwidth": 1080,
+            "is_sample": true
+          }
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_dynamic_section_hh9UCM"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "hide_product_information": false,
+        "stack_products": true,
+        "recommendations_count": 10,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": "",
+        "title": "You might also like these",
+        "content": ""
+      }
+    },
+    "recently_viewed_products_kbhUdg": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "separate_section_with_border": true,
+        "color_scheme": "scheme-2",
+        "hide_product_information": false,
+        "stack_products": false,
+        "products_count": 9,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": "",
+        "title": "Recently viewed products",
+        "content": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "media_grid_GURbbE",
+    "complete_the_look",
+    "173593565665a6d37f",
+    "related-products",
+    "recently_viewed_products_kbhUdg"
+  ]
+}
