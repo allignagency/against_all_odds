@@ -71,7 +71,7 @@
       },
       "14952540001915115444": {
         "type": "shopify://apps/upcart-cart-drawer/blocks/app-embed/af3da5fb-f5f7-40ec-8273-41bf50059d4b",
-        "disabled": false,
+        "disabled": true,
         "settings": {}
       }
     },
