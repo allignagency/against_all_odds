@@ -5,7 +5,7 @@
       "blocks": {
         "accordion_rdLwBW": {
           "type": "accordion",
-          "disabled": true,
+          "disabled": false,
           "settings": {
             "show_below_gallery": true,
             "icon": "none",
@@ -17,7 +17,7 @@
         },
         "accordion_7ziYbi": {
           "type": "accordion",
-          "disabled": true,
+          "disabled": false,
           "settings": {
             "show_below_gallery": true,
             "icon": "none",
@@ -29,7 +29,7 @@
         },
         "accordion_kr4yep": {
           "type": "accordion",
-          "disabled": true,
+          "disabled": false,
           "settings": {
             "show_below_gallery": true,
             "icon": "none",
@@ -111,7 +111,7 @@
           "type": "variant_picker",
           "settings": {
             "hide_sold_out_variants": false,
-            "selector_style": "dropdown",
+            "selector_style": "block",
             "swatch_selector_style": "swatch",
             "variant_image_options": "",
             "size_chart_page": ""
@@ -144,7 +144,7 @@
             "collapse_content": false,
             "show_below_gallery": false
           },
-          "disabled": true
+          "disabled": false
         },
         "complementary_products": {
           "type": "complementary_products",
@@ -184,7 +184,8 @@
             "block_padding_bottom": 0.0,
             "padding_vertical": 6.0,
             "padding_horizontal": 0.0
-          }
+          },
+          "disabled": true
         },
         "284b13221165f0c0": {
           "type": "shopify://apps/section-store/blocks/block-badge/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
@@ -331,7 +332,8 @@
             "padding_vertical": 18.0,
             "padding_horizontal": 18.0,
             "reviewer_image": "shopify://shop_images/ai-block-tabs-reviewer-image-1_fc2b1c8e-6584-4181-bcb5-44697bf1473d.jpg"
-          }
+          },
+          "disabled": true
         },
         "69c80e04cef3e57e": {
           "type": "shopify://apps/section-store/blocks/block-atc-style/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
@@ -494,7 +496,7 @@
             "limit": 25,
             "hide_thumbnails": false,
             "maxwidth": 1080,
-            "is_sample": true
+            "is_sample": false
           }
         }
       },

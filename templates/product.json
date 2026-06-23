@@ -5,19 +5,19 @@
       "blocks": {
         "accordion_rdLwBW": {
           "type": "accordion",
-          "disabled": true,
+          "disabled": false,
           "settings": {
             "show_below_gallery": true,
             "icon": "none",
             "title": "DETAILS",
-            "content": "<ul><li>100% ORGANIC COTTON JERSEY, 240GSM\u00a0</li><li>SOFT-TOUCH AGAINSTALLODDS LOGO</li><li>OVERSIZED FIT</li><li>DROPPED SHOULDERS</li><li>MADE IN PORTUGAL </li><li>HAND FINISHED IN ENGLAND</li></ul>",
+            "content": "<ul><li>100% ORGANIC COTTON JERSEY, 240GSM </li><li>SOFT-TOUCH AGAINSTALLODDS LOGO</li><li>OVERSIZED FIT</li><li>DROPPED SHOULDERS</li><li>MADE IN PORTUGAL </li><li>HAND FINISHED IN ENGLAND</li></ul>",
             "liquid": "",
             "page": ""
           }
         },
         "accordion_7ziYbi": {
           "type": "accordion",
-          "disabled": true,
+          "disabled": false,
           "settings": {
             "show_below_gallery": true,
             "icon": "none",
@@ -29,7 +29,7 @@
         },
         "accordion_kr4yep": {
           "type": "accordion",
-          "disabled": true,
+          "disabled": false,
           "settings": {
             "show_below_gallery": true,
             "icon": "none",
@@ -104,13 +104,14 @@
         },
         "quantity_selector": {
           "type": "quantity_selector",
-          "settings": {}
+          "settings": {},
+          "disabled": true
         },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
             "hide_sold_out_variants": false,
-            "selector_style": "dropdown",
+            "selector_style": "block",
             "swatch_selector_style": "swatch",
             "variant_image_options": "",
             "size_chart_page": ""
@@ -283,7 +284,7 @@
             "limit": 25,
             "hide_thumbnails": false,
             "maxwidth": 1080,
-            "is_sample": true
+            "is_sample": false
           }
         }
       },
