@@ -204,5 +204,8 @@ Supported variables
     {%- if show_rating -%}
       {%- render 'product-rating', product: product, show_empty: settings.show_product_rating_if_empty, display_mode: settings.product_rating_mode -%}
     {%- endif -%}
+
+    {%- comment -%} Loox review stars on collection cards: the loox-inject app embed populates these .loox-rating elements (works without the native review metafields) {%- endcomment -%}
+    <div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}" style="margin-top:4px;line-height:1;"></div>
   </div>
 </product-card>
