@@ -122,7 +122,8 @@
       }
     },
     "cart_free_shipping_threshold": 100,
-    "cart_show_free_shipping_bar": true
+    "cart_show_free_shipping_bar": true,
+    "text_font_size_mobile": 16
   },
   "presets": {
     "Prestige": {

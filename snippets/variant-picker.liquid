@@ -43,6 +43,12 @@ Supported variables
         assign option_downcase = option.name | downcase
         assign resolved_option_selector_style = selector_style
 
+        # Normalize mis-named size options: some products name the option "XS"/"SIZE" instead of "Size", which renders as the buy-box label. Force "Size".
+        assign option_display_name = option.name
+        if option_downcase == 'xs' or option_downcase == 's' or option_downcase == 'm' or option_downcase == 'l' or option_downcase == 'xl' or option_downcase == 'xxl' or option_downcase == 'xxxl' or option_downcase == 'size'
+          assign option_display_name = 'Size'
+        endif
+
         assign swatch_count = option.values | map: 'swatch' | compact | size
 
         if swatch_count > 0 and swatch_selector_style != 'none'
@@ -65,7 +71,7 @@ Supported variables
       <fieldset class="variant-picker__option v-stack gap-2">
         <div class="variant-picker__option-info h-stack justify-between gap-2">
           <div class="h-stack gap-1">
-            <legend>{{ option.name }}:</legend>
+            <legend>{{ option_display_name }}:</legend>
 
             {%- if resolved_option_selector_style == 'swatch' or resolved_option_selector_style == 'variant_image' -%}
               <span>{{ option.selected_value }}</span>
@@ -101,7 +107,7 @@ Supported variables
             </button>
 
             <x-popover id="{{ popover_id }}" class="popover popover--bottom-start color-scheme color-scheme--dialog" close-on-listbox-change>
-              <p class="h5" slot="header">{{ option.name }}</p>
+              <p class="h5" slot="header">{{ option_display_name }}</p>
 
               <div class="popover__value-list">
                 {%- assign param_name = form_id | append: '-option' | append: option.position -%}
