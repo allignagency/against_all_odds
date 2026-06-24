@@ -205,11 +205,7 @@ Supported variables
       {%- render 'product-rating', product: product, show_empty: settings.show_product_rating_if_empty, display_mode: settings.product_rating_mode -%}
     {%- endif -%}
 
-    {%- comment -%} Loox review stars on collection cards: only show for well-reviewed products (>=5 reviews, >=4.0 avg) so sparse/low ratings don't hurt conversion on e.g. new fighter tees {%- endcomment -%}
-    {%- assign loox_n = product.metafields.loox.num_reviews | plus: 0 -%}
-    {%- assign loox_r = product.metafields.loox.avg_rating | plus: 0 -%}
-    {%- if loox_n >= 5 and loox_r >= 4.0 -%}
-      <div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}" style="margin-top:4px;line-height:1;"></div>
-    {%- endif -%}
+    {%- comment -%} Loox review stars on collection cards: the loox-inject app embed populates these .loox-rating elements (ratings always shown; review quality handled via Loox product grouping) {%- endcomment -%}
+    <div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}" style="margin-top:4px;line-height:1;"></div>
   </div>
 </product-card>

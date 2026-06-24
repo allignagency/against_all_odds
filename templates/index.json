@@ -1,1 +1,719 @@
-{"sections":{"video_bD4nXC":{"type":"video","blocks":{"play_b3QAaM":{"type":"play","settings":{"icon_color":"#ffffff"}},"heading_JgXqMW":{"type":"heading","settings":{"text":"","heading_tag":"h2"}}},"block_order":["play_b3QAaM","heading_JgXqMW"],"disabled":true,"custom_css":[],"name":"t:sections.video.presets.video.name","settings":{"autoplay":true,"show_controls":false,"video_size":"fill","video":"shopify:\/\/files\/videos\/0829_3ed84cac-cd0d-41c6-a854-72b4cccacd16.mov","mobile_video":"shopify:\/\/files\/videos\/0822.mov","external_video_url":"https:\/\/www.youtube.com\/watch?v=TxtS-gOEu0k","text_color":"#ffffff"}},"slideshow":{"type":"slideshow","blocks":{"image_CzCajj":{"type":"image","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/DESKTOP_WEBSITE.webp","mobile_image":"shopify:\/\/shop_images\/MOBILE_WEBSITE.webp","subheading":"","title":"","mobile_text_position":"place-self-center text-center","desktop_text_position":"sm:place-self-center sm:text-center","content_max_width":780,"button_1_text":"","button_1_link":"","button_1_style":"solid","button_1_background":"#ffffff","button_1_text_color":"#000000","button_2_text":"","button_2_link":"","button_2_style":"outline","button_2_background":"#ffffff","button_2_text_color":"#000000","background":"","background_opacity":50,"text_color":"#ffffff","border_color":"","gradient_overlay":"linear-gradient(180deg, rgba(NaN, NaN, NaN, 0), rgba(4, 4, 4, 0.65) 100%)"}},"slide-1":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/226ff61b-9b97-4616-a790-f8d253996875.webp","mobile_image":"shopify:\/\/shop_images\/ChatGPT_Image_Jun_14_2026_at_11_30_25_PM.png","subheading":"","title":"AGAINST ALL ODDS - FOR THE FIGHTERS.","mobile_text_position":"place-self-end-center text-center","desktop_text_position":"sm:place-self-end-center sm:text-center","content_max_width":780,"button_1_text":"","button_1_link":"shopify:\/\/collections\/fight-tees","button_1_style":"link","button_1_background":"#ffffff","button_1_text_color":"#000000","button_2_text":"Shop Fight Week","button_2_link":"shopify:\/\/collections\/fight-tees","button_2_style":"solid","button_2_background":"#ffffff","button_2_text_color":"#000000","background":"","background_opacity":50,"text_color":"#eeeeee","border_color":"","gradient_overlay":"linear-gradient(180deg, rgba(NaN, NaN, NaN, 0), rgba(254, 91, 124, 1) 49%, rgba(255, 140, 162, 1) 100%)"}},"slide-2":{"type":"image","disabled":true,"settings":{"subheading":"Tell your story","title":"Image slide","mobile_text_position":"place-self-center text-center","desktop_text_position":"sm:place-self-center sm:text-center","content_max_width":780,"button_1_text":"","button_1_link":"","button_1_style":"solid","button_1_background":"#ffffff","button_1_text_color":"#000000","button_2_text":"","button_2_link":"","button_2_style":"outline","button_2_background":"#ffffff","button_2_text_color":"#000000","background":"","background_opacity":50,"text_color":"#ffffff","border_color":"","gradient_overlay":"linear-gradient(180deg, rgba(54, 54, 54, 0.2) 0%, rgba(4, 4, 4, 0.65) 100%)"}}},"block_order":["image_CzCajj","slide-1","slide-2"],"settings":{"allow_transparent_header":true,"show_next_section_button":true,"media_size":"auto","show_initial_transition":false,"autoplay":true,"autoplay_pause_on_video":true,"cycle_speed":5,"background":"#000000","controls_color":"#ffffff"}},"featured-collections":{"type":"featured-collections","blocks":{"collection-1":{"type":"collection","settings":{"collection":"fight-tees","products_count":8,"title":"","link_url":"shopify:\/\/collections\/fight-tees","link_text":"SHOP NOW"}}},"block_order":["collection-1"],"settings":{"color_scheme":"scheme-2","separate_section_with_border":true,"hide_product_information":false,"stack_products":false,"products_per_row_mobile":"2","products_per_row_desktop":4,"horizontal_spacing_factor":1,"vertical_spacing_factor":1,"subheading":""}},"image_with_text_id8qQh":{"type":"image-with-text","blocks":{"richtext_JwWeAA":{"type":"richtext","settings":{"content":"<p>Against All Odds started as a streetwear brand built on the underdog mindset. Boxing has become part of our next chapter, connecting fighters, fans, gyms and communities through limited clothing, fight week releases and real stories.<\/p>"}}},"block_order":["richtext_JwWeAA"],"name":"t:sections.image_with_text.presets.image_with_text.name","settings":{"color_scheme":"scheme-2","separate_section_with_border":true,"image":"shopify:\/\/shop_images\/ChatGPT_Image_Jun_13_2026_at_10_32_43_PM.png","mobile_image":"shopify:\/\/shop_images\/ChatGPT_Image_Jun_13_2026_at_10_18_26_PM.png","reveal_on_scroll":true,"image_position":"start","content_width":"sm","remove_vertical_spacing":true}},"image_with_text_JrwypK":{"type":"image-with-text","blocks":{"richtext_TaAFGm":{"type":"richtext","settings":{"content":"<p>Against All Odds started as a streetwear brand built on the underdog mindset. Boxing has become part of our next chapter, connecting fighters, fans, gyms and communities through limited clothing, fight week releases and real stories.<\/p>"}}},"block_order":["richtext_TaAFGm"],"disabled":true,"name":"t:sections.image_with_text.presets.image_with_text.name","settings":{"color_scheme":"scheme-2","separate_section_with_border":true,"image":"shopify:\/\/shop_images\/ChatGPT_Image_Jun_14_2026_at_10_40_16_PM.png","mobile_image":"shopify:\/\/shop_images\/ChatGPT_Image_Jun_14_2026_at_10_40_16_PM.png","reveal_on_scroll":true,"image_position":"start","content_width":"sm","remove_vertical_spacing":true}},"image_with_text_overlay_yzzd88":{"type":"image-with-text-overlay","blocks":{"button_xRpXCG":{"type":"button","settings":{"style":"outline","text":"SHOP COLLECTION","url":"shopify:\/\/collections\/archive","background":"#f7f6f6","text_color":""}},"richtext_QhcNLJ":{"type":"richtext","settings":{"content":""}}},"block_order":["button_xRpXCG","richtext_QhcNLJ"],"name":"t:sections.image_with_text_overlay.presets.image_with_text_overlay.name","settings":{"color_scheme":"","image_size":"auto","image":"shopify:\/\/shop_images\/ChatGPT_Image_Jun_19_2026_at_11_49_29_PM.png","mobile_image":"shopify:\/\/shop_images\/ChatGPT_Image_Jun_20_2026_at_12_21_03_AM.png","allow_transparent_header":false,"reveal_on_scroll":true,"remove_vertical_spacing":true,"content_width":"md","mobile_text_position":"place-self-end-center text-center","desktop_text_position":"sm:place-self-end-center sm:text-center","overlay_color":"#000000","overlay_opacity":30}},"rich_text_CQcj9X":{"type":"rich-text","blocks":{"heading_VVbpyg":{"type":"heading","settings":{"text":"LEGENDS","heading_tag":"h1"}},"richtext_66KRNQ":{"type":"richtext","settings":{"content":"<p>Celebrating the legends, past and present.<br\/>Series 1<\/p>"}}},"block_order":["heading_VVbpyg","richtext_66KRNQ"],"name":"t:sections.rich_text.presets.rich_text.name","settings":{"color_scheme":"scheme-2","separate_section_with_border":true,"content_width":"lg","text_position":"center","remove_vertical_spacing":true}},"slideshow_EDg3CE":{"type":"slideshow","settings":{"allow_transparent_header":true,"show_next_section_button":true,"media_size":"auto","show_initial_transition":false,"autoplay":true,"autoplay_pause_on_video":true,"cycle_speed":5,"background":"#000000","controls_color":"#ffffff"}},"17675615000248aecf":{"type":"_blocks","settings":{"color_scheme":"","separate_section_with_border":true,"remove_vertical_spacing":false,"remove_horizontal_spacing":false}},"ss_beauty_template_1_EMTiNf":{"type":"ss-beauty-template-1","blocks":{"featured_products_QPVAjQ":{"type":"featured_products","settings":{"product_list":["charlie-edwards-official-for-the-fighters-limited-edition","ed-hardy-official-for-the-fighters-limited-edition","chris-mulunda-official-for-the-fighters-limited-edition","brad-casey-official-for-the-fighters-limited-edition"],"img_side":"left","desktop_gap":true,"content_gap":32,"img_width":50,"show_text":true,"btn_label":"View Product","btn_style":"outline","card_title_color":"#67645e","card_text_color":"#67645e","counter_color":"#67645e","dots_color":"#84827e","bg_style":"solid","background_color":"#ffffff","background_gradient":"","border_thickness":0,"border_color":"#fdfdfd"}}},"block_order":["featured_products_QPVAjQ"],"name":"SS - Beauty template #1","settings":{"heading_custom_font":false,"heading_font":"josefin_sans_n4","heading_size":36,"heading_size_mobile":28,"heading_line_height":130,"text_custom_font":false,"text_font":"josefin_sans_n4","text_size":16,"text_size_mobile":14,"text_line_height":150,"button_custom_font":false,"button_font":"josefin_sans_n4","btn_size":16,"btn_size_mobile":14,"button_line_height":100,"btn_radius":100,"btn_border_thickness":1,"enable_button_hover_effect":true,"btn_advanced":false,"btn_padding_vertical":12,"btn_padding_vertical_mobile":12,"btn_padding_horizontal":32,"btn_padding_horizontal_mobile":24,"btn_color":"#67645e","btn_bg_color":"rgba(0,0,0,0)","btn_border_color":"#67645e","btn_hover_color":"#84827e","btn_bg_hover_color":"#ffffff","btn_border_hover_color":"#67645e","arrow_size":48,"arrow_size_mobile":30,"arrow_icon_size":10,"arrow_icon_size_mobile":10,"arrow_radius":50,"arrow_border_thickness":1,"arrow_hover_effect":"color","arrow_color":"#67645e","arrow_bg_color":"#f1f0ed","arrow_border_color":"#67645e","arrow_hover_color":"#67645e","arrow_bg_hover_color":"#ffffff","arrow_border_hover_color":"#67645e","enable_animation":true,"margin_top":12,"margin_bottom":28,"margin_horizontal":1.5,"margin_horizontal_mobile":0.7,"padding_top":36,"padding_bottom":36,"padding_horizontal":2,"padding_horizontal_mobile":1.5,"block_gap":32,"block_gap_mobile":20,"width":"page","content_width":1200,"section_radius":12,"bg_style":"solid","background_color":"#f1f0ed","background_gradient":""}},"image_with_text_overlay_fLXQnV":{"type":"image-with-text-overlay","blocks":{"button_FPmJn9":{"type":"button","settings":{"style":"solid","text":"SHOP COLLECTION","url":"shopify:\/\/collections\/boxing-club","background":"","text_color":""}},"heading_pw3BUM":{"type":"heading","settings":{"text":"FIGHT CAMP","heading_tag":"h4"}},"richtext_KAcxjU":{"type":"richtext","settings":{"content":"<p>The core uniform of the new Against All Odds direction. Built for fighters, dreamers and underdogs still showing up.<\/p>"}}},"block_order":["button_FPmJn9","heading_pw3BUM","richtext_KAcxjU"],"name":"t:sections.image_with_text_overlay.presets.image_with_text_overlay.name","settings":{"color_scheme":"scheme-3","image_size":"auto","image":"shopify:\/\/shop_images\/ChatGPT_Image_Jun_19_2026_at_10_20_53_PM_1.png","mobile_image":"shopify:\/\/shop_images\/ChatGPT_Image_Jun_19_2026_at_10_20_53_PM_2.png","allow_transparent_header":false,"reveal_on_scroll":true,"remove_vertical_spacing":true,"content_width":"md","mobile_text_position":"place-self-end-center text-center","desktop_text_position":"sm:place-self-center sm:text-center","overlay_color":"#000000","overlay_opacity":0}},"image_with_text_overlay_T3nQre":{"type":"image-with-text-overlay","blocks":{"button_AdAHDE":{"type":"button","settings":{"style":"outline","text":"SHOP DREAMERS","url":"shopify:\/\/collections\/dreamers-to-believers","background":"","text_color":""}},"heading_hWYbxY":{"type":"heading","settings":{"text":"DREAMERS","heading_tag":"h1"}},"richtext_Kp3BDE":{"type":"richtext","settings":{"content":"<p>The original message that started Against All Odds.<\/p>"}}},"block_order":["button_AdAHDE","heading_hWYbxY","richtext_Kp3BDE"],"name":"t:sections.image_with_text_overlay.presets.image_with_text_overlay.name","settings":{"color_scheme":"scheme-3","image_size":"lg","image":"shopify:\/\/shop_images\/website_image_6431bd7a-9c14-4047-a12d-dbf1b2b8cecb.png","mobile_image":"shopify:\/\/shop_images\/mobile_image.png","allow_transparent_header":false,"reveal_on_scroll":true,"remove_vertical_spacing":true,"content_width":"md","mobile_text_position":"place-self-end-center text-center","desktop_text_position":"sm:place-self-end-center sm:text-center","overlay_color":"#000000","overlay_opacity":0}},"image_with_text_overlay_UgKDcW":{"type":"image-with-text-overlay","blocks":{"heading_JUj6mQ":{"type":"heading","settings":{"text":"THE COMMUNITY SESSIONS","heading_tag":"h4"}},"richtext_BXg9n9":{"type":"richtext","settings":{"content":"<p>Bringing boxing culture, fighters and opportunity into overlooked communities.<\/p>"}},"button_nGJ99b":{"type":"button","settings":{"style":"solid","text":"COMING SOON","url":"","background":"","text_color":""}}},"block_order":["heading_JUj6mQ","richtext_BXg9n9","button_nGJ99b"],"name":"t:sections.image_with_text_overlay.presets.image_with_text_overlay.name","settings":{"color_scheme":"scheme-3","image_size":"lg","image":"shopify:\/\/shop_images\/ChatGPT_Image_Jun_14_2026_at_10_40_16_PM.png","mobile_image":"shopify:\/\/shop_images\/ChatGPT_Image_Jun_14_2026_at_10_40_16_PM.png","allow_transparent_header":false,"reveal_on_scroll":true,"remove_vertical_spacing":true,"content_width":"md","mobile_text_position":"place-self-end-center text-center","desktop_text_position":"sm:place-self-end-center sm:text-center","overlay_color":"#000000","overlay_opacity":0}},"ss_slider_2_imBJAY":{"type":"ss-slider-2","blocks":{"slide_LjCjzn":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/IMG_6585.webp","url":"","title":"RIO FERDINAND","button":"","button_url":""}},"slide_MeYUjY":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/IMG_6584.webp","url":"","title":"CHIP","button":"","button_url":""}},"slide_bKXmzD":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/IMG_6580.webp","url":"","title":"SHABAZ MASOUD","button":"","button_url":""}},"slide_UGRrdd":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/Untitled-1.webp","url":"","title":"DAPPY","button":"","button_url":""}},"slide_dfDzdB":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/581B0951-1C51-4A53-AD3E-ACD94CE4BC73.webp","url":"","title":"BILLY WINGROVE","button":"","button_url":""}},"slide_bjNWBX":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/IMG_6594.webp","url":"","title":"CHARLIE EDWARDS","button":"","button_url":""}}},"block_order":["slide_LjCjzn","slide_MeYUjY","slide_bKXmzD","slide_UGRrdd","slide_dfDzdB","slide_bjNWBX"],"name":"SS - Slider #2","settings":{"slider_view":4,"slider_view_mobile":1.5,"slider_rotate":0,"card_padding_vertical":24,"card_padding_vertical_mobile":24,"card_padding_horizontal":40,"card_padding_horizontal_mobile":30,"card_radius":0,"card_border_thickness":0,"card_shadow":true,"card_ratio":"portrait","card_ratio_mobile":"portrait","card_overlay":0.2,"content_horizontal_position":"center","content_horizontal_position_mobile":"center","content_vertical_position":"end","content_vertical_position_mobile":"end","title_custom":true,"title_font":"radio_canada_big_n7","title_size":24,"title_size_mobile":24,"title_height":130,"button_custom":false,"button_font":"radio_canada_big_n4","button_size":14,"button_size_mobile":14,"button_height":100,"button_mt":16,"button_padding_vertical":12,"button_padding_horizontal":20,"button_radius":0,"button_border_thickness":1,"arrow_size":50,"arrow_size_mobile":32,"arrow_icon_size":20,"arrow_icon_size_mobile":12,"arrow_border_thickness":0,"arrow_show_desktop":true,"arrow_show_mobile":true,"title_color":"#ffffff","card_border_color":"#121212","card_shadow_color":"#121212","card_overlay_color":"#121212","button_color":"#ffffff","button_hover_color":"#121212","button_bg_color":"","button_bg_hover_color":"#ffffff","button_border_color":"#ffffff","button_border_hover_color":"#ffffff","arrow_color":"#121212","arrow_hover_color":"#ffffff","arrow_bg_color":"#ffffff","arrow_bg_hover_color":"#121212","arrow_border_color":"#121212","arrow_border_hover_color":"#454545","background_color":"#ffffff","background_gradient":"","border_color":"#121212","margin_top":0,"margin_bottom":0,"padding_top":36,"padding_bottom":36,"padding_horizontal":0,"padding_horizontal_mobile":0,"full_width":true,"content_width":1200,"border_thickness":0,"lazy":true}}},"order":["video_bD4nXC","slideshow","featured-collections","image_with_text_id8qQh","image_with_text_JrwypK","image_with_text_overlay_yzzd88","rich_text_CQcj9X","slideshow_EDg3CE","17675615000248aecf","ss_beauty_template_1_EMTiNf","image_with_text_overlay_fLXQnV","image_with_text_overlay_T3nQre","image_with_text_overlay_UgKDcW","ss_slider_2_imBJAY"]}
+{
+  "sections": {
+    "video_bD4nXC": {
+      "type": "video",
+      "blocks": {
+        "play_b3QAaM": {
+          "type": "play",
+          "settings": {
+            "icon_color": "#ffffff"
+          }
+        },
+        "heading_JgXqMW": {
+          "type": "heading",
+          "settings": {
+            "text": "",
+            "heading_tag": "h2"
+          }
+        }
+      },
+      "block_order": [
+        "play_b3QAaM",
+        "heading_JgXqMW"
+      ],
+      "disabled": true,
+      "custom_css": [],
+      "name": "t:sections.video.presets.video.name",
+      "settings": {
+        "autoplay": true,
+        "show_controls": false,
+        "video_size": "fill",
+        "video": "shopify://files/videos/0829_3ed84cac-cd0d-41c6-a854-72b4cccacd16.mov",
+        "mobile_video": "shopify://files/videos/0822.mov",
+        "external_video_url": "https://www.youtube.com/watch?v=TxtS-gOEu0k",
+        "text_color": "#ffffff"
+      }
+    },
+    "slideshow": {
+      "type": "slideshow",
+      "blocks": {
+        "image_CzCajj": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/DESKTOP_WEBSITE.webp",
+            "mobile_image": "shopify://shop_images/MOBILE_WEBSITE.webp",
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(NaN, NaN, NaN, 0), rgba(4, 4, 4, 0.65) 100%)"
+          }
+        },
+        "slide-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/226ff61b-9b97-4616-a790-f8d253996875.webp",
+            "mobile_image": "shopify://shop_images/ChatGPT_Image_Jun_14_2026_at_11_30_25_PM.png",
+            "subheading": "",
+            "title": "AGAINST ALL ODDS - FOR THE FIGHTERS.",
+            "mobile_text_position": "place-self-end-center text-center",
+            "desktop_text_position": "sm:place-self-end-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "",
+            "button_1_link": "shopify://collections/fight-tees",
+            "button_1_style": "link",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "Shop Fight Week",
+            "button_2_link": "shopify://collections/fight-tees",
+            "button_2_style": "solid",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#eeeeee",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(NaN, NaN, NaN, 0), rgba(254, 91, 124, 1) 49%, rgba(255, 140, 162, 1) 100%)"
+          }
+        },
+        "slide-2": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "subheading": "Tell your story",
+            "title": "Image slide",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(54, 54, 54, 0.2) 0%, rgba(4, 4, 4, 0.65) 100%)"
+          }
+        }
+      },
+      "block_order": [
+        "image_CzCajj",
+        "slide-1",
+        "slide-2"
+      ],
+      "settings": {
+        "allow_transparent_header": true,
+        "show_next_section_button": true,
+        "media_size": "auto",
+        "show_initial_transition": false,
+        "autoplay": true,
+        "autoplay_pause_on_video": true,
+        "cycle_speed": 5,
+        "background": "#000000",
+        "controls_color": "#ffffff"
+      }
+    },
+    "featured-collections": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "fight-tees",
+            "products_count": 8,
+            "title": "",
+            "link_url": "shopify://collections/fight-tees",
+            "link_text": "SHOP NOW"
+          }
+        }
+      },
+      "block_order": [
+        "collection-1"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "hide_product_information": false,
+        "stack_products": false,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": ""
+      }
+    },
+    "image_with_text_id8qQh": {
+      "type": "image-with-text",
+      "blocks": {
+        "richtext_JwWeAA": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Against All Odds started as a streetwear brand built on the underdog mindset. Boxing has become part of our next chapter, connecting fighters, fans, gyms and communities through limited clothing, fight week releases and real stories.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "richtext_JwWeAA"
+      ],
+      "name": "t:sections.image_with_text.presets.image_with_text.name",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "image": "shopify://shop_images/ChatGPT_Image_Jun_13_2026_at_10_32_43_PM.png",
+        "mobile_image": "shopify://shop_images/ChatGPT_Image_Jun_13_2026_at_10_18_26_PM.png",
+        "reveal_on_scroll": true,
+        "image_position": "start",
+        "content_width": "sm",
+        "remove_vertical_spacing": true
+      }
+    },
+    "image_with_text_JrwypK": {
+      "type": "image-with-text",
+      "blocks": {
+        "richtext_TaAFGm": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Against All Odds started as a streetwear brand built on the underdog mindset. Boxing has become part of our next chapter, connecting fighters, fans, gyms and communities through limited clothing, fight week releases and real stories.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "richtext_TaAFGm"
+      ],
+      "disabled": true,
+      "name": "t:sections.image_with_text.presets.image_with_text.name",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "image": "shopify://shop_images/ChatGPT_Image_Jun_14_2026_at_10_40_16_PM.png",
+        "mobile_image": "shopify://shop_images/ChatGPT_Image_Jun_14_2026_at_10_40_16_PM.png",
+        "reveal_on_scroll": true,
+        "image_position": "start",
+        "content_width": "sm",
+        "remove_vertical_spacing": true
+      }
+    },
+    "image_with_text_overlay_yzzd88": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "button_xRpXCG": {
+          "type": "button",
+          "settings": {
+            "style": "outline",
+            "text": "SHOP COLLECTION",
+            "url": "shopify://collections/archive",
+            "background": "#f7f6f6",
+            "text_color": ""
+          }
+        },
+        "richtext_QhcNLJ": {
+          "type": "richtext",
+          "settings": {
+            "content": ""
+          }
+        }
+      },
+      "block_order": [
+        "button_xRpXCG",
+        "richtext_QhcNLJ"
+      ],
+      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
+      "settings": {
+        "color_scheme": "",
+        "image_size": "auto",
+        "image": "shopify://shop_images/ChatGPT_Image_Jun_19_2026_at_11_49_29_PM.png",
+        "mobile_image": "shopify://shop_images/ChatGPT_Image_Jun_20_2026_at_12_21_03_AM.png",
+        "allow_transparent_header": false,
+        "reveal_on_scroll": true,
+        "remove_vertical_spacing": true,
+        "content_width": "md",
+        "mobile_text_position": "place-self-end-center text-center",
+        "desktop_text_position": "sm:place-self-end-center sm:text-center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
+    "rich_text_CQcj9X": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_VVbpyg": {
+          "type": "heading",
+          "settings": {
+            "text": "LEGENDS",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_66KRNQ": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Celebrating the legends, past and present.<br/>Series 1</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_VVbpyg",
+        "richtext_66KRNQ"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "content_width": "lg",
+        "text_position": "center",
+        "remove_vertical_spacing": true
+      }
+    },
+    "ss_beauty_template_1_EMTiNf": {
+      "type": "ss-beauty-template-1",
+      "blocks": {
+        "featured_products_QPVAjQ": {
+          "type": "featured_products",
+          "settings": {
+            "product_list": [
+              "charlie-edwards-official-for-the-fighters-limited-edition",
+              "ed-hardy-official-for-the-fighters-limited-edition",
+              "chris-mulunda-official-for-the-fighters-limited-edition",
+              "brad-casey-official-for-the-fighters-limited-edition"
+            ],
+            "img_side": "left",
+            "desktop_gap": true,
+            "content_gap": 32,
+            "img_width": 50,
+            "show_text": true,
+            "btn_label": "View Product",
+            "btn_style": "outline",
+            "card_title_color": "#67645e",
+            "card_text_color": "#67645e",
+            "counter_color": "#67645e",
+            "dots_color": "#84827e",
+            "bg_style": "solid",
+            "background_color": "#ffffff",
+            "background_gradient": "",
+            "border_thickness": 0,
+            "border_color": "#fdfdfd"
+          }
+        }
+      },
+      "block_order": [
+        "featured_products_QPVAjQ"
+      ],
+      "name": "SS - Beauty template #1",
+      "settings": {
+        "heading_custom_font": false,
+        "heading_font": "josefin_sans_n4",
+        "heading_size": 36,
+        "heading_size_mobile": 28,
+        "heading_line_height": 130,
+        "text_custom_font": false,
+        "text_font": "josefin_sans_n4",
+        "text_size": 16,
+        "text_size_mobile": 14,
+        "text_line_height": 150,
+        "button_custom_font": false,
+        "button_font": "josefin_sans_n4",
+        "btn_size": 16,
+        "btn_size_mobile": 14,
+        "button_line_height": 100,
+        "btn_radius": 100,
+        "btn_border_thickness": 1,
+        "enable_button_hover_effect": true,
+        "btn_advanced": false,
+        "btn_padding_vertical": 12,
+        "btn_padding_vertical_mobile": 12,
+        "btn_padding_horizontal": 32,
+        "btn_padding_horizontal_mobile": 24,
+        "btn_color": "#67645e",
+        "btn_bg_color": "rgba(0,0,0,0)",
+        "btn_border_color": "#67645e",
+        "btn_hover_color": "#84827e",
+        "btn_bg_hover_color": "#ffffff",
+        "btn_border_hover_color": "#67645e",
+        "arrow_size": 48,
+        "arrow_size_mobile": 30,
+        "arrow_icon_size": 10,
+        "arrow_icon_size_mobile": 10,
+        "arrow_radius": 50,
+        "arrow_border_thickness": 1,
+        "arrow_hover_effect": "color",
+        "arrow_color": "#67645e",
+        "arrow_bg_color": "#f1f0ed",
+        "arrow_border_color": "#67645e",
+        "arrow_hover_color": "#67645e",
+        "arrow_bg_hover_color": "#ffffff",
+        "arrow_border_hover_color": "#67645e",
+        "enable_animation": true,
+        "margin_top": 12,
+        "margin_bottom": 28,
+        "margin_horizontal": 1.5,
+        "margin_horizontal_mobile": 0.7,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_horizontal": 2,
+        "padding_horizontal_mobile": 1.5,
+        "block_gap": 32,
+        "block_gap_mobile": 20,
+        "width": "page",
+        "content_width": 1200,
+        "section_radius": 12,
+        "bg_style": "solid",
+        "background_color": "#f1f0ed",
+        "background_gradient": ""
+      }
+    },
+    "image_with_text_overlay_fLXQnV": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "button_FPmJn9": {
+          "type": "button",
+          "settings": {
+            "style": "solid",
+            "text": "SHOP COLLECTION",
+            "url": "shopify://collections/boxing-club",
+            "background": "",
+            "text_color": ""
+          }
+        },
+        "heading_pw3BUM": {
+          "type": "heading",
+          "settings": {
+            "text": "FIGHT CAMP",
+            "heading_tag": "h4"
+          }
+        },
+        "richtext_KAcxjU": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>The core uniform of the new Against All Odds direction. Built for fighters, dreamers and underdogs still showing up.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "button_FPmJn9",
+        "heading_pw3BUM",
+        "richtext_KAcxjU"
+      ],
+      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "image_size": "auto",
+        "image": "shopify://shop_images/ChatGPT_Image_Jun_19_2026_at_10_20_53_PM_1.png",
+        "mobile_image": "shopify://shop_images/ChatGPT_Image_Jun_19_2026_at_10_20_53_PM_2.png",
+        "allow_transparent_header": false,
+        "reveal_on_scroll": true,
+        "remove_vertical_spacing": true,
+        "content_width": "md",
+        "mobile_text_position": "place-self-end-center text-center",
+        "desktop_text_position": "sm:place-self-center sm:text-center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "image_with_text_overlay_T3nQre": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "button_AdAHDE": {
+          "type": "button",
+          "settings": {
+            "style": "outline",
+            "text": "SHOP DREAMERS",
+            "url": "shopify://collections/dreamers-to-believers",
+            "background": "",
+            "text_color": ""
+          }
+        },
+        "heading_hWYbxY": {
+          "type": "heading",
+          "settings": {
+            "text": "DREAMERS",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_Kp3BDE": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>The original message that started Against All Odds.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "button_AdAHDE",
+        "heading_hWYbxY",
+        "richtext_Kp3BDE"
+      ],
+      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "image_size": "lg",
+        "image": "shopify://shop_images/website_image_6431bd7a-9c14-4047-a12d-dbf1b2b8cecb.png",
+        "mobile_image": "shopify://shop_images/mobile_image.png",
+        "allow_transparent_header": false,
+        "reveal_on_scroll": true,
+        "remove_vertical_spacing": true,
+        "content_width": "md",
+        "mobile_text_position": "place-self-end-center text-center",
+        "desktop_text_position": "sm:place-self-end-center sm:text-center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "image_with_text_overlay_UgKDcW": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_JUj6mQ": {
+          "type": "heading",
+          "settings": {
+            "text": "THE COMMUNITY SESSIONS",
+            "heading_tag": "h4"
+          }
+        },
+        "richtext_BXg9n9": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Bringing boxing culture, fighters and opportunity into overlooked communities.</p>"
+          }
+        },
+        "button_nGJ99b": {
+          "type": "button",
+          "settings": {
+            "style": "solid",
+            "text": "COMING SOON",
+            "url": "",
+            "background": "",
+            "text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_JUj6mQ",
+        "richtext_BXg9n9",
+        "button_nGJ99b"
+      ],
+      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "image_size": "lg",
+        "image": "shopify://shop_images/ChatGPT_Image_Jun_14_2026_at_10_40_16_PM.png",
+        "mobile_image": "shopify://shop_images/ChatGPT_Image_Jun_14_2026_at_10_40_16_PM.png",
+        "allow_transparent_header": false,
+        "reveal_on_scroll": true,
+        "remove_vertical_spacing": true,
+        "content_width": "md",
+        "mobile_text_position": "place-self-end-center text-center",
+        "desktop_text_position": "sm:place-self-end-center sm:text-center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "ss_slider_2_imBJAY": {
+      "type": "ss-slider-2",
+      "blocks": {
+        "slide_LjCjzn": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/IMG_6585.webp",
+            "url": "shopify://collections/fight-tees",
+            "title": "RIO FERDINAND",
+            "button": "",
+            "button_url": "shopify://collections/fight-tees"
+          }
+        },
+        "slide_MeYUjY": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/IMG_6584.webp",
+            "url": "shopify://collections/fight-tees",
+            "title": "CHIP",
+            "button": "",
+            "button_url": "shopify://collections/fight-tees"
+          }
+        },
+        "slide_bKXmzD": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/IMG_6580.webp",
+            "url": "shopify://collections/fight-tees",
+            "title": "SHABAZ MASOUD",
+            "button": "",
+            "button_url": "shopify://collections/fight-tees"
+          }
+        },
+        "slide_UGRrdd": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Untitled-1.webp",
+            "url": "shopify://collections/fight-tees",
+            "title": "DAPPY",
+            "button": "",
+            "button_url": "shopify://collections/fight-tees"
+          }
+        },
+        "slide_dfDzdB": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/581B0951-1C51-4A53-AD3E-ACD94CE4BC73.webp",
+            "url": "shopify://collections/fight-tees",
+            "title": "BILLY WINGROVE",
+            "button": "",
+            "button_url": "shopify://collections/fight-tees"
+          }
+        },
+        "slide_bjNWBX": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/IMG_6594.webp",
+            "url": "shopify://collections/fight-tees",
+            "title": "CHARLIE EDWARDS",
+            "button": "",
+            "button_url": "shopify://collections/fight-tees"
+          }
+        }
+      },
+      "block_order": [
+        "slide_LjCjzn",
+        "slide_MeYUjY",
+        "slide_bKXmzD",
+        "slide_UGRrdd",
+        "slide_dfDzdB",
+        "slide_bjNWBX"
+      ],
+      "name": "SS - Slider #2",
+      "settings": {
+        "slider_view": 4,
+        "slider_view_mobile": 1.5,
+        "slider_rotate": 0,
+        "card_padding_vertical": 24,
+        "card_padding_vertical_mobile": 24,
+        "card_padding_horizontal": 40,
+        "card_padding_horizontal_mobile": 30,
+        "card_radius": 0,
+        "card_border_thickness": 0,
+        "card_shadow": true,
+        "card_ratio": "portrait",
+        "card_ratio_mobile": "portrait",
+        "card_overlay": 0.2,
+        "content_horizontal_position": "center",
+        "content_horizontal_position_mobile": "center",
+        "content_vertical_position": "end",
+        "content_vertical_position_mobile": "end",
+        "title_custom": true,
+        "title_font": "radio_canada_big_n7",
+        "title_size": 24,
+        "title_size_mobile": 24,
+        "title_height": 130,
+        "button_custom": false,
+        "button_font": "radio_canada_big_n4",
+        "button_size": 14,
+        "button_size_mobile": 14,
+        "button_height": 100,
+        "button_mt": 16,
+        "button_padding_vertical": 12,
+        "button_padding_horizontal": 20,
+        "button_radius": 0,
+        "button_border_thickness": 1,
+        "arrow_size": 50,
+        "arrow_size_mobile": 32,
+        "arrow_icon_size": 20,
+        "arrow_icon_size_mobile": 12,
+        "arrow_border_thickness": 0,
+        "arrow_show_desktop": true,
+        "arrow_show_mobile": true,
+        "title_color": "#ffffff",
+        "card_border_color": "#121212",
+        "card_shadow_color": "#121212",
+        "card_overlay_color": "#121212",
+        "button_color": "#ffffff",
+        "button_hover_color": "#121212",
+        "button_bg_color": "",
+        "button_bg_hover_color": "#ffffff",
+        "button_border_color": "#ffffff",
+        "button_border_hover_color": "#ffffff",
+        "arrow_color": "#121212",
+        "arrow_hover_color": "#ffffff",
+        "arrow_bg_color": "#ffffff",
+        "arrow_bg_hover_color": "#121212",
+        "arrow_border_color": "#121212",
+        "arrow_border_hover_color": "#454545",
+        "background_color": "#ffffff",
+        "background_gradient": "",
+        "border_color": "#121212",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_horizontal": 0,
+        "padding_horizontal_mobile": 0,
+        "full_width": true,
+        "content_width": 1200,
+        "border_thickness": 0,
+        "lazy": true
+      }
+    },
+    "legends_bestsellers": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "best-sellers",
+            "products_count": 8,
+            "title": "",
+            "link_url": "shopify://collections/best-sellers",
+            "link_text": "SHOP ALL"
+          }
+        }
+      },
+      "block_order": [
+        "collection-1"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "hide_product_information": false,
+        "stack_products": false,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": ""
+      }
+    }
+  },
+  "order": [
+    "video_bD4nXC",
+    "slideshow",
+    "featured-collections",
+    "image_with_text_id8qQh",
+    "image_with_text_JrwypK",
+    "image_with_text_overlay_yzzd88",
+    "rich_text_CQcj9X",
+    "legends_bestsellers",
+    "ss_beauty_template_1_EMTiNf",
+    "image_with_text_overlay_fLXQnV",
+    "image_with_text_overlay_T3nQre",
+    "image_with_text_overlay_UgKDcW",
+    "ss_slider_2_imBJAY"
+  ]
+}
