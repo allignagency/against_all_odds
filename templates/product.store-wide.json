@@ -68,8 +68,8 @@
             "icon": "none",
             "title": "SIZE CHART",
             "content": "",
-            "liquid": "",
-            "page": "size-chart"
+            "liquid": "{%- assign sc_t = product.type | append: ' ' | append: product.title | downcase -%}{%- if sc_t contains 'hoodie' or sc_t contains 'sweat' or sc_t contains 'jacket' or sc_t contains 'crew' -%}<img src=\"https://www.againstallodds.shop/cdn/shop/files/hoodie_size_chart_upscaled_4x_pure_white_bg.webp\" alt=\"Hoodie size chart\" loading=\"lazy\" style=\"max-width:100%;height:auto;display:block;\">{%- else -%}<img src=\"https://www.againstallodds.shop/cdn/shop/files/tshirt_size_chart_upscaled_4x_pure_white_bg.webp\" alt=\"T-shirt size chart\" loading=\"lazy\" style=\"max-width:100%;height:auto;display:block;\">{%- endif -%}",
+            "page": ""
           }
         },
         "title": {
