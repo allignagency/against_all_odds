@@ -95,7 +95,7 @@ Supported variables
           {%- endif -%}
 
           {%- comment -%} CRO: always expose a Size guide on size options (the chart was buried in a below-the-fold accordion; fit confidence is the #1 apparel conversion lever). Tee vs hoodie chart auto-selected. {%- endcomment -%}
-          {%- if option_display_name == 'Size' and size_chart_page == blank -%}
+          {%- if option_display_name == 'Size' -%}{%- unless size_chart_page != blank and size_label_list contains option_downcase -%}
             {%- liquid
               assign sc_type = product.type | append: ' ' | append: product.title | downcase
               if sc_type contains 'hood'
@@ -118,7 +118,7 @@ Supported variables
                 <img src="{{ sc_img }}" alt="{{ product.title | escape }} size chart" loading="lazy" style="width:100%;height:auto;">
               </div>
             </x-modal>
-          {%- endif -%}
+          {%- endunless -%}{%- endif -%}
         </div>
 
         {%- assign name = 'option' | append: option.position -%}
