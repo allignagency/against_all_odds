@@ -200,6 +200,54 @@
   </script>
 {%- endif -%}
 
+{%- comment -%} CRO: the visible size selector is rendered by the Globo Product Options app (.swatch--gl), which overrides the theme variant-picker, so the theme-level size guide stays hidden. This injects a "Size guide" trigger next to the Globo (or native) size label and opens the tee/hoodie chart. {%- endcomment -%}
+{%- liquid
+  assign sg_type = product.type | append: ' ' | append: product.title | downcase
+  if sg_type contains 'hood'
+    assign sg_img = 'https://www.againstallodds.shop/cdn/shop/files/hoodie_size_chart_upscaled_4x_pure_white_bg.webp'
+  else
+    assign sg_img = 'https://www.againstallodds.shop/cdn/shop/files/tshirt_size_chart_upscaled_4x_pure_white_bg.webp'
+  endif
+-%}
+<script>
+  (function () {
+    var IMG = {{ sg_img | json }};
+    function modal() {
+      var m = document.getElementById('aao-size-guide');
+      if (m) return m;
+      m = document.createElement('div');
+      m.id = 'aao-size-guide';
+      m.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:16px;';
+      m.innerHTML = '<div style="background:#fff;max-width:560px;width:100%;max-height:88vh;overflow:auto;padding:24px;position:relative;">'
+        + '<button type="button" id="aao-sg-x" aria-label="Close" style="position:absolute;top:8px;right:12px;font-size:26px;line-height:1;background:none;border:0;cursor:pointer;">&times;</button>'
+        + '<h3 style="margin:0 0 8px;text-transform:uppercase;letter-spacing:.04em;font-size:1.1rem;">Size guide</h3>'
+        + '<p style="margin:0 0 14px;font-size:.95rem;"><strong>Oversized fit.</strong> Size down for a regular fit. Measurements below are garment dimensions, laid flat.</p>'
+        + '<img src="' + IMG + '" alt="Size chart" style="width:100%;height:auto;display:block;">'
+        + '</div>';
+      document.body.appendChild(m);
+      m.addEventListener('click', function (e) { if (e.target === m || e.target.id === 'aao-sg-x') m.style.display = 'none'; });
+      return m;
+    }
+    function inject() {
+      var legs = [].slice.call(document.querySelectorAll('.swatch--gl .name-option, .swatch--gl legend, .variant-picker__option-info legend'));
+      var leg = legs.filter(function (l) {
+        return /size/i.test((l.getAttribute('data-name') || '') + ' ' + l.textContent) && l.offsetParent && !l.parentNode.querySelector('.aao-sg-link') && !l.querySelector('.aao-sg-link');
+      })[0];
+      if (!leg) return false;
+      var a = document.createElement('button');
+      a.type = 'button';
+      a.className = 'aao-sg-link';
+      a.textContent = 'Size guide';
+      a.style.cssText = 'margin-inline-start:12px;font-size:.8em;text-decoration:underline;background:none;border:0;cursor:pointer;color:inherit;';
+      a.addEventListener('click', function () { modal().style.display = 'flex'; });
+      leg.appendChild(a);
+      return true;
+    }
+    function start() { if (inject()) return; var n = 0, iv = setInterval(function () { if (inject() || ++n > 25) clearInterval(iv); }, 400); }
+    if (document.readyState !== 'loading') start(); else document.addEventListener('DOMContentLoaded', start);
+  })();
+</script>
+
 {%- comment -%}
 IMPLEMENTATION NOTE: Shopify does not currently allows to render a given section within the context of a given product. However,
 when rendering the quick buy drawers/popovers, we want to be able to re-use the merchant's choices (such as the selector type). This
