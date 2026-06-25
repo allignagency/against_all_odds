@@ -54,7 +54,7 @@
         "logo": "shopify://shop_images/main_logo.png",
         "logo_max_width": 140,
         "logo_mobile_max_width": 100,
-        "menu": "sidebar-mini-menu",
+        "menu": "main-menu",
         "sidebar_menu": "",
         "menu_open_trigger": "hover",
         "menu_text_font": "heading",
