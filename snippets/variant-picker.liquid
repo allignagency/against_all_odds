@@ -93,6 +93,32 @@ Supported variables
               </div>
             </x-modal>
           {%- endif -%}
+
+          {%- comment -%} CRO: always expose a Size guide on size options (the chart was buried in a below-the-fold accordion; fit confidence is the #1 apparel conversion lever). Tee vs hoodie chart auto-selected. {%- endcomment -%}
+          {%- if option_display_name == 'Size' and size_chart_page == blank -%}
+            {%- liquid
+              assign sc_type = product.type | append: ' ' | append: product.title | downcase
+              if sc_type contains 'hood'
+                assign sc_img = 'https://www.againstallodds.shop/cdn/shop/files/hoodie_size_chart_upscaled_4x_pure_white_bg.webp'
+              else
+                assign sc_img = 'https://www.againstallodds.shop/cdn/shop/files/tshirt_size_chart_upscaled_4x_pure_white_bg.webp'
+              endif
+            -%}
+            {%- capture sg_id -%}size-guide-{{ option.position }}-{{ form_id }}{%- endcapture -%}
+
+            <button type="button" class="link" aria-controls="{{ sg_id | escape }}" aria-expanded="false">
+              {{- 'product.general.size_chart' | t -}}
+            </button>
+
+            <x-modal id="{{ sg_id | escape }}" class="modal modal--lg color-scheme color-scheme--dialog">
+              <span class="h5" slot="header">{{ 'product.general.size_chart' | t }}</span>
+
+              <div class="prose">
+                <p><strong>Oversized fit.</strong> Size down for a regular fit. Measurements below are garment dimensions, laid flat.</p>
+                <img src="{{ sc_img }}" alt="{{ product.title | escape }} size chart" loading="lazy" style="width:100%;height:auto;">
+              </div>
+            </x-modal>
+          {%- endif -%}
         </div>
 
         {%- assign name = 'option' | append: option.position -%}

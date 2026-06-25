@@ -178,6 +178,26 @@
       </buy-buttons>
     </product-sticky-bar>
   </product-rerender>
+
+  {%- comment -%} CRO: the theme's product-sticky-bar controller wasn't revealing the bar (stayed visibility:hidden at every scroll depth on mobile). This toggles it when the inline buy box scrolls out of view, and hides it over the footer. Re-queries the bar so it survives product-rerender variant swaps. {%- endcomment -%}
+  <script>
+    (function () {
+      var formId = {{ product_form_id | json }};
+      var form = document.getElementById(formId);
+      if (!form) return;
+      var footer = document.querySelector('.shopify-section-group-footer-group') || document.querySelector('footer');
+      var formOut = false, footerIn = false;
+      function apply() {
+        var bar = document.querySelector('product-sticky-bar[form="' + formId + '"]');
+        if (!bar) return;
+        var show = formOut && !footerIn;
+        bar.style.setProperty('visibility', show ? 'visible' : 'hidden', 'important');
+        bar.style.setProperty('opacity', show ? '1' : '0', 'important');
+      }
+      new IntersectionObserver(function (e) { formOut = !e[0].isIntersecting; apply(); }).observe(form);
+      if (footer) new IntersectionObserver(function (e) { footerIn = e[0].isIntersecting; apply(); }).observe(footer);
+    })();
+  </script>
 {%- endif -%}
 
 {%- comment -%}
