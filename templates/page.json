@@ -115,7 +115,7 @@
         "richtext_mzL7rk": {
           "type": "richtext",
           "settings": {
-            "content": "<p>The objective at Against All Odds, your streetwear brand, is to provide high-quality and stylish clothing that embodies the spirit of resilience and empowerment. Our goal is to create a unique brand identity that represents the idea that no matter the odds, you can overcome obstacles and achieve your goals.</p><p>At Against All Odds, we aim to create a community around our brand and build a loyal customer base that identifies with our values and messaging. We want our customers to feel a sense of belonging and pride when wearing our clothing and accessories.</p><p>We also recognize the importance of social and environmental responsibility and are committed to promoting these values. We partner with charitable organizations and promote sustainable manufacturing practices to help make a positive impact on the world around us.</p><p>Our objective is to establish Against All Odds as a brand that not only provides stylish and high-quality clothing but also promotes a positive message and creates a community around the idea of overcoming obstacles and achieving your dreams, no matter the odds. We want our brand to inspire and empower our customers to pursue their passions and become their best selves.</p>{{ page.content }}"
+            "content": "{{ page.content }}"
           }
         },
         "button_kmVt8G": {
