@@ -218,6 +218,7 @@
     },
     "image_with_text_overlay_yzzd88": {
       "type": "image-with-text-overlay",
+      "disabled": true,
       "blocks": {
         "button_xRpXCG": {
           "type": "button",
