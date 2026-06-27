@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "icon_stroke_width": 1,
@@ -12,12 +21,15 @@
     "heading_font": "radio_canada_big_n6",
     "heading_letter_spacing": 18,
     "text_font": "univers_next_n4",
+    "text_font_size_mobile": 16,
     "text_font_size_desktop": 14,
     "button_text_transform": "normal",
     "button_letter_spacing": 18,
     "product_title_max_lines": 0,
     "product_card_text_font": "heading",
     "cart_empty_cart_link": "shopify://collections/best-sellers",
+    "cart_show_free_shipping_bar": true,
+    "cart_free_shipping_threshold": "100",
     "social_instagram": "https://www.instagram.com/againstallodds.clo/",
     "favicon": "shopify://shop_images/favicon_512_source.png",
     "easysize_shop_id": "85f1cfd7d0",
@@ -73,6 +85,11 @@
         "type": "shopify://apps/upcart-cart-drawer/blocks/app-embed/af3da5fb-f5f7-40ec-8273-41bf50059d4b",
         "disabled": true,
         "settings": {}
+      },
+      "14826766009936288847": {
+        "type": "shopify://apps/discounty/blocks/sdk/d65eb522-0d94-499f-9831-d4b3301f5340",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
@@ -120,10 +137,7 @@
           "circle_button_icon": "#1c1c1c"
         }
       }
-    },
-    "cart_free_shipping_threshold": 100,
-    "cart_show_free_shipping_bar": true,
-    "text_font_size_mobile": 16
+    }
   },
   "presets": {
     "Prestige": {
