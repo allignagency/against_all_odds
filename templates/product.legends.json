@@ -13,7 +13,7 @@
       "type": "countdown",
       "name": "t:sections.countdown_timer.presets.countdown_timer.name",
       "settings": {
-        "color_scheme": "",
+        "color_scheme": "scheme-3",
         "separate_section_with_border": true,
         "image_size": "auto",
         "subheading": "SPECIAL OFFER",
@@ -21,7 +21,7 @@
         "content": "<p>Only our loyal customers currently have access to this new collection, and also get an additional 10% discount as a gesture of appreciation.</p>",
         "button_link": "",
         "button_text": "",
-        "expiration_date": "",
+        "expiration_date": "2026-06-29 00:00",
         "expiration_behavior": "leave",
         "timer_position": "end",
         "animate_number": true,
