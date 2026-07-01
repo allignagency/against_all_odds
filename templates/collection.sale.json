@@ -28,29 +28,6 @@
         "overlay_opacity": 70
       }
     },
-    "countdown_EQabTm": {
-      "type": "countdown",
-      "name": "t:sections.countdown_timer.presets.countdown_timer.name",
-      "settings": {
-        "color_scheme": "scheme-3",
-        "separate_section_with_border": true,
-        "image_size": "auto",
-        "subheading": "DISCOUNT ENDING IN...",
-        "title": "10% DISCOUNT FOR OUR FAMilY",
-        "content": "<p>We appreciate you being part of our family, and wanted to provide you the chance of ordering our collection first.</p>",
-        "button_link": "",
-        "button_text": "",
-        "expiration_date": "2026-06-30 18:00",
-        "expiration_behavior": "leave",
-        "timer_position": "end",
-        "animate_number": true,
-        "flip_background": "",
-        "flip_background_opacity": 50,
-        "flip_text_color": "",
-        "overlay_color": "#000000",
-        "overlay_opacity": 30
-      }
-    },
     "main": {
       "type": "main-collection",
       "settings": {
@@ -75,7 +52,6 @@
   },
   "order": [
     "collection-banner",
-    "countdown_EQabTm",
     "main"
   ]
 }

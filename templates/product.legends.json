@@ -9,29 +9,6 @@
  */
 {
   "sections": {
-    "countdown_kz8gTt": {
-      "type": "countdown",
-      "name": "t:sections.countdown_timer.presets.countdown_timer.name",
-      "settings": {
-        "color_scheme": "scheme-3",
-        "separate_section_with_border": true,
-        "image_size": "auto",
-        "subheading": "SPECIAL OFFER",
-        "title": "JUST FOR OUR FAMILY",
-        "content": "<p>Only our loyal customers currently have access to this new collection, and also get an additional 10% discount as a gesture of appreciation.</p>",
-        "button_link": "",
-        "button_text": "",
-        "expiration_date": "2026-06-30 18:00",
-        "expiration_behavior": "leave",
-        "timer_position": "end",
-        "animate_number": true,
-        "flip_background": "",
-        "flip_background_opacity": 50,
-        "flip_text_color": "",
-        "overlay_color": "#000000",
-        "overlay_opacity": 30
-      }
-    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -365,7 +342,6 @@
     }
   },
   "order": [
-    "countdown_kz8gTt",
     "main",
     "media_grid_GURbbE",
     "complete_the_look",
