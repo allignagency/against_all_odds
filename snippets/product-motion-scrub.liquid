@@ -14,6 +14,7 @@
       muted
       playsinline
       preload="auto"
+      {% if poster != blank %}poster="{{ poster | asset_url }}"{% endif %}
       aria-label="{{ heading | default: product.title | escape }}"
       data-src-desktop="{{ video_url }}"
       data-src-mobile="{{ video_url_mobile | default: video_url }}"
