@@ -331,10 +331,22 @@
         "title": "Recently viewed products",
         "content": ""
       }
+    },
+    "product_motion": {
+      "type": "product-motion",
+      "settings": {
+        "video_asset": "aob-motion.mp4",
+        "poster_asset": "aob-motion-poster.jpg",
+        "product_handles": "art-of-boxing-ivory-luxury-tee-1",
+        "subheading": "Art of Boxing",
+        "heading": "Made to move",
+        "text": "<p>Heavyweight organic cotton, oversized cut, flat screen printed. Shot in motion so you can see how it actually wears.</p>"
+      }
     }
   },
   "order": [
     "main",
+    "product_motion",
     "media_grid_GURbbE",
     "complete_the_look",
     "173593565665a6d37f",

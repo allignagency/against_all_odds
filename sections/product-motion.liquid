@@ -1,0 +1,105 @@
+{%- comment -%}
+  Product Motion: cinematic on-model video under the main product section.
+  Renders only when a video asset is set AND (allowlist empty OR product handle allowlisted).
+  Autoplays muted while in view (IntersectionObserver), pauses off-screen,
+  respects prefers-reduced-motion (poster only).
+{%- endcomment -%}
+
+{%- liquid
+  assign show_section = false
+  if section.settings.video_asset != blank
+    if section.settings.product_handles == blank
+      assign show_section = true
+    else
+      assign allow = section.settings.product_handles | replace: ' ', '' | split: ','
+      if allow contains product.handle
+        assign show_section = true
+      endif
+    endif
+  endif
+-%}
+
+{%- if show_section -%}
+<section class="aao-motion" id="aao-motion-{{ section.id }}">
+  <div class="aao-motion__inner">
+    <div class="aao-motion__copy">
+      {%- if section.settings.subheading != blank -%}
+        <p class="aao-motion__kicker">{{ section.settings.subheading | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="aao-motion__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="aao-motion__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </div>
+    <div class="aao-motion__media">
+      <video
+        class="aao-motion__video"
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        {% if section.settings.poster_asset != blank %}poster="{{ section.settings.poster_asset | asset_url }}"{% endif %}
+        aria-label="{{ section.settings.heading | default: product.title | escape }}"
+      >
+        <source src="{{ section.settings.video_asset | asset_url }}" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+{%- style -%}
+  .aao-motion { background: #ffffff; border-top: 1px solid rgba(0,0,0,.08); }
+  .aao-motion__inner { max-width: 1300px; margin: 0 auto; padding: 56px 24px; display: grid; grid-template-columns: minmax(260px, 2fr) 3fr; gap: 48px; align-items: center; }
+  .aao-motion__kicker { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #8a8a8a; margin: 0 0 14px; }
+  .aao-motion__heading { font-size: clamp(26px, 3.4vw, 42px); line-height: 1.02; text-transform: uppercase; letter-spacing: .5px; margin: 0 0 14px; color: #0b0b0b; }
+  .aao-motion__text { font-size: 15px; line-height: 1.55; color: #555; max-width: 42ch; }
+  .aao-motion__media { position: relative; }
+  .aao-motion__video { display: block; width: 100%; height: auto; max-height: 680px; object-fit: cover; background: #f4f4f4; }
+  @media (max-width: 899px) {
+    .aao-motion__inner { grid-template-columns: 1fr; gap: 24px; padding: 40px 16px; }
+    .aao-motion__copy { order: 2; }
+    .aao-motion__media { order: 1; margin: 0 -16px; }
+    .aao-motion__video { max-height: none; }
+  }
+{%- endstyle -%}
+
+<script>
+  (function () {
+    var root = document.getElementById('aao-motion-{{ section.id }}');
+    if (!root) return;
+    var video = root.querySelector('.aao-motion__video');
+    if (!video) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!('IntersectionObserver' in window)) { video.autoplay = true; video.play().catch(function(){}); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && e.intersectionRatio >= 0.35) {
+          video.play().catch(function(){});
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: [0, 0.35] });
+    io.observe(root);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product Motion",
+  "tag": "section",
+  "class": "shopify-section--product-motion",
+  "settings": [
+    { "type": "paragraph", "content": "Cinematic on-model video shown below the product section. Renders only when a video asset filename is set. Leave the handle allowlist empty to show on all products." },
+    { "type": "text", "id": "video_asset", "label": "Video asset filename (in theme assets)", "info": "e.g. aob-motion.mp4" },
+    { "type": "text", "id": "poster_asset", "label": "Poster image asset filename", "info": "e.g. aob-motion-poster.jpg" },
+    { "type": "text", "id": "product_handles", "label": "Product handle allowlist (comma-separated)", "info": "Only these products show the section. Empty = all products." },
+    { "type": "text", "id": "subheading", "label": "Kicker", "default": "In motion" },
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "richtext", "id": "text", "label": "Text" }
+  ],
+  "presets": [{ "name": "Product Motion" }]
+}
+{% endschema %}
