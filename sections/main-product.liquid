@@ -287,6 +287,18 @@ quick buy information in a template, that will be extracted in JS, which ensures
   }
 </script>
 
+
+{%- comment -%} AAO product motion scrub (test: Art of Boxing tee) {%- endcomment -%}
+{%- if product.handle == 'art-of-boxing-ivory-luxury-tee-1' -%}
+  {%- render 'product-motion-scrub',
+    video_url: 'https://allign.agency/aao/media/aob-scrub.mp4',
+    video_url_mobile: 'https://allign.agency/aao/media/aob-scrub-mobile.mp4',
+    kicker: 'Art of Boxing',
+    heading: 'Made to move',
+    body: 'Heavyweight organic cotton, oversized cut, flat screen printed.'
+  -%}
+{%- endif -%}
+
 {% schema %}
 {
   "name": "t:sections.main_product.name",

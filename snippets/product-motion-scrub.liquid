@@ -1,0 +1,104 @@
+{%- comment -%}
+  Full-bleed scroll-scrubbed product video, rendered from main-product.liquid.
+  Args: video_url (required), video_url_mobile, kicker, heading, body, track_vh.
+  Scrolling through the block drives video.currentTime; falls back to an
+  autoplay loop for reduced motion or when metadata fails to load.
+{%- endcomment -%}
+
+{%- if video_url != blank -%}
+{%- assign track_vh = track_vh | default: 300 -%}
+<div class="aao-scrub" id="aao-scrub-{{ product.id }}" style="height: {{ track_vh }}vh;">
+  <div class="aao-scrub__pin">
+    <video
+      class="aao-scrub__video"
+      muted
+      playsinline
+      preload="auto"
+      aria-label="{{ heading | default: product.title | escape }}"
+      data-src-desktop="{{ video_url }}"
+      data-src-mobile="{{ video_url_mobile | default: video_url }}"
+    ></video>
+    <div class="aao-scrub__scrim"></div>
+    <div class="aao-scrub__copy">
+      {%- if kicker != blank -%}<p class="aao-scrub__kicker">{{ kicker | escape }}</p>{%- endif -%}
+      {%- if heading != blank -%}<h2 class="aao-scrub__heading">{{ heading | escape }}</h2>{%- endif -%}
+      {%- if body != blank -%}<div class="aao-scrub__text"><p>{{ body | escape }}</p></div>{%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- style -%}
+  .aao-scrub { position: relative; width: 100%; background: #0d0d0d; }
+  .aao-scrub__pin { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; }
+  .aao-scrub__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .aao-scrub__scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 38%); pointer-events: none; }
+  .aao-scrub__copy { position: absolute; left: max(24px, 4vw); bottom: max(28px, 5vh); color: #ffffff; max-width: 60ch; }
+  .aao-scrub__kicker { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; opacity: .75; margin: 0 0 10px; color: #ffffff; }
+  .aao-scrub__heading { font-size: clamp(30px, 4.5vw, 58px); line-height: 1.0; text-transform: uppercase; letter-spacing: .5px; margin: 0 0 10px; color: #ffffff; }
+  .aao-scrub__text { font-size: 15px; line-height: 1.5; opacity: .85; max-width: 46ch; }
+  .aao-scrub__text p { margin: 0; }
+{%- endstyle -%}
+
+<script>
+  (function () {
+    var root = document.getElementById('aao-scrub-{{ product.id }}');
+    if (!root) return;
+    var video = root.querySelector('.aao-scrub__video');
+    if (!video) return;
+
+    var isMobile = window.matchMedia('(max-width: 749px)').matches;
+    var src = isMobile ? video.getAttribute('data-src-mobile') : video.getAttribute('data-src-desktop');
+    if (!src) return;
+    var source = document.createElement('source');
+    source.src = src; source.type = 'video/mp4';
+    video.appendChild(source);
+    video.load();
+
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function fallbackLoop() {
+      video.loop = true;
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { video.play().catch(function(){}); } else { video.pause(); }
+          });
+        }, { threshold: 0.2 });
+        io.observe(root);
+      } else { video.autoplay = true; video.play().catch(function(){}); }
+    }
+
+    if (reduced) { fallbackLoop(); return; }
+
+    var duration = 0, target = 0, current = 0, raf = null, lastSet = -1;
+    video.addEventListener('loadedmetadata', function () { duration = video.duration || 0; });
+    video.pause();
+
+    function progress() {
+      var rect = root.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var total = rect.height - vh;
+      if (total <= 0) return 0;
+      var p = -rect.top / total;
+      return Math.max(0, Math.min(1, p));
+    }
+
+    function tick() {
+      raf = null;
+      if (duration > 0) {
+        target = progress() * duration;
+        current += (target - current) * 0.22;
+        if (Math.abs(current - lastSet) > 0.02) {
+          try { video.currentTime = current; lastSet = current; } catch (e) {}
+        }
+        if (Math.abs(target - current) > 0.01) { raf = requestAnimationFrame(tick); }
+      }
+    }
+    function onScroll() { if (!raf) raf = requestAnimationFrame(tick); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    setTimeout(function () { if (!duration) fallbackLoop(); }, 4000);
+  })();
+</script>
+{%- endif -%}

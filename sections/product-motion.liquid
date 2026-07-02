@@ -1,8 +1,9 @@
 {%- comment -%}
-  Product Motion: cinematic on-model video under the main product section.
-  Renders only when a video asset is set AND (allowlist empty OR product handle allowlisted).
-  Autoplays muted while in view (IntersectionObserver), pauses off-screen,
-  respects prefers-reduced-motion (poster only).
+  Product Motion: full-bleed scroll-scrubbed video.
+  The section occupies a tall scroll track; the video pins to the viewport and
+  its playback position follows scroll progress (scrub). Falls back to an
+  autoplay loop when scrubbing is unsupported or reduced motion is requested.
+  Renders only when a video source is set AND (allowlist empty OR handle listed).
 {%- endcomment -%}
 
 {%- liquid
@@ -11,6 +12,7 @@
   if video_src == blank and section.settings.video_asset != blank
     assign video_src = section.settings.video_asset | asset_url
   endif
+  assign video_src_mobile = section.settings.video_url_mobile | default: video_src
   if video_src != blank
     if section.settings.product_handles == blank
       assign show_section = true
@@ -24,69 +26,106 @@
 -%}
 
 {%- if show_section -%}
-<section class="aao-motion" id="aao-motion-{{ section.id }}">
-  <div class="aao-motion__inner">
-    <div class="aao-motion__copy">
+<div class="aao-scrub" id="aao-scrub-{{ section.id }}" style="height: {{ section.settings.track_height | default: 300 }}vh;">
+  <div class="aao-scrub__pin">
+    <video
+      class="aao-scrub__video"
+      muted
+      playsinline
+      preload="auto"
+      {% if section.settings.poster_asset != blank %}poster="{{ section.settings.poster_asset | asset_url }}"{% endif %}
+      aria-label="{{ section.settings.heading | default: product.title | escape }}"
+      data-src-desktop="{{ video_src }}"
+      data-src-mobile="{{ video_src_mobile }}"
+    ></video>
+    <div class="aao-scrub__scrim"></div>
+    <div class="aao-scrub__copy">
       {%- if section.settings.subheading != blank -%}
-        <p class="aao-motion__kicker">{{ section.settings.subheading | escape }}</p>
+        <p class="aao-scrub__kicker">{{ section.settings.subheading | escape }}</p>
       {%- endif -%}
       {%- if section.settings.heading != blank -%}
-        <h2 class="aao-motion__heading">{{ section.settings.heading | escape }}</h2>
+        <h2 class="aao-scrub__heading">{{ section.settings.heading | escape }}</h2>
       {%- endif -%}
       {%- if section.settings.text != blank -%}
-        <div class="aao-motion__text">{{ section.settings.text }}</div>
+        <div class="aao-scrub__text">{{ section.settings.text }}</div>
       {%- endif -%}
     </div>
-    <div class="aao-motion__media">
-      <video
-        class="aao-motion__video"
-        muted
-        loop
-        playsinline
-        preload="metadata"
-        {% if section.settings.poster_asset != blank %}poster="{{ section.settings.poster_asset | asset_url }}"{% endif %}
-        aria-label="{{ section.settings.heading | default: product.title | escape }}"
-      >
-        <source src="{{ video_src }}" type="video/mp4">
-      </video>
-    </div>
   </div>
-</section>
+</div>
 
 {%- style -%}
-  .aao-motion { background: #ffffff; border-top: 1px solid rgba(0,0,0,.08); }
-  .aao-motion__inner { max-width: 1300px; margin: 0 auto; padding: 56px 24px; display: grid; grid-template-columns: minmax(260px, 2fr) 3fr; gap: 48px; align-items: center; }
-  .aao-motion__kicker { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #8a8a8a; margin: 0 0 14px; }
-  .aao-motion__heading { font-size: clamp(26px, 3.4vw, 42px); line-height: 1.02; text-transform: uppercase; letter-spacing: .5px; margin: 0 0 14px; color: #0b0b0b; }
-  .aao-motion__text { font-size: 15px; line-height: 1.55; color: #555; max-width: 42ch; }
-  .aao-motion__media { position: relative; }
-  .aao-motion__video { display: block; width: 100%; height: auto; max-height: 680px; object-fit: cover; background: #f4f4f4; }
-  @media (max-width: 899px) {
-    .aao-motion__inner { grid-template-columns: 1fr; gap: 24px; padding: 40px 16px; }
-    .aao-motion__copy { order: 2; }
-    .aao-motion__media { order: 1; margin: 0 -16px; }
-    .aao-motion__video { max-height: none; }
-  }
+  .aao-scrub { position: relative; width: 100%; background: #0d0d0d; }
+  .aao-scrub__pin { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; }
+  .aao-scrub__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .aao-scrub__scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 38%); pointer-events: none; }
+  .aao-scrub__copy { position: absolute; left: max(24px, 4vw); bottom: max(28px, 5vh); color: #ffffff; max-width: 60ch; }
+  .aao-scrub__kicker { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; opacity: .75; margin: 0 0 10px; }
+  .aao-scrub__heading { font-size: clamp(30px, 4.5vw, 58px); line-height: 1.0; text-transform: uppercase; letter-spacing: .5px; margin: 0 0 10px; color: #ffffff; }
+  .aao-scrub__text { font-size: 15px; line-height: 1.5; opacity: .85; max-width: 46ch; }
+  .aao-scrub__text p { margin: 0; }
 {%- endstyle -%}
 
 <script>
   (function () {
-    var root = document.getElementById('aao-motion-{{ section.id }}');
+    var root = document.getElementById('aao-scrub-{{ section.id }}');
     if (!root) return;
-    var video = root.querySelector('.aao-motion__video');
+    var video = root.querySelector('.aao-scrub__video');
     if (!video) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (!('IntersectionObserver' in window)) { video.autoplay = true; video.play().catch(function(){}); return; }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting && e.intersectionRatio >= 0.35) {
-          video.play().catch(function(){});
-        } else {
-          video.pause();
+
+    var isMobile = window.matchMedia('(max-width: 749px)').matches;
+    var src = isMobile ? video.getAttribute('data-src-mobile') : video.getAttribute('data-src-desktop');
+    if (!src) return;
+    var source = document.createElement('source');
+    source.src = src; source.type = 'video/mp4';
+    video.appendChild(source);
+    video.load();
+
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function fallbackLoop() {
+      video.loop = true;
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { video.play().catch(function(){}); } else { video.pause(); }
+          });
+        }, { threshold: 0.2 });
+        io.observe(root);
+      } else { video.autoplay = true; video.play().catch(function(){}); }
+    }
+
+    if (reduced) { fallbackLoop(); return; }
+
+    var duration = 0, target = 0, current = 0, raf = null, lastSet = -1;
+    video.addEventListener('loadedmetadata', function () { duration = video.duration || 0; });
+    video.pause();
+
+    function progress() {
+      var rect = root.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var total = rect.height - vh;
+      if (total <= 0) return 0;
+      var p = -rect.top / total;
+      return Math.max(0, Math.min(1, p));
+    }
+
+    function tick() {
+      raf = null;
+      if (duration > 0) {
+        target = progress() * duration;
+        current += (target - current) * 0.22;
+        if (Math.abs(current - lastSet) > 0.02) {
+          try { video.currentTime = current; lastSet = current; } catch (e) {}
         }
-      });
-    }, { threshold: [0, 0.35] });
-    io.observe(root);
+        if (Math.abs(target - current) > 0.01) { raf = requestAnimationFrame(tick); }
+      }
+    }
+    function onScroll() { if (!raf) raf = requestAnimationFrame(tick); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    // if scrubbing never engages (metadata fails), fall back after 4s
+    setTimeout(function () { if (!duration) fallbackLoop(); }, 4000);
   })();
 </script>
 {%- endif -%}
@@ -97,11 +136,13 @@
   "tag": "section",
   "class": "shopify-section--product-motion",
   "settings": [
-    { "type": "paragraph", "content": "Cinematic on-model video shown below the product section. Renders only when a video asset filename is set. Leave the handle allowlist empty to show on all products." },
-    { "type": "text", "id": "video_url", "label": "Video URL (external, preferred)", "info": "Full https URL to an mp4. Takes precedence over the asset filename." },
-    { "type": "text", "id": "video_asset", "label": "Video asset filename (in theme assets)", "info": "Fallback if no URL set" },
-    { "type": "text", "id": "poster_asset", "label": "Poster image asset filename", "info": "e.g. aob-motion-poster.jpg" },
-    { "type": "text", "id": "product_handles", "label": "Product handle allowlist (comma-separated)", "info": "Only these products show the section. Empty = all products." },
+    { "type": "paragraph", "content": "Full-bleed scroll-scrubbed video. Scrolling through the section drives the video timeline. Renders only when a video URL is set. Leave the handle allowlist empty to show on all products." },
+    { "type": "text", "id": "video_url", "label": "Video URL (desktop scrub file)", "info": "Full https URL to an mp4 encoded with dense keyframes" },
+    { "type": "text", "id": "video_url_mobile", "label": "Video URL (mobile, lighter file)", "info": "Optional. Falls back to the desktop file." },
+    { "type": "text", "id": "video_asset", "label": "Video asset filename (fallback)", "info": "Used only if no URL set" },
+    { "type": "text", "id": "poster_asset", "label": "Poster image asset filename" },
+    { "type": "range", "id": "track_height", "label": "Scroll length (vh)", "min": 150, "max": 500, "step": 25, "default": 300 },
+    { "type": "text", "id": "product_handles", "label": "Product handle allowlist (comma-separated)", "info": "Empty = all products" },
     { "type": "text", "id": "subheading", "label": "Kicker", "default": "In motion" },
     { "type": "text", "id": "heading", "label": "Heading" },
     { "type": "richtext", "id": "text", "label": "Text" }
