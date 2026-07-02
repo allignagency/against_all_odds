@@ -7,7 +7,11 @@
 
 {%- liquid
   assign show_section = false
-  if section.settings.video_asset != blank
+  assign video_src = section.settings.video_url
+  if video_src == blank and section.settings.video_asset != blank
+    assign video_src = section.settings.video_asset | asset_url
+  endif
+  if video_src != blank
     if section.settings.product_handles == blank
       assign show_section = true
     else
@@ -43,7 +47,7 @@
         {% if section.settings.poster_asset != blank %}poster="{{ section.settings.poster_asset | asset_url }}"{% endif %}
         aria-label="{{ section.settings.heading | default: product.title | escape }}"
       >
-        <source src="{{ section.settings.video_asset | asset_url }}" type="video/mp4">
+        <source src="{{ video_src }}" type="video/mp4">
       </video>
     </div>
   </div>
@@ -93,7 +97,8 @@
   "class": "shopify-section--product-motion",
   "settings": [
     { "type": "paragraph", "content": "Cinematic on-model video shown below the product section. Renders only when a video asset filename is set. Leave the handle allowlist empty to show on all products." },
-    { "type": "text", "id": "video_asset", "label": "Video asset filename (in theme assets)", "info": "e.g. aob-motion.mp4" },
+    { "type": "text", "id": "video_url", "label": "Video URL (external, preferred)", "info": "Full https URL to an mp4. Takes precedence over the asset filename." },
+    { "type": "text", "id": "video_asset", "label": "Video asset filename (in theme assets)", "info": "Fallback if no URL set" },
     { "type": "text", "id": "poster_asset", "label": "Poster image asset filename", "info": "e.g. aob-motion-poster.jpg" },
     { "type": "text", "id": "product_handles", "label": "Product handle allowlist (comma-separated)", "info": "Only these products show the section. Empty = all products." },
     { "type": "text", "id": "subheading", "label": "Kicker", "default": "In motion" },
