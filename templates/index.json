@@ -218,28 +218,42 @@
     },
     "image_with_text_overlay_yzzd88": {
       "type": "image-with-text-overlay",
-      "disabled": true,
       "blocks": {
-        "button_xRpXCG": {
-          "type": "button",
+        "subheading_LEGENDS": {
+          "type": "subheading",
           "settings": {
-            "style": "outline",
-            "text": "SHOP COLLECTION",
-            "url": "shopify://collections/archive",
-            "background": "#f7f6f6",
-            "text_color": ""
+            "text": "The premium line"
+          }
+        },
+        "heading_LEGENDS": {
+          "type": "heading",
+          "settings": {
+            "text": "LEGENDS",
+            "heading_tag": "h2"
           }
         },
         "richtext_QhcNLJ": {
           "type": "richtext",
           "settings": {
-            "content": ""
+            "content": "<p>Icons of boxing, in heavyweight organic cotton.</p>"
+          }
+        },
+        "button_xRpXCG": {
+          "type": "button",
+          "settings": {
+            "style": "outline",
+            "text": "Shop LEGENDS",
+            "url": "shopify://collections/archive",
+            "background": "#f7f6f6",
+            "text_color": ""
           }
         }
       },
       "block_order": [
-        "button_xRpXCG",
-        "richtext_QhcNLJ"
+        "subheading_LEGENDS",
+        "heading_LEGENDS",
+        "richtext_QhcNLJ",
+        "button_xRpXCG"
       ],
       "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
       "settings": {

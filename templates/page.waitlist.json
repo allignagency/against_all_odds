@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "show_title": true,
+        "page_width": "xs"
+      }
+    },
+    "waitlist": {
+      "type": "waitlist-signup",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": false,
+        "subheading": "Future drops",
+        "heading": "GET FIRST ACCESS",
+        "text": "<p>Drops are capped and do not restock. The waitlist hears first.</p>",
+        "button_text": "Join the waitlist",
+        "tag": "waitlist"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "waitlist"
+  ]
+}

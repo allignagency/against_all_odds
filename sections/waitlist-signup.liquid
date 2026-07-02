@@ -1,0 +1,102 @@
+{%- comment -%}
+------------------------------------------------------------------------------------------------------------------------
+WAITLIST SIGNUP
+
+Monochrome email capture for future drops. Uses the native Shopify customer form so signups become real
+customers tagged with the configured tag (default "waitlist"), which Shopify syncs through to Klaviyo.
+------------------------------------------------------------------------------------------------------------------------
+{%- endcomment -%}
+
+<div class="color-scheme color-scheme--{{ section.settings.color_scheme.id }} section-spacing {% if section.settings.separate_section_with_border %}bordered-section{% endif %}">
+  <div class="container container--sm">
+    <div class="content section-stack gap-8 text-center">
+      {%- render 'section-header', subheading: section.settings.subheading, heading: section.settings.heading, content: section.settings.text -%}
+
+      {%- assign waitlist_form_id = 'waitlist-form-' | append: section.id -%}
+
+      {%- form 'customer', id: waitlist_form_id, class: 'form justify-self-center' -%}
+        {%- if form.posted_successfully? -%}
+          {%- assign success_message = 'general.newsletter.subscribed_successfully' | t -%}
+          {%- render 'banner', content: success_message, status: 'success', text_alignment: 'center' -%}
+        {%- else -%}
+          {%- if form.errors -%}
+            {%- capture error_message -%}{{ form.errors.translated_fields['email'] }} {{ form.errors.messages['email'] }}{%- endcapture -%}
+            {%- render 'banner', content: error_message, status: 'error', text_alignment: 'center' -%}
+          {%- endif -%}
+
+          <input type="hidden" name="contact[tags]" value="{{ section.settings.tag }}">
+
+          <div class="form-row">
+            {%- assign input_label = 'general.newsletter.email' | t -%}
+
+            {%- render 'input', name: 'contact[email]', label: input_label, label_hidden: true, type: 'email', required: true, autocomplete: 'email', enterkeyhint: 'send' -%}
+            {%- render 'button', type: 'submit', content: section.settings.button_text -%}
+          </div>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Waitlist Signup",
+  "class": "shopify-section--waitlist-signup",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:global.colors.scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "separate_section_with_border",
+      "label": "t:global.section.separate_section_with_border",
+      "default": true
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Future drops"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "GET FIRST ACCESS"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Drops are capped and do not restock. The waitlist hears first.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Join the waitlist"
+    },
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Customer tag",
+      "info": "Tag applied to customers who sign up here. Used to sync this list to Klaviyo.",
+      "default": "waitlist"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Waitlist Signup",
+      "category": "t:global.categories.call_to_action",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

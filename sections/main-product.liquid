@@ -200,7 +200,7 @@
   </script>
 {%- endif -%}
 
-{%- comment -%} CRO: the visible size selector is rendered by the Globo Product Options app (.swatch--gl), which overrides the theme variant-picker, so the theme-level size guide stays hidden. This injects a "Size guide" trigger next to the Globo (or native) size label and opens the tee/hoodie chart. {%- endcomment -%}
+{%- comment -%} CRO: the visible size selector is rendered by the Globo Product Options app (.swatch--gl), which overrides the theme variant-picker, so the theme-level size guide stays hidden. This injects a "Size guide" trigger next to the Globo (or native) size label and opens the tee/hoodie chart. It also injects a small fit note above the selector for tee-type products only (hoodie/sweat/jacket/crew products use a regular fit and get no note), using the same product-type heuristic as the size-chart accordion in the product templates. {%- endcomment -%}
 {%- liquid
   assign sg_type = product.type | append: ' ' | append: product.title | downcase
   if sg_type contains 'hood'
@@ -208,10 +208,16 @@
   else
     assign sg_img = 'https://www.againstallodds.shop/cdn/shop/files/tshirt_size_chart_upscaled_4x_pure_white_bg.webp'
   endif
+
+  assign sg_is_tee = true
+  if sg_type contains 'hoodie' or sg_type contains 'sweat' or sg_type contains 'jacket' or sg_type contains 'crew'
+    assign sg_is_tee = false
+  endif
 -%}
 <script>
   (function () {
     var IMG = {{ sg_img | json }};
+    var IS_TEE = {{ sg_is_tee | json }};
     function modal() {
       var m = document.getElementById('aao-size-guide');
       if (m) return m;
@@ -228,6 +234,16 @@
       m.addEventListener('click', function (e) { if (e.target === m || e.target.id === 'aao-sg-x') m.style.display = 'none'; });
       return m;
     }
+    function injectFitNote(leg) {
+      if (!IS_TEE) return;
+      var host = leg.closest('.swatch--gl, .variant-picker__option-info') || leg.parentNode;
+      if (!host || host.parentNode.querySelector('.aao-fit-note')) return;
+      var note = document.createElement('p');
+      note.className = 'aao-fit-note';
+      note.textContent = 'RUNS OVERSIZED. SIZE DOWN FOR A REGULAR FIT.';
+      note.style.cssText = 'margin:0 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#8a8a8a;';
+      host.parentNode.insertBefore(note, host);
+    }
     function inject() {
       var legs = [].slice.call(document.querySelectorAll('.swatch--gl .name-option, .swatch--gl legend, .variant-picker__option-info legend'));
       var leg = legs.filter(function (l) {
@@ -241,6 +257,7 @@
       a.style.cssText = 'margin-inline-start:12px;font-size:.8em;text-decoration:underline;background:none;border:0;cursor:pointer;color:inherit;';
       a.addEventListener('click', function () { modal().style.display = 'flex'; });
       leg.appendChild(a);
+      injectFitNote(leg);
       return true;
     }
     function start() { if (inject()) return; var n = 0, iv = setInterval(function () { if (inject() || ++n > 25) clearInterval(iv); }, 400); }
@@ -324,6 +341,13 @@ quick buy information in a template, that will be extracted in JS, which ensures
       "id": "center_basic_info",
       "label": "t:sections.main_product.center_basic_info",
       "info": "t:sections.main_product.center_basic_info_info",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bundle_promo",
+      "label": "Show 2-for-£75 bundle promo",
+      "info": "Requires the automatic bundle discount to be set up in Shopify first. Leave off until that discount exists.",
       "default": false
     },
     {

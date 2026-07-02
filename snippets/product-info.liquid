@@ -170,6 +170,13 @@ Supported variables
                     {%- endif -%}
                   </p>
                 {%- endif -%}
+
+                {%- comment -%} CRO: bundle promo line, shipped disabled until the automatic 2-for-£75 discount exists in Shopify. Toggle via the main-product section setting "Show 2-for-£75 bundle promo". {%- endcomment -%}
+                {%- if context == 'main_product' and section.settings.show_bundle_promo -%}
+                  <p class="text-sm" style="display:inline-block;margin:4px 0 0;padding:6px 10px;border:1px solid currentColor;opacity:.75;text-transform:uppercase;letter-spacing:.04em;font-size:11px;">
+                    2 tees for £75. Applied automatically at checkout.
+                  </p>
+                {%- endif -%}
               </div>
             {%- endif -%}
 

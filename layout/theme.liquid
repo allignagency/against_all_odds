@@ -54,22 +54,6 @@
 
     {{ content_for_header }}
 
-    {%- comment -%} Gate the LEGENDS (archive) collection: keep the collection and its products out of search engines so the drop stays link-only {%- endcomment -%}
-    {%- liquid
-      assign aao_gate = false
-      if collection.handle == 'archive'
-        assign aao_gate = true
-      endif
-      if request.page_type == 'product'
-        for aao_c in product.collections
-          if aao_c.handle == 'archive'
-            assign aao_gate = true
-          endif
-        endfor
-      endif
-    -%}
-    {%- if aao_gate -%}<meta name="robots" content="noindex, nofollow">{%- endif -%}
-
     {{- 'theme.css' | asset_url | stylesheet_tag: preload: true -}}
   </head>
 
