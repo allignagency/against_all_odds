@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "video_bD4nXC": {
@@ -296,9 +305,38 @@
       "settings": {
         "color_scheme": "scheme-2",
         "separate_section_with_border": true,
-        "content_width": "lg",
+        "content_width": "md",
         "text_position": "center",
-        "remove_vertical_spacing": true
+        "remove_vertical_spacing": false
+      }
+    },
+    "legends_bestsellers": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "best-sellers",
+            "products_count": 8,
+            "title": "",
+            "link_url": "shopify://collections/best-sellers",
+            "link_text": "SHOP ALL"
+          }
+        }
+      },
+      "block_order": [
+        "collection-1"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "hide_product_information": false,
+        "stack_products": false,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": ""
       }
     },
     "ss_beauty_template_1_EMTiNf": {
@@ -684,35 +722,6 @@
         "content_width": 1200,
         "border_thickness": 0,
         "lazy": true
-      }
-    },
-    "legends_bestsellers": {
-      "type": "featured-collections",
-      "blocks": {
-        "collection-1": {
-          "type": "collection",
-          "settings": {
-            "collection": "best-sellers",
-            "products_count": 8,
-            "title": "",
-            "link_url": "shopify://collections/best-sellers",
-            "link_text": "SHOP ALL"
-          }
-        }
-      },
-      "block_order": [
-        "collection-1"
-      ],
-      "settings": {
-        "color_scheme": "scheme-2",
-        "separate_section_with_border": true,
-        "hide_product_information": false,
-        "stack_products": false,
-        "products_per_row_mobile": "2",
-        "products_per_row_desktop": 4,
-        "horizontal_spacing_factor": 1,
-        "vertical_spacing_factor": 1,
-        "subheading": ""
       }
     }
   },
