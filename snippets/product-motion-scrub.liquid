@@ -1,12 +1,16 @@
 {%- comment -%}
-  Full-bleed scroll-scrubbed product video, rendered from main-product.liquid.
-  Args: video_url (required), video_url_mobile, kicker, heading, body, track_vh.
+  Full-bleed scroll-scrubbed product video, rendered from sections/product-motion.liquid.
+  Args: video_url (required, full https URL), video_url_mobile, poster_url (full https
+  URL, from a file-reference metafield) or poster (legacy theme asset filename),
+  kicker, heading, body, track_vh.
   Scrolling through the block drives video.currentTime; falls back to an
   autoplay loop for reduced motion or when metadata fails to load.
 {%- endcomment -%}
 
 {%- if video_url != blank -%}
 {%- assign track_vh = track_vh | default: 300 -%}
+{%- assign resolved_poster = poster_url -%}
+{%- if resolved_poster == blank and poster != blank -%}{%- assign resolved_poster = poster | asset_url -%}{%- endif -%}
 <div class="aao-scrub" id="aao-scrub-{{ product.id }}" style="height: {{ track_vh }}vh;">
   <div class="aao-scrub__pin">
     <video
@@ -14,7 +18,7 @@
       muted
       playsinline
       preload="auto"
-      {% if poster != blank %}poster="{{ poster | asset_url }}"{% endif %}
+      {% if resolved_poster != blank %}poster="{{ resolved_poster }}"{% endif %}
       aria-label="{{ heading | default: product.title | escape }}"
       data-src-desktop="{{ video_url }}"
       data-src-mobile="{{ video_url_mobile | default: video_url }}"

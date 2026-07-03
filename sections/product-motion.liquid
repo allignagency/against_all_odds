@@ -1,133 +1,43 @@
 {%- comment -%}
-  Product Motion: full-bleed scroll-scrubbed video.
-  The section occupies a tall scroll track; the video pins to the viewport and
-  its playback position follows scroll progress (scrub). Falls back to an
-  autoplay loop when scrubbing is unsupported or reduced motion is requested.
-  Renders only when a video source is set AND (allowlist empty OR handle listed).
+  Product Motion. A full-bleed scroll-scrubbed product film.
+  This section renders NOTHING unless the product has a video attached to its
+  "Motion video" metafield (custom.motion_video). No code changes are needed
+  to enable or disable it per product: attach or remove the metafield value.
+
+  Metafields read (all under the "custom" namespace, all optional except the
+  first, which gates whether anything renders at all):
+    motion_video         file_reference (video)  REQUIRED to show the section
+    motion_video_mobile  file_reference (video)  optional, falls back to motion_video
+    motion_poster        file_reference (image)  optional poster frame
+    motion_kicker        single_line_text_field  optional, small label above heading
+    motion_heading       single_line_text_field  optional, falls back to product title
+    motion_body          multi_line_text_field   optional, one line of body copy
+    motion_track_vh      number_integer          optional, scroll length in vh (default 300)
 {%- endcomment -%}
 
 {%- liquid
-  assign show_section = false
-  assign video_src = section.settings.video_url
-  if video_src == blank and section.settings.video_asset != blank
-    assign video_src = section.settings.video_asset | asset_url
-  endif
-  assign video_src_mobile = section.settings.video_url_mobile | default: video_src
-  if video_src != blank
-    if section.settings.product_handles == blank
-      assign show_section = true
-    else
-      assign allow = section.settings.product_handles | replace: ' ', '' | split: ','
-      if allow contains product.handle
-        assign show_section = true
-      endif
-    endif
-  endif
+  assign mf = product.metafields.custom
+  assign motion_video = mf.motion_video.value
 -%}
 
-{%- if show_section -%}
-<div class="aao-scrub" id="aao-scrub-{{ section.id }}" style="height: {{ section.settings.track_height | default: 300 }}vh;">
-  <div class="aao-scrub__pin">
-    <video
-      class="aao-scrub__video"
-      muted
-      playsinline
-      preload="auto"
-      {% if section.settings.poster_asset != blank %}poster="{{ section.settings.poster_asset | asset_url }}"{% endif %}
-      aria-label="{{ section.settings.heading | default: product.title | escape }}"
-      data-src-desktop="{{ video_src }}"
-      data-src-mobile="{{ video_src_mobile }}"
-    ></video>
-    <div class="aao-scrub__scrim"></div>
-    <div class="aao-scrub__copy">
-      {%- if section.settings.subheading != blank -%}
-        <p class="aao-scrub__kicker">{{ section.settings.subheading | escape }}</p>
-      {%- endif -%}
-      {%- if section.settings.heading != blank -%}
-        <h2 class="aao-scrub__heading">{{ section.settings.heading | escape }}</h2>
-      {%- endif -%}
-      {%- if section.settings.text != blank -%}
-        <div class="aao-scrub__text">{{ section.settings.text }}</div>
-      {%- endif -%}
-    </div>
-  </div>
-</div>
-
-{%- style -%}
-  .aao-scrub { position: relative; width: 100%; background: #0d0d0d; }
-  .aao-scrub__pin { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; }
-  .aao-scrub__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .aao-scrub__scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 38%); pointer-events: none; }
-  .aao-scrub__copy { position: absolute; left: max(24px, 4vw); bottom: max(28px, 5vh); color: #ffffff; max-width: 60ch; }
-  .aao-scrub__kicker { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; opacity: .75; margin: 0 0 10px; }
-  .aao-scrub__heading { font-size: clamp(30px, 4.5vw, 58px); line-height: 1.0; text-transform: uppercase; letter-spacing: .5px; margin: 0 0 10px; color: #ffffff; }
-  .aao-scrub__text { font-size: 15px; line-height: 1.5; opacity: .85; max-width: 46ch; }
-  .aao-scrub__text p { margin: 0; }
-{%- endstyle -%}
-
-<script>
-  (function () {
-    var root = document.getElementById('aao-scrub-{{ section.id }}');
-    if (!root) return;
-    var video = root.querySelector('.aao-scrub__video');
-    if (!video) return;
-
-    var isMobile = window.matchMedia('(max-width: 749px)').matches;
-    var src = isMobile ? video.getAttribute('data-src-mobile') : video.getAttribute('data-src-desktop');
-    if (!src) return;
-    var source = document.createElement('source');
-    source.src = src; source.type = 'video/mp4';
-    video.appendChild(source);
-    video.load();
-
-    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function fallbackLoop() {
-      video.loop = true;
-      if ('IntersectionObserver' in window) {
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) {
-            if (e.isIntersecting) { video.play().catch(function(){}); } else { video.pause(); }
-          });
-        }, { threshold: 0.2 });
-        io.observe(root);
-      } else { video.autoplay = true; video.play().catch(function(){}); }
-    }
-
-    if (reduced) { fallbackLoop(); return; }
-
-    var duration = 0, target = 0, current = 0, raf = null, lastSet = -1;
-    video.addEventListener('loadedmetadata', function () { duration = video.duration || 0; });
-    video.pause();
-
-    function progress() {
-      var rect = root.getBoundingClientRect();
-      var vh = window.innerHeight;
-      var total = rect.height - vh;
-      if (total <= 0) return 0;
-      var p = -rect.top / total;
-      return Math.max(0, Math.min(1, p));
-    }
-
-    function tick() {
-      raf = null;
-      if (duration > 0) {
-        target = progress() * duration;
-        current += (target - current) * 0.22;
-        if (Math.abs(current - lastSet) > 0.02) {
-          try { video.currentTime = current; lastSet = current; } catch (e) {}
-        }
-        if (Math.abs(target - current) > 0.01) { raf = requestAnimationFrame(tick); }
-      }
-    }
-    function onScroll() { if (!raf) raf = requestAnimationFrame(tick); }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-
-    // if scrubbing never engages (metadata fails), fall back after 4s
-    setTimeout(function () { if (!duration) fallbackLoop(); }, 4000);
-  })();
-</script>
+{%- if motion_video != blank -%}
+  {%- liquid
+    assign motion_video_mobile = mf.motion_video_mobile.value
+    assign motion_poster = mf.motion_poster.value
+    assign motion_kicker = mf.motion_kicker.value
+    assign motion_heading = mf.motion_heading.value
+    assign motion_body = mf.motion_body.value
+    assign motion_track_vh = mf.motion_track_vh.value | default: 300
+  -%}
+  {%- render 'product-motion-scrub',
+    video_url: motion_video.url,
+    video_url_mobile: motion_video_mobile.url,
+    poster_url: motion_poster.url,
+    kicker: motion_kicker,
+    heading: motion_heading,
+    body: motion_body,
+    track_vh: motion_track_vh
+  -%}
 {%- endif -%}
 
 {% schema %}
@@ -136,16 +46,10 @@
   "tag": "section",
   "class": "shopify-section--product-motion",
   "settings": [
-    { "type": "paragraph", "content": "Full-bleed scroll-scrubbed video. Scrolling through the section drives the video timeline. Renders only when a video URL is set. Leave the handle allowlist empty to show on all products." },
-    { "type": "text", "id": "video_url", "label": "Video URL (desktop scrub file)", "info": "Full https URL to an mp4 encoded with dense keyframes" },
-    { "type": "text", "id": "video_url_mobile", "label": "Video URL (mobile, lighter file)", "info": "Optional. Falls back to the desktop file." },
-    { "type": "text", "id": "video_asset", "label": "Video asset filename (fallback)", "info": "Used only if no URL set" },
-    { "type": "text", "id": "poster_asset", "label": "Poster image asset filename" },
-    { "type": "range", "id": "track_height", "label": "Scroll length (vh)", "min": 150, "max": 500, "step": 25, "default": 300 },
-    { "type": "text", "id": "product_handles", "label": "Product handle allowlist (comma-separated)", "info": "Empty = all products" },
-    { "type": "text", "id": "subheading", "label": "Kicker", "default": "In motion" },
-    { "type": "text", "id": "heading", "label": "Heading" },
-    { "type": "richtext", "id": "text", "label": "Text" }
+    {
+      "type": "paragraph",
+      "content": "Shows a full-bleed, scroll-scrubbed video on the product page. This section is invisible and takes up no space unless the product has a video attached to its Motion video metafield (Settings > Custom data > Products, or the Metafields panel on the product page). No theme edits are needed per product: attach a video to show it, remove it to hide it."
+    }
   ],
   "presets": [{ "name": "Product Motion" }]
 }

@@ -331,10 +331,14 @@
         "title": "Recently viewed products",
         "content": ""
       }
+    },
+    "product_motion": {
+      "type": "product-motion"
     }
   },
   "order": [
     "main",
+    "product_motion",
     "media_grid_GURbbE",
     "complete_the_look",
     "173593565665a6d37f",

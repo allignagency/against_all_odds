@@ -288,42 +288,6 @@ quick buy information in a template, that will be extracted in JS, which ensures
 </script>
 
 
-{%- comment -%} AAO product motion scrub: per-product map {%- endcomment -%}
-{%- liquid
-  assign motion_video = ''
-  assign motion_mobile = ''
-  assign motion_poster = ''
-  assign motion_kicker = ''
-  assign motion_heading = ''
-  assign motion_body = ''
-  case product.handle
-    when 'art-of-boxing-ivory-luxury-tee-1'
-      assign motion_video = 'https://allign.agency/aao/media/aob-scrub.mp4'
-      assign motion_mobile = 'https://allign.agency/aao/media/aob-scrub-mobile.mp4'
-      assign motion_poster = 'aob-poster.jpg'
-      assign motion_kicker = 'Art of Boxing'
-      assign motion_heading = 'Made to move'
-      assign motion_body = 'Heavyweight organic cotton, oversized cut, flat screen printed.'
-    when 'white-luxury-boxy-tee'
-      assign motion_video = 'https://allign.agency/aao/media/dw-scrub.mp4'
-      assign motion_mobile = 'https://allign.agency/aao/media/dw-scrub-mobile.mp4'
-      assign motion_poster = 'dw-poster.jpg'
-      assign motion_kicker = 'Dreamers'
-      assign motion_heading = 'First light'
-      assign motion_body = 'Heavyweight boxy cut. From dreamers to believers.'
-    when 'black-luxury-boxy-tee-1'
-      assign motion_video = 'https://allign.agency/aao/media/db-scrub.mp4'
-      assign motion_mobile = 'https://allign.agency/aao/media/db-scrub-mobile.mp4'
-      assign motion_poster = 'db-poster.jpg'
-      assign motion_kicker = 'Dreamers'
-      assign motion_heading = 'Last round'
-      assign motion_body = 'Heavyweight boxy cut. From dreamers to believers.'
-  endcase
--%}
-{%- if motion_video != blank -%}
-  {%- render 'product-motion-scrub', video_url: motion_video, video_url_mobile: motion_mobile, poster: motion_poster, kicker: motion_kicker, heading: motion_heading, body: motion_body -%}
-{%- endif -%}
-
 {% schema %}
 {
   "name": "t:sections.main_product.name",
