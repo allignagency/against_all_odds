@@ -6,9 +6,9 @@
 
   Metafields read (all under the "custom" namespace, all optional except the
   first, which gates whether anything renders at all):
-    motion_video         file_reference (video)  REQUIRED to show the section
-    motion_video_mobile  file_reference (video)  optional, falls back to motion_video
-    motion_poster        file_reference (image)  optional poster frame
+    motion_video         url                      REQUIRED to show the section
+    motion_video_mobile  url                      optional, falls back to motion_video
+    motion_poster        url                      optional poster frame
     motion_kicker        single_line_text_field  optional, small label above heading
     motion_heading       single_line_text_field  optional, falls back to product title
     motion_body          multi_line_text_field   optional, one line of body copy
@@ -30,9 +30,9 @@
     assign motion_track_vh = mf.motion_track_vh.value | default: 300
   -%}
   {%- render 'product-motion-scrub',
-    video_url: motion_video.url,
-    video_url_mobile: motion_video_mobile.url,
-    poster_url: motion_poster.url,
+    video_url: motion_video,
+    video_url_mobile: motion_video_mobile,
+    poster_url: motion_poster,
     kicker: motion_kicker,
     heading: motion_heading,
     body: motion_body,
