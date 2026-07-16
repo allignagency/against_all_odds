@@ -173,10 +173,10 @@
         "collection_gCtaVA": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "kids-from",
             "products_count": 8,
             "title": "",
-            "link_url": "",
+            "link_url": "shopify://collections/kids-from",
             "link_text": "View all"
           }
         }
