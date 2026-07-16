@@ -32,6 +32,36 @@
         "controls_color": "#ffffff"
       }
     },
+    "featured_collections_rTkidr": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection_gCtaVA": {
+          "type": "collection",
+          "settings": {
+            "collection": "kids-from",
+            "products_count": 8,
+            "title": "",
+            "link_url": "shopify://collections/kids-from",
+            "link_text": "View all"
+          }
+        }
+      },
+      "block_order": [
+        "collection_gCtaVA"
+      ],
+      "name": "t:sections.featured_collections.presets.featured_collections.name",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "hide_product_information": false,
+        "stack_products": false,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": "Featured collection"
+      }
+    },
     "image_with_text_YeF9TT": {
       "type": "image-with-text",
       "blocks": {
@@ -166,45 +196,15 @@
         "overlay_color": "#000000",
         "overlay_opacity": 0
       }
-    },
-    "featured_collections_rTkidr": {
-      "type": "featured-collections",
-      "blocks": {
-        "collection_gCtaVA": {
-          "type": "collection",
-          "settings": {
-            "collection": "kids-from",
-            "products_count": 8,
-            "title": "",
-            "link_url": "shopify://collections/kids-from",
-            "link_text": "View all"
-          }
-        }
-      },
-      "block_order": [
-        "collection_gCtaVA"
-      ],
-      "name": "t:sections.featured_collections.presets.featured_collections.name",
-      "settings": {
-        "color_scheme": "scheme-2",
-        "separate_section_with_border": true,
-        "hide_product_information": false,
-        "stack_products": false,
-        "products_per_row_mobile": "2",
-        "products_per_row_desktop": 4,
-        "horizontal_spacing_factor": 1,
-        "vertical_spacing_factor": 1,
-        "subheading": "Featured collection"
-      }
     }
   },
   "order": [
     "main",
     "slideshow_XQKjNn",
+    "featured_collections_rTkidr",
     "image_with_text_YeF9TT",
     "rich_text_i4peLb",
     "rich_text_w3K6jg",
-    "image_with_text_overlay_wricWp",
-    "featured_collections_rTkidr"
+    "image_with_text_overlay_wricWp"
   ]
 }
