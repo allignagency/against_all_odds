@@ -86,29 +86,90 @@
           "settings": {
             "content": "{{ page.content }}"
           }
-        },
-        "button_kmVt8G": {
-          "type": "button",
-          "settings": {
-            "style": "solid",
-            "text": "COMING SOON",
-            "url": "shopify://collections",
-            "background": "",
-            "text_color": ""
-          }
         }
       },
       "block_order": [
         "subheading_6xiQgt",
-        "richtext_mzL7rk",
-        "button_kmVt8G"
+        "richtext_mzL7rk"
       ],
       "settings": {
-        "color_scheme": "",
+        "color_scheme": "scheme-2",
         "separate_section_with_border": true,
         "content_width": "sm",
         "text_position": "center",
         "remove_vertical_spacing": false
+      }
+    },
+    "rich_text_w3K6jg": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_UALKgr": {
+          "type": "subheading",
+          "settings": {
+            "text": "BY AGAINSTALLODDS"
+          }
+        },
+        "heading_e6jcFq": {
+          "type": "heading",
+          "settings": {
+            "text": "<strong>COUNCIL KIDS PRESENTSKIDS FROM COV PROJECT 001 / COVENTRY</strong>",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_yP8WMF": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>A community campaign by Against All Odds, created to help raise funds and awareness for Standard Triumph Recreation Club.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_UALKgr",
+        "heading_e6jcFq",
+        "richtext_yP8WMF"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "image_with_text_overlay_rEHyH3": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_VcDRGQ": {
+          "type": "heading",
+          "settings": {
+            "text": "Image with text overlay",
+            "heading_tag": "h4"
+          }
+        },
+        "richtext_xKj8xR": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p><strong>THE STORY</strong><br/><br/>It was brought to our attention that a boxing club in Coventry needed help finding a new home.<br/><br/>Coventry is close to the roots of Against All Odds. Boxing is close to the heart of the brand.<br/><br/>So when we heard what was happening with Standard Triumph Recreation Club, it felt like something we couldn’t just scroll past.<br/><br/>A few people had already started pushing the story and bringing attention to the club. They got the ball rolling. We’ve now <br/>stepped in to add what we can, the brand, the platform, the designs, and the community around Against All Odds.<br/><br/>The aim is simple: raise money, raise awareness, and help give the club the best possible chance of being rehomed.<br/><br/>This project is built around two T-shirts.<br/><br/><strong>KIDS FROM COV</strong> is for the city.<br/>For the people from Coventry.<br/>For the ones who know what it means to come from there.<br/><br/><strong>COUNCIL KIDS</strong> is for everyone who connects with the message.<br/><br/>You don’t have to be from Coventry to support the project. You just have to understand why places like this matter.<br/><br/>Because boxing clubs are not just buildings.<br/>They are places where kids find discipline, confidence, routine, friendship and direction. They are places that keep <br/>people grounded. Places that give young people somewhere to go, someone to believe in them, and something to belong to.<br/><br/>And too often, these are the places that get forgotten.<br/><br/>Where councils, systems and people in power have looked the other way, Against All Odds is choosing not to.<br/><br/>We’re not pretending we can fix everything. But we can do something.<br/><br/>And this is your chance to do something too.<br/><br/>By supporting this drop, you are helping raise funds towards rehoming the club. You are supporting a city, <br/>a boxing community, a local club, and the young people who still need places like this to exist.<br/><br/>People talk about wanting to help communities. This is a real way to do it.<br/><br/>Buy the tee. Share the story. Back the project. Be part of something that actually moves.<br/><br/><strong>For the kids.<br/>For the clubs.<br/>For the fighters.<br/>For the community.<br/><br/>Against All Odds.</strong></p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_VcDRGQ",
+        "richtext_xKj8xR"
+      ],
+      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
+      "settings": {
+        "color_scheme": "",
+        "image_size": "auto",
+        "allow_transparent_header": false,
+        "reveal_on_scroll": true,
+        "remove_vertical_spacing": true,
+        "content_width": "md",
+        "mobile_text_position": "place-self-center text-center",
+        "desktop_text_position": "sm:place-self-center sm:text-center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
       }
     }
   },
@@ -116,6 +177,8 @@
     "main",
     "slideshow_XQKjNn",
     "image_with_text_YeF9TT",
-    "rich_text_i4peLb"
+    "rich_text_i4peLb",
+    "rich_text_w3K6jg",
+    "image_with_text_overlay_rEHyH3"
   ]
 }
