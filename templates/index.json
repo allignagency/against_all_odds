@@ -147,21 +147,6 @@
     },
     "featured-collections": {
       "type": "featured-collections",
-      "blocks": {
-        "collection-1": {
-          "type": "collection",
-          "settings": {
-            "collection": "fight-tees",
-            "products_count": 8,
-            "title": "",
-            "link_url": "shopify://collections/fight-tees",
-            "link_text": "SHOP NOW"
-          }
-        }
-      },
-      "block_order": [
-        "collection-1"
-      ],
       "settings": {
         "color_scheme": "scheme-2",
         "separate_section_with_border": true,
