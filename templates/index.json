@@ -566,8 +566,8 @@
           "type": "button",
           "settings": {
             "style": "solid",
-            "text": "COMING SOON",
-            "url": "",
+            "text": "KIDS FROM",
+            "url": "shopify://collections/kids-from",
             "background": "",
             "text_color": ""
           }
