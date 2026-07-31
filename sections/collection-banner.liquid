@@ -1,3 +1,24 @@
+{%- comment -%}
+  AAO 24 HOUR SALE. During the sale window the catch-all "All Products-Shopify"
+  collection is the landing page for the popup and the campaign emails, so it shows
+  sale copy instead of its internal name. Fixed UTC bounds; outside the window this
+  does nothing and the collection renders normally, so there is nothing to revert.
+{%- endcomment -%}
+{%- liquid
+  assign aao_title = collection.title
+  assign aao_desc_html = collection.description
+  assign aao_sale_banner = false
+  assign aao_start = 1785488400
+  assign aao_end = 1785574800
+  assign aao_now = 'now' | date: '%s' | plus: 0
+
+  if aao_now >= aao_start and aao_now < aao_end and collection.handle == 'all'
+    assign aao_sale_banner = true
+    assign aao_title = '20% OFF'
+    assign aao_desc_html = '<p>On all products from Against All Odds.</p>'
+  endif
+-%}
+
 {%- if section.settings.show_image == false or collection.image == blank and section.settings.image == blank -%}
   {%- assign show_image = false -%}
 {%- else -%}
@@ -17,7 +38,7 @@
         </li>
 
         <li class="breadcrumb__list-item">
-          <a href="{{ collection.url }}" aria-current="page" class="smallcaps {% unless show_image %}link-faded{% endunless %}">{{ collection.title }}</a>
+          <a href="{{ collection.url }}" aria-current="page" class="smallcaps {% unless show_image %}link-faded{% endunless %}">{{ aao_title }}</a>
         </li>
       </ol>
     </nav>
@@ -25,13 +46,13 @@
 {%- endcapture -%}
 
 {%- capture collection_content -%}
-  {%- if section.settings.show_collection_title -%}
-    <h1 class="h1">{{ collection.title }}</h1>
+  {%- if section.settings.show_collection_title or aao_sale_banner -%}
+    <h1 class="h1">{{ aao_title }}</h1>
   {%- endif -%}
 
-  {%- if section.settings.show_collection_description -%}
+  {%- if section.settings.show_collection_description or aao_sale_banner -%}
     <div class="collection-description">
-      {{- collection.description -}}
+      {{- aao_desc_html -}}
     </div>
   {%- endif -%}
 {%- endcapture -%}
