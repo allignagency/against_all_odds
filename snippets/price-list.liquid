@@ -38,8 +38,67 @@ Supported variables
   endcase
 -%}
 
+{%- comment -%}
+  AAO 24 HOUR SALE. The Shopify automatic discount "24 HOUR SALE | 20% OFF" applies the
+  real 20% in the cart, but automatic discounts do not change displayed prices. This block
+  renders the was/now pair on cards and product pages for the sale window only, so the
+  storefront shows what the customer will actually be charged.
+
+  Window is fixed UTC: 1785488400 = Fri 31 Jul 2026 10:00 BST, 1785574800 = Sat 1 Aug 10:00 BST.
+  Outside it, nothing here applies and pricing reverts to normal with no cleanup needed.
+  Products tagged "no-sale" (the Council Kids capsule) are skipped, matching the discount scope.
+  Line items are skipped: the cart already shows genuinely discounted prices.
+{%- endcomment -%}
+{%- liquid
+  assign aao_sale_on = false
+  assign aao_start = 1785488400
+  assign aao_end = 1785574800
+  assign aao_now = 'now' | date: '%s' | plus: 0
+
+  if aao_now >= aao_start and aao_now < aao_end and line_item == blank
+    if variant != blank
+      assign aao_v = variant
+      assign aao_p = variant.product
+    elsif product != blank
+      if product.price_varies and settings.product_price_strategy != 'from_price'
+        assign aao_v = product.variants | sort: 'price' | last | default: product.selected_or_first_available_variant
+      else
+        assign aao_v = product.variants | sort: 'price' | first | default: product.selected_or_first_available_variant
+      endif
+      assign aao_p = product
+    endif
+
+    if aao_v != blank and aao_v.price > 0
+      unless aao_p.tags contains 'no-sale'
+        assign aao_sale_on = true
+        assign aao_was = aao_v.price
+        assign aao_now_price = aao_v.price | times: 80 | divided_by: 100
+      endunless
+    endif
+  endif
+-%}
+
 <price-list class="price-list {% if context == 'product' %}price-list--product{% endif %}">
-  {%- if variant != blank -%}
+  {%- if aao_sale_on -%}
+    {%- comment -%} AAO 24 hour sale: 20% off, shown as was/now {%- endcomment -%}
+    <sale-price class="{{ on_sale_price_classes }}">
+      <span class="sr-only">{{ 'product.price.sale_price' | t }}</span>
+      {%- if settings.currency_code_enabled -%}
+        {{- aao_now_price | money_with_currency -}}
+      {%- else -%}
+        {{- aao_now_price | money -}}
+      {%- endif -%}
+    </sale-price>
+
+    <compare-at-price class="{{ compare_at_price_classes }}">
+      <span class="sr-only">{{ 'product.price.regular_price' | t }}</span>
+      {%- if settings.currency_code_enabled -%}
+        {{- aao_was | money_with_currency -}}
+      {%- else -%}
+        {{- aao_was | money -}}
+      {%- endif -%}
+    </compare-at-price>
+  {%- elsif variant != blank -%}
     {%- comment -%}
     --------------------------------------------------------------------------------------------------------------------
     VARIANT CASE (used on product page, quick view...)
