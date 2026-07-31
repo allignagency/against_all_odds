@@ -1,0 +1,130 @@
+{%- comment -%}
+  AAO sale announcement hero. Full-bleed monochrome band with a live countdown.
+
+  Self-expiring: the window is hard-coded in ISO with an explicit UK offset, and the
+  section removes itself outside it, so nothing needs reverting when the sale ends.
+    opens  2026-07-31 10:00 BST
+    closes 2026-08-01 10:00 BST
+
+  Server-side Liquid gates the initial render (so it is not in the HTML before the
+  sale), and the client re-checks and ticks the clock.
+{%- endcomment -%}
+
+{%- liquid
+  assign aao_start = 1785488400
+  assign aao_end = 1785574800
+  assign aao_now = 'now' | date: '%s' | plus: 0
+  assign aao_live = false
+  if aao_now >= aao_start and aao_now < aao_end
+    assign aao_live = true
+  endif
+-%}
+
+{%- if aao_live -%}
+  <section
+    class="aao-hero"
+    id="aao-hero-{{ section.id }}"
+    data-end="2026-08-01T10:00:00+01:00"
+    aria-label="24 hour sale, 20 percent off everything"
+  >
+    <div class="aao-hero__inner">
+      <p class="aao-hero__kick">{{ section.settings.kicker | escape }}</p>
+
+      <h2 class="aao-hero__title">
+        <span class="aao-hero__pct">20%</span>
+        <span class="aao-hero__off">OFF</span>
+        <span class="aao-hero__every">EVERYTHING</span>
+      </h2>
+
+      <div class="aao-hero__clock" data-aao-hero-clock aria-live="polite">
+        <span class="aao-hero__digits">24</span><span class="aao-hero__sep">:</span><span
+          class="aao-hero__digits">00</span><span class="aao-hero__sep">:</span><span
+          class="aao-hero__digits">00</span>
+      </div>
+      <p class="aao-hero__lab">Left to shop it</p>
+
+      <a class="aao-hero__btn" href="{{ section.settings.button_url | default: '/collections/all' }}">
+        {{ section.settings.button_text | default: 'SHOP THE SALE' | escape }}
+      </a>
+
+      {%- if section.settings.note != blank -%}
+        <p class="aao-hero__note">{{ section.settings.note | escape }}</p>
+      {%- endif -%}
+    </div>
+  </section>
+
+  {%- style -%}
+    .aao-hero{background:#0b0b0b;color:#fff;padding:64px 24px 58px;text-align:center;
+      font-family:Arial,Helvetica,sans-serif;}
+    .aao-hero__inner{max-width:960px;margin:0 auto;}
+    .aao-hero__kick{margin:0 0 22px;font-size:11px;font-weight:700;letter-spacing:.42em;
+      text-transform:uppercase;color:#9a9a9a;}
+    .aao-hero__title{margin:0;font-family:'Arial Narrow',Arial,sans-serif;font-weight:700;
+      line-height:.86;letter-spacing:-.02em;text-transform:uppercase;}
+    .aao-hero__pct{font-size:112px;}
+    .aao-hero__off{font-size:112px;}
+    .aao-hero__every{display:block;font-size:60px;margin-top:6px;}
+    .aao-hero__clock{margin-top:30px;font-family:'Arial Narrow',Arial,sans-serif;
+      font-size:52px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;}
+    .aao-hero__sep{opacity:.45;margin:0 2px;}
+    .aao-hero__lab{margin:10px 0 0;font-size:11px;font-weight:700;letter-spacing:.3em;
+      text-transform:uppercase;color:#9a9a9a;}
+    .aao-hero__btn{display:inline-block;margin-top:32px;background:#fff;color:#0b0b0b;
+      font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+      padding:18px 46px;text-decoration:none;}
+    .aao-hero__btn:hover{opacity:.86;}
+    .aao-hero__note{margin:24px auto 0;max-width:520px;font-size:12px;line-height:1.7;color:#8a8a8a;}
+    @media screen and (max-width:749px){
+      .aao-hero{padding:46px 20px 42px;}
+      .aao-hero__pct,.aao-hero__off{font-size:72px;}
+      .aao-hero__every{font-size:38px;}
+      .aao-hero__clock{font-size:38px;}
+      .aao-hero__btn{padding:16px 34px;width:100%;max-width:320px;}
+    }
+  {%- endstyle -%}
+
+  <script>
+    (function () {
+      var root = document.getElementById('aao-hero-{{ section.id }}');
+      if (!root) return;
+      var end = new Date(root.getAttribute('data-end')).getTime();
+      var clock = root.querySelector('[data-aao-hero-clock]');
+      if (!clock) return;
+      var digits = clock.querySelectorAll('.aao-hero__digits');
+
+      function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+      function tick() {
+        var left = end - Date.now();
+        if (left <= 0) { root.style.display = 'none'; clearInterval(t); return; }
+        var h = Math.floor(left / 3600000);
+        var m = Math.floor((left % 3600000) / 60000);
+        var s = Math.floor((left % 60000) / 1000);
+        digits[0].textContent = pad(h);
+        digits[1].textContent = pad(m);
+        digits[2].textContent = pad(s);
+      }
+      tick();
+      var t = setInterval(tick, 1000);
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "AAO sale hero",
+  "tag": "section",
+  "class": "shopify-section--aao-sale-hero",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Full-bleed sale banner with a live countdown. It renders nothing outside the sale window, which is hard-coded in the section file, so it disappears on its own when the sale ends."
+    },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "24 hours only" },
+    { "type": "text", "id": "button_text", "label": "Button", "default": "SHOP THE SALE" },
+    { "type": "url", "id": "button_url", "label": "Button link" },
+    { "type": "textarea", "id": "note", "label": "Small print" }
+  ],
+  "presets": [{ "name": "AAO sale hero" }]
+}
+{% endschema %}
