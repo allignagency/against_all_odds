@@ -1,0 +1,151 @@
+{%- comment -%}
+  AAO 24 hour sale popup. Design "06 countdown", strict monochrome, live timer.
+
+  Window is hard-coded in ISO with an explicit UK offset so the countdown is
+  correct regardless of the visitor's own timezone:
+    opens  2026-07-31 10:00 BST
+    closes 2026-08-01 10:00 BST
+
+  Renders nothing outside that window (the JS removes it), shows once per
+  session, and is dismissible. To kill it early, remove the render call in
+  layout/theme.liquid or set data-force="off".
+{%- endcomment -%}
+
+<div
+  id="aao-sale-popup"
+  class="aao-sp"
+  hidden
+  data-start="2026-07-31T10:00:00+01:00"
+  data-end="2026-08-01T10:00:00+01:00"
+  role="dialog"
+  aria-modal="true"
+  aria-label="24 hour sale, 20 percent off"
+>
+  <div class="aao-sp__scrim" data-aao-close></div>
+
+  <div class="aao-sp__card">
+    <button class="aao-sp__x" type="button" data-aao-close aria-label="Close">&times;</button>
+
+    <div class="aao-sp__copy">
+      <p class="aao-sp__kick">The clock is running</p>
+
+      <div class="aao-sp__pct">20%</div>
+      <div class="aao-sp__off">OFF</div>
+
+      <div class="aao-sp__rule"></div>
+
+      <div class="aao-sp__clock" data-aao-clock aria-live="polite">24:00:00</div>
+      <p class="aao-sp__lab">Hours remaining</p>
+
+      <a class="aao-sp__btn" href="/collections/all">Shop the sale</a>
+
+      <p class="aao-sp__fine">
+        Everything except the Council Kids capsule, which stays full price to
+        fund the boxing gym in Coventry.
+      </p>
+    </div>
+
+    <div class="aao-sp__img" aria-hidden="true">
+      <img
+        src="https://cdn.shopify.com/s/files/1/0297/4528/3205/files/179e60e4-27e7-4c77-bcf7-de63b2eb10d1.png?width=900"
+        alt=""
+        loading="lazy"
+        width="900"
+        height="900"
+      >
+    </div>
+  </div>
+</div>
+
+{%- style -%}
+  .aao-sp{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;
+    justify-content:center;font-family:Arial,Helvetica,sans-serif;}
+  .aao-sp[hidden]{display:none;}
+  .aao-sp__scrim{position:absolute;inset:0;background:rgba(11,11,11,.62);}
+  .aao-sp__card{position:relative;display:flex;width:min(940px,calc(100vw - 32px));
+    max-height:calc(100vh - 32px);background:#fff;overflow:hidden;
+    box-shadow:0 24px 70px rgba(0,0,0,.32);}
+  .aao-sp__copy{flex:1 1 54%;padding:44px 40px 38px;display:flex;flex-direction:column;
+    align-items:flex-start;justify-content:center;}
+  .aao-sp__img{flex:1 1 46%;background:#efefef;overflow:hidden;}
+  .aao-sp__img img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1);}
+  .aao-sp__x{position:absolute;top:12px;right:12px;z-index:3;background:#fff;border:0;
+    width:34px;height:34px;border-radius:50%;font-size:22px;line-height:1;color:#0b0b0b;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 10px rgba(0,0,0,.18);}
+  .aao-sp__x:hover{background:#efefef;}
+  .aao-sp__kick{margin:0 0 14px;font-size:11px;font-weight:700;letter-spacing:.34em;
+    text-transform:uppercase;color:#0b0b0b;}
+  .aao-sp__pct{font-family:'Arial Narrow',Arial,sans-serif;font-size:104px;font-weight:700;
+    line-height:.8;letter-spacing:-.04em;color:#0b0b0b;}
+  .aao-sp__off{font-family:'Arial Narrow',Arial,sans-serif;font-size:52px;font-weight:700;
+    line-height:1;letter-spacing:.04em;color:#0b0b0b;margin-top:6px;}
+  .aao-sp__rule{width:100%;max-width:300px;height:3px;background:#0b0b0b;margin:22px 0 16px;}
+  .aao-sp__clock{font-family:'Arial Narrow',Arial,sans-serif;font-size:40px;font-weight:700;
+    line-height:1;color:#0b0b0b;font-variant-numeric:tabular-nums;}
+  .aao-sp__lab{margin:8px 0 0;font-size:11px;font-weight:700;letter-spacing:.28em;
+    text-transform:uppercase;color:#5c5c5c;}
+  .aao-sp__btn{display:inline-block;margin-top:26px;background:#0b0b0b;color:#fff;
+    font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    padding:16px 34px;text-decoration:none;}
+  .aao-sp__btn:hover{opacity:.86;}
+  .aao-sp__fine{margin:18px 0 0;font-size:11px;line-height:1.6;color:#8a8a8a;max-width:330px;}
+  @media screen and (max-width:749px){
+    .aao-sp__card{flex-direction:column;width:calc(100vw - 24px);overflow-y:auto;}
+    .aao-sp__img{display:none;}
+    .aao-sp__copy{padding:38px 24px 30px;}
+    .aao-sp__pct{font-size:82px;}
+    .aao-sp__off{font-size:40px;}
+    .aao-sp__clock{font-size:34px;}
+  }
+{%- endstyle -%}
+
+<script>
+  (function () {
+    var el = document.getElementById('aao-sale-popup');
+    if (!el) return;
+
+    var KEY = 'aao_sale_popup_dismissed_v1';
+    var start = new Date(el.getAttribute('data-start')).getTime();
+    var end = new Date(el.getAttribute('data-end')).getTime();
+    var clock = el.querySelector('[data-aao-clock]');
+    var timer = null;
+
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+    function close() {
+      el.setAttribute('hidden', '');
+      if (timer) { clearInterval(timer); timer = null; }
+      try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    }
+
+    Array.prototype.forEach.call(el.querySelectorAll('[data-aao-close]'), function (n) {
+      n.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !el.hasAttribute('hidden')) close();
+    });
+
+    function tick() {
+      var left = end - Date.now();
+      if (left <= 0) { close(); return; }
+      var h = Math.floor(left / 3600000);
+      var m = Math.floor((left % 3600000) / 60000);
+      var s = Math.floor((left % 60000) / 1000);
+      clock.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+    }
+
+    function open() {
+      tick();
+      el.removeAttribute('hidden');
+      timer = setInterval(tick, 1000);
+    }
+
+    var now = Date.now();
+    if (now < start || now >= end) return;          // outside the sale window
+    try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
+
+    // let the page settle first so it does not fight the hero
+    setTimeout(open, 2500);
+  })();
+</script>

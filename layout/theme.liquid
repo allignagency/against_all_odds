@@ -110,5 +110,10 @@
         {%- sections 'footer-group' -%}
       {%- endif -%}
     </main>
+
+    {%- comment -%} AAO 24 hour sale popup, self-expiring 2026-08-01 10:00 BST {%- endcomment -%}
+    {%- unless request.page_type == 'password' -%}
+      {%- render 'aao-sale-popup' -%}
+    {%- endunless -%}
   </body>
 </html>
