@@ -239,61 +239,6 @@
         "remove_vertical_spacing": true
       }
     },
-    "image_with_text_overlay_yzzd88": {
-      "type": "image-with-text-overlay",
-      "blocks": {
-        "subheading_LEGENDS": {
-          "type": "subheading",
-          "settings": {
-            "text": "The premium line"
-          }
-        },
-        "heading_LEGENDS": {
-          "type": "heading",
-          "settings": {
-            "text": "LEGENDS",
-            "heading_tag": "h2"
-          }
-        },
-        "richtext_QhcNLJ": {
-          "type": "richtext",
-          "settings": {
-            "content": "<p>Icons of boxing, in heavyweight organic cotton.</p>"
-          }
-        },
-        "button_xRpXCG": {
-          "type": "button",
-          "settings": {
-            "style": "outline",
-            "text": "Shop LEGENDS",
-            "url": "shopify://collections/archive",
-            "background": "#f7f6f6",
-            "text_color": ""
-          }
-        }
-      },
-      "block_order": [
-        "subheading_LEGENDS",
-        "heading_LEGENDS",
-        "richtext_QhcNLJ",
-        "button_xRpXCG"
-      ],
-      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
-      "settings": {
-        "color_scheme": "",
-        "image_size": "auto",
-        "image": "shopify://shop_images/ChatGPT_Image_Jun_19_2026_at_11_49_29_PM.png",
-        "mobile_image": "shopify://shop_images/ChatGPT_Image_Jun_20_2026_at_12_21_03_AM.png",
-        "allow_transparent_header": false,
-        "reveal_on_scroll": true,
-        "remove_vertical_spacing": true,
-        "content_width": "md",
-        "mobile_text_position": "place-self-end-center text-center",
-        "desktop_text_position": "sm:place-self-end-center sm:text-center",
-        "overlay_color": "#000000",
-        "overlay_opacity": 30
-      }
-    },
     "image_with_text_overlay_UgKDcW": {
       "type": "image-with-text-overlay",
       "blocks": {
@@ -594,6 +539,61 @@
         "overlay_opacity": 0
       }
     },
+    "image_with_text_overlay_yzzd88": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "subheading_LEGENDS": {
+          "type": "subheading",
+          "settings": {
+            "text": ""
+          }
+        },
+        "heading_LEGENDS": {
+          "type": "heading",
+          "settings": {
+            "text": "",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext_QhcNLJ": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Icons of boxing, in heavyweight organic cotton.</p>"
+          }
+        },
+        "button_xRpXCG": {
+          "type": "button",
+          "settings": {
+            "style": "outline",
+            "text": "Shop LEGENDS",
+            "url": "shopify://collections/archive",
+            "background": "#f7f6f6",
+            "text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "subheading_LEGENDS",
+        "heading_LEGENDS",
+        "richtext_QhcNLJ",
+        "button_xRpXCG"
+      ],
+      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
+      "settings": {
+        "color_scheme": "",
+        "image_size": "auto",
+        "image": "shopify://shop_images/ChatGPT_Image_Jun_19_2026_at_11_49_29_PM.png",
+        "mobile_image": "shopify://shop_images/ChatGPT_Image_Jun_20_2026_at_12_21_03_AM.png",
+        "allow_transparent_header": false,
+        "reveal_on_scroll": true,
+        "remove_vertical_spacing": true,
+        "content_width": "md",
+        "mobile_text_position": "place-self-end-center text-center",
+        "desktop_text_position": "sm:place-self-end-center sm:text-center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
     "ss_slider_2_imBJAY": {
       "type": "ss-slider-2",
       "blocks": {
@@ -746,13 +746,13 @@
     "featured_collections_HnLM8c",
     "image_with_text_id8qQh",
     "image_with_text_JrwypK",
-    "image_with_text_overlay_yzzd88",
     "image_with_text_overlay_UgKDcW",
     "rich_text_CQcj9X",
     "legends_bestsellers",
     "ss_beauty_template_1_EMTiNf",
     "image_with_text_overlay_fLXQnV",
     "image_with_text_overlay_T3nQre",
+    "image_with_text_overlay_yzzd88",
     "ss_slider_2_imBJAY"
   ]
 }
