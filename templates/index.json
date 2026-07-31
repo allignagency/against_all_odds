@@ -287,36 +287,6 @@
         "overlay_opacity": 0
       }
     },
-    "rich_text_CQcj9X": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_VVbpyg": {
-          "type": "heading",
-          "settings": {
-            "text": "LEGENDS",
-            "heading_tag": "h1"
-          }
-        },
-        "richtext_66KRNQ": {
-          "type": "richtext",
-          "settings": {
-            "content": "<p>Celebrating the legends, past and present.<br/>Series 1</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_VVbpyg",
-        "richtext_66KRNQ"
-      ],
-      "name": "t:sections.rich_text.presets.rich_text.name",
-      "settings": {
-        "color_scheme": "scheme-2",
-        "separate_section_with_border": true,
-        "content_width": "md",
-        "text_position": "center",
-        "remove_vertical_spacing": false
-      }
-    },
     "legends_bestsellers": {
       "type": "featured-collections",
       "blocks": {
@@ -539,6 +509,36 @@
         "overlay_opacity": 0
       }
     },
+    "rich_text_CQcj9X": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_VVbpyg": {
+          "type": "heading",
+          "settings": {
+            "text": "LEGENDS",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_66KRNQ": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Celebrating the legends, past and present.<br/>Series 1</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_VVbpyg",
+        "richtext_66KRNQ"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "content_width": "md",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
     "image_with_text_overlay_yzzd88": {
       "type": "image-with-text-overlay",
       "blocks": {
@@ -747,11 +747,11 @@
     "image_with_text_id8qQh",
     "image_with_text_JrwypK",
     "image_with_text_overlay_UgKDcW",
-    "rich_text_CQcj9X",
     "legends_bestsellers",
     "ss_beauty_template_1_EMTiNf",
     "image_with_text_overlay_fLXQnV",
     "image_with_text_overlay_T3nQre",
+    "rich_text_CQcj9X",
     "image_with_text_overlay_yzzd88",
     "ss_slider_2_imBJAY"
   ]
