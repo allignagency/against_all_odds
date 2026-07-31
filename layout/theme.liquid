@@ -5,7 +5,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=5.0">
 
-    <title>{% if page_title == blank %}{{ shop.name }}{% else %}{{ page_title }}{% if current_page != 1 %} &ndash; {{ 'general.page' | t: page: current_page }}{% endif %}{% endif %}</title>
+    {%- comment -%}
+      AAO 24 hour sale: the catch-all collection is the campaign landing page, so its
+      internal name is replaced in the tab and share previews for the sale window only.
+    {%- endcomment -%}
+    {%- liquid
+      assign aao_page_title = page_title
+      assign aao_start = 1785488400
+      assign aao_end = 1785574800
+      assign aao_now = 'now' | date: '%s' | plus: 0
+      if aao_now >= aao_start and aao_now < aao_end and collection.handle == 'all'
+        assign aao_page_title = '20% OFF everything | AgainstAllOdds'
+      endif
+    -%}
+    <title>{% if aao_page_title == blank %}{{ shop.name }}{% else %}{{ aao_page_title }}{% if current_page != 1 %} &ndash; {{ 'general.page' | t: page: current_page }}{% endif %}{% endif %}</title>
 
     {%- if page_description -%}
       <meta name="description" content="{{ page_description | escape }}">
