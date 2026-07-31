@@ -201,7 +201,12 @@ Supported variables
       {%- endif -%}
     {%- endif -%}
 
-    {%- if show_rating -%}
+    {%- comment -%}
+      The theme's native rating is intentionally NOT rendered here. Loox (below) is the
+      live review source and carries the real review counts; rendering both produced two
+      different star rows with conflicting numbers on every card.
+    {%- endcomment -%}
+    {%- if false -%}
       {%- render 'product-rating', product: product, show_empty: settings.show_product_rating_if_empty, display_mode: settings.product_rating_mode -%}
     {%- endif -%}
 
