@@ -294,6 +294,54 @@
         "overlay_opacity": 30
       }
     },
+    "image_with_text_overlay_UgKDcW": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_JUj6mQ": {
+          "type": "heading",
+          "settings": {
+            "text": "THE COMMUNITY SESSIONS",
+            "heading_tag": "h4"
+          }
+        },
+        "richtext_BXg9n9": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Bringing boxing culture, fighters and opportunity into overlooked communities.</p>"
+          }
+        },
+        "button_nGJ99b": {
+          "type": "button",
+          "settings": {
+            "style": "solid",
+            "text": "KIDS FROM",
+            "url": "shopify://collections/kids-from",
+            "background": "",
+            "text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_JUj6mQ",
+        "richtext_BXg9n9",
+        "button_nGJ99b"
+      ],
+      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "image_size": "lg",
+        "image": "shopify://shop_images/ChatGPT_Image_Jul_16_2026_at_09_24_28_PM.png",
+        "mobile_image": "shopify://shop_images/ChatGPT_Image_Jul_16_2026_at_09_12_29_PM_9d0e7e21-aa27-4034-8f3f-8a0810150401.png",
+        "allow_transparent_header": false,
+        "reveal_on_scroll": true,
+        "remove_vertical_spacing": true,
+        "content_width": "md",
+        "mobile_text_position": "place-self-end-center text-center",
+        "desktop_text_position": "sm:place-self-end-center sm:text-center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
     "rich_text_CQcj9X": {
       "type": "rich-text",
       "blocks": {
@@ -546,54 +594,6 @@
         "overlay_opacity": 0
       }
     },
-    "image_with_text_overlay_UgKDcW": {
-      "type": "image-with-text-overlay",
-      "blocks": {
-        "heading_JUj6mQ": {
-          "type": "heading",
-          "settings": {
-            "text": "THE COMMUNITY SESSIONS",
-            "heading_tag": "h4"
-          }
-        },
-        "richtext_BXg9n9": {
-          "type": "richtext",
-          "settings": {
-            "content": "<p>Bringing boxing culture, fighters and opportunity into overlooked communities.</p>"
-          }
-        },
-        "button_nGJ99b": {
-          "type": "button",
-          "settings": {
-            "style": "solid",
-            "text": "KIDS FROM",
-            "url": "shopify://collections/kids-from",
-            "background": "",
-            "text_color": ""
-          }
-        }
-      },
-      "block_order": [
-        "heading_JUj6mQ",
-        "richtext_BXg9n9",
-        "button_nGJ99b"
-      ],
-      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
-      "settings": {
-        "color_scheme": "scheme-3",
-        "image_size": "lg",
-        "image": "shopify://shop_images/ChatGPT_Image_Jun_14_2026_at_10_40_16_PM.png",
-        "mobile_image": "shopify://shop_images/ChatGPT_Image_Jun_14_2026_at_10_40_16_PM.png",
-        "allow_transparent_header": false,
-        "reveal_on_scroll": true,
-        "remove_vertical_spacing": true,
-        "content_width": "md",
-        "mobile_text_position": "place-self-end-center text-center",
-        "desktop_text_position": "sm:place-self-end-center sm:text-center",
-        "overlay_color": "#000000",
-        "overlay_opacity": 0
-      }
-    },
     "ss_slider_2_imBJAY": {
       "type": "ss-slider-2",
       "blocks": {
@@ -747,12 +747,12 @@
     "image_with_text_id8qQh",
     "image_with_text_JrwypK",
     "image_with_text_overlay_yzzd88",
+    "image_with_text_overlay_UgKDcW",
     "rich_text_CQcj9X",
     "legends_bestsellers",
     "ss_beauty_template_1_EMTiNf",
     "image_with_text_overlay_fLXQnV",
     "image_with_text_overlay_T3nQre",
-    "image_with_text_overlay_UgKDcW",
     "ss_slider_2_imBJAY"
   ]
 }
