@@ -327,6 +327,54 @@
         "subheading": ""
       }
     },
+    "image_with_text_overlay_T3nQre": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_hWYbxY": {
+          "type": "heading",
+          "settings": {
+            "text": "DREAMERS",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext_Kp3BDE": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>The original message that started Against All Odds.</p>"
+          }
+        },
+        "button_AdAHDE": {
+          "type": "button",
+          "settings": {
+            "style": "solid",
+            "text": "SHOP DREAMERS",
+            "url": "shopify://collections/dreamers-to-believers",
+            "background": "",
+            "text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_hWYbxY",
+        "richtext_Kp3BDE",
+        "button_AdAHDE"
+      ],
+      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "image_size": "lg",
+        "image": "shopify://shop_images/website_image_6431bd7a-9c14-4047-a12d-dbf1b2b8cecb.png",
+        "mobile_image": "shopify://shop_images/mobile_image.png",
+        "allow_transparent_header": false,
+        "reveal_on_scroll": true,
+        "remove_vertical_spacing": true,
+        "content_width": "md",
+        "mobile_text_position": "place-self-end-center text-center",
+        "desktop_text_position": "sm:place-self-end-center sm:text-center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
     "legends_bestsellers": {
       "type": "featured-collections",
       "blocks": {
@@ -491,54 +539,6 @@
         "image_size": "lg",
         "image": "shopify://shop_images/ChatGPT_Image_Jun_19_2026_at_10_20_53_PM_1.png",
         "mobile_image": "shopify://shop_images/ChatGPT_Image_Jun_19_2026_at_10_20_53_PM_2.png",
-        "allow_transparent_header": false,
-        "reveal_on_scroll": true,
-        "remove_vertical_spacing": true,
-        "content_width": "md",
-        "mobile_text_position": "place-self-end-center text-center",
-        "desktop_text_position": "sm:place-self-end-center sm:text-center",
-        "overlay_color": "#000000",
-        "overlay_opacity": 0
-      }
-    },
-    "image_with_text_overlay_T3nQre": {
-      "type": "image-with-text-overlay",
-      "blocks": {
-        "heading_hWYbxY": {
-          "type": "heading",
-          "settings": {
-            "text": "DREAMERS",
-            "heading_tag": "h2"
-          }
-        },
-        "richtext_Kp3BDE": {
-          "type": "richtext",
-          "settings": {
-            "content": "<p>The original message that started Against All Odds.</p>"
-          }
-        },
-        "button_AdAHDE": {
-          "type": "button",
-          "settings": {
-            "style": "solid",
-            "text": "SHOP DREAMERS",
-            "url": "shopify://collections/dreamers-to-believers",
-            "background": "",
-            "text_color": ""
-          }
-        }
-      },
-      "block_order": [
-        "heading_hWYbxY",
-        "richtext_Kp3BDE",
-        "button_AdAHDE"
-      ],
-      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
-      "settings": {
-        "color_scheme": "scheme-3",
-        "image_size": "lg",
-        "image": "shopify://shop_images/website_image_6431bd7a-9c14-4047-a12d-dbf1b2b8cecb.png",
-        "mobile_image": "shopify://shop_images/mobile_image.png",
         "allow_transparent_header": false,
         "reveal_on_scroll": true,
         "remove_vertical_spacing": true,
@@ -774,10 +774,10 @@
     "image_with_text_JrwypK",
     "image_with_text_overlay_UgKDcW",
     "featured_collections_8ycgHm",
+    "image_with_text_overlay_T3nQre",
     "legends_bestsellers",
     "ss_beauty_template_1_EMTiNf",
     "image_with_text_overlay_fLXQnV",
-    "image_with_text_overlay_T3nQre",
     "rich_text_CQcj9X",
     "image_with_text_overlay_yzzd88",
     "ss_slider_2_imBJAY"
