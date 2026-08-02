@@ -9,6 +9,15 @@
  */
 {
   "sections": {
+    "aao_sale_hero": {
+      "type": "aao-sale-hero",
+      "settings": {
+        "kicker": "24 hours only",
+        "button_text": "SHOP THE SALE",
+        "button_url": "shopify://collections/all",
+        "note": "Everything except the Council Kids capsule, which stays full price to fund the boxing gym in Coventry."
+      }
+    },
     "video_bD4nXC": {
       "type": "video",
       "blocks": {
@@ -147,6 +156,7 @@
     },
     "featured-collections": {
       "type": "featured-collections",
+      "disabled": true,
       "settings": {
         "color_scheme": "scheme-2",
         "separate_section_with_border": true,
@@ -157,8 +167,7 @@
         "horizontal_spacing_factor": 1,
         "vertical_spacing_factor": 1,
         "subheading": ""
-      },
-      "disabled": true
+      }
     },
     "featured_collections_HnLM8c": {
       "type": "featured-collections",
@@ -277,12 +286,12 @@
         "color_scheme": "scheme-3",
         "image_size": "lg",
         "image": "shopify://shop_images/ChatGPT_Image_Jul_16_2026_at_09_24_28_PM.png",
-        "mobile_image": "shopify://shop_images/ChatGPT_Image_Jul_16_2026_at_09_12_29_PM_9d0e7e21-aa27-4034-8f3f-8a0810150401.png",
+        "mobile_image": "shopify://shop_images/triumph.webp",
         "allow_transparent_header": false,
         "reveal_on_scroll": true,
         "remove_vertical_spacing": true,
         "content_width": "md",
-        "mobile_text_position": "place-self-end-center text-center",
+        "mobile_text_position": "place-self-start-center text-center",
         "desktop_text_position": "sm:place-self-end-center sm:text-center",
         "overlay_color": "#000000",
         "overlay_opacity": 0
@@ -417,16 +426,6 @@
     "image_with_text_overlay_fLXQnV": {
       "type": "image-with-text-overlay",
       "blocks": {
-        "button_FPmJn9": {
-          "type": "button",
-          "settings": {
-            "style": "solid",
-            "text": "SHOP COLLECTION",
-            "url": "shopify://collections/boxing-club",
-            "background": "",
-            "text_color": ""
-          }
-        },
         "heading_pw3BUM": {
           "type": "heading",
           "settings": {
@@ -438,6 +437,16 @@
           "type": "richtext",
           "settings": {
             "content": "<p>The core uniform of the new Against All Odds direction. Built for fighters, dreamers and underdogs still showing up.</p>"
+          }
+        },
+        "button_FPmJn9": {
+          "type": "button",
+          "settings": {
+            "style": "solid",
+            "text": "SHOP COLLECTION",
+            "url": "shopify://collections/boxing-club",
+            "background": "",
+            "text_color": ""
           }
         }
       },
@@ -465,16 +474,6 @@
     "image_with_text_overlay_T3nQre": {
       "type": "image-with-text-overlay",
       "blocks": {
-        "button_AdAHDE": {
-          "type": "button",
-          "settings": {
-            "style": "solid",
-            "text": "SHOP DREAMERS",
-            "url": "shopify://collections/dreamers-to-believers",
-            "background": "",
-            "text_color": ""
-          }
-        },
         "heading_hWYbxY": {
           "type": "heading",
           "settings": {
@@ -486,6 +485,16 @@
           "type": "richtext",
           "settings": {
             "content": "<p>The original message that started Against All Odds.</p>"
+          }
+        },
+        "button_AdAHDE": {
+          "type": "button",
+          "settings": {
+            "style": "solid",
+            "text": "SHOP DREAMERS",
+            "url": "shopify://collections/dreamers-to-believers",
+            "background": "",
+            "text_color": ""
           }
         }
       },
@@ -752,15 +761,6 @@
         "horizontal_spacing_factor": 1,
         "vertical_spacing_factor": 1,
         "subheading": ""
-      }
-    },
-    "aao_sale_hero": {
-      "type": "aao-sale-hero",
-      "settings": {
-        "kicker": "24 hours only",
-        "button_text": "SHOP THE SALE",
-        "button_url": "shopify://collections/all",
-        "note": "Everything except the Council Kids capsule, which stays full price to fund the boxing gym in Coventry."
       }
     }
   },
