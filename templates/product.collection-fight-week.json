@@ -1,11 +1,52 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-product",
       "blocks": {
+        "1a8adec4480d4b2c": {
+          "type": "shopify://apps/section-store/blocks/block-review-summary/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "disabled": true,
+          "settings": {
+            "star_style": "mild",
+            "stars_count": 4.5,
+            "stars_size": 14,
+            "stars_gap": 1,
+            "stars_color": "#1c1c1c",
+            "stars_bg_color": "#1c1c1c",
+            "stars_bg_half_color": "#dddddd",
+            "avatars_position": "first",
+            "avatars_size": 22,
+            "avatars_animate": false,
+            "first_text": "<p>&nbsp;</p>",
+            "first_text_size": 12,
+            "first_text_color": "#1c1c1c",
+            "second_text": "<p>Rated 4.8 by fans | <strong>580+ sold</strong></p>",
+            "second_text_size": 12,
+            "second_text_color": "#1c1c1c",
+            "border": "none",
+            "border_thickness": 1,
+            "border_color": "#1c1c1c",
+            "radius": 0,
+            "background": "",
+            "background_gradient": "",
+            "effect": "none",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "padding_vertical": 6,
+            "padding_horizontal": 0
+          }
+        },
         "accordion_rdLwBW": {
           "type": "accordion",
-          "disabled": false,
           "settings": {
             "show_below_gallery": true,
             "icon": "none",
@@ -17,7 +58,6 @@
         },
         "accordion_7ziYbi": {
           "type": "accordion",
-          "disabled": false,
           "settings": {
             "show_below_gallery": true,
             "icon": "none",
@@ -29,7 +69,6 @@
         },
         "accordion_kr4yep": {
           "type": "accordion",
-          "disabled": false,
           "settings": {
             "show_below_gallery": true,
             "icon": "none",
@@ -64,6 +103,95 @@
           "type": "price",
           "settings": {
             "show_taxes_notice": false
+          }
+        },
+        "284b13221165f0c0": {
+          "type": "shopify://apps/section-store/blocks/block-badge/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "disabled": true,
+          "settings": {
+            "first_icon": "shield_check",
+            "first_title": "Official Fighter Merch",
+            "first_bg_color": "#1c1c1c",
+            "first_background_gradient": "",
+            "first_title_color": "#ffffff",
+            "second_icon": "star_sparkle",
+            "second_title": "Premium Cotton",
+            "second_bg_color": "#1c1c1c",
+            "second_background_gradient": "",
+            "second_title_color": "#ffffff",
+            "third_icon": "heart",
+            "third_title": "Supports the Boxer",
+            "third_bg_color": "#1c1c1c",
+            "third_background_gradient": "",
+            "third_title_color": "#ffffff",
+            "title_size": 11,
+            "icon_size": 14,
+            "font_weight": "600",
+            "effect": "none",
+            "card_border": "solid",
+            "card_border_width": 0.5,
+            "card_border_color": "#333333",
+            "card_radius": 8,
+            "card_align": "left",
+            "background_gradient": "",
+            "padding_vertical": 4,
+            "padding_sides": 0,
+            "card_padding_horizontal": 12,
+            "card_padding_vertical": 7
+          }
+        },
+        "a187a9e4b968a9b7": {
+          "type": "shopify://apps/section-store/blocks/block-benefits-list/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "disabled": true,
+          "settings": {
+            "items_gap": 8,
+            "first_text": "<p><strong>Heavyweight feel</strong> — 240-245GSM built to last</p>",
+            "second_text": "<p><strong>Signed collectible</strong> — personal photo from the fighter</p>",
+            "third_text": "<p><strong>Fight-ready fit</strong> — structured oversized silhouette</p>",
+            "fourth_text": "<p><strong>Limited run</strong> — once they're gone, they're gone</p>",
+            "icon_selection": "check_mark",
+            "icon_size": 18,
+            "icon_color": "#1c1c1c",
+            "text_size": 14,
+            "text_color": "#1c1c1c",
+            "content_align": "left",
+            "border": "dotted",
+            "border_thickness": 1,
+            "border_color": "#d7d7d7",
+            "radius": 10,
+            "background": "",
+            "background_gradient": "",
+            "padding_vertical": 14,
+            "padding_horizontal": 14
+          }
+        },
+        "402011192551e36c": {
+          "type": "shopify://apps/section-store/blocks/block-banner/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "disabled": true,
+          "settings": {
+            "gap": 2,
+            "text_align": "center",
+            "link": "",
+            "use_image": false,
+            "icon": "rocket",
+            "image_size": 30,
+            "image_position": "left",
+            "icon_color": "#e32c2b",
+            "title_text": "<p>🥊 <strong>Fight Week — Limited Stock</strong></p>",
+            "title_size": 14,
+            "title_color": "#1c1c1c",
+            "body_text": "<p>Official tees sell out before fight night. Don't miss yours.</p>",
+            "body_size": 12,
+            "body_color": "#444444",
+            "border": "solid",
+            "border_thickness": 1,
+            "border_color": "#d7d7d7",
+            "radius": 10,
+            "background": "#f5f5f5",
+            "background_gradient": "",
+            "shadow": "none",
+            "padding_vertical": 12,
+            "padding_horizontal": 16
           }
         },
         "clearpay_on_site_messaging_payments_messaging_HDmgHf": {
@@ -104,8 +232,8 @@
         },
         "quantity_selector": {
           "type": "quantity_selector",
-          "settings": {},
-          "disabled": true
+          "disabled": true,
+          "settings": {}
         },
         "variant_picker": {
           "type": "variant_picker",
@@ -123,6 +251,31 @@
             "liquid": "{% if product.available %}\n\n<div class=\"instock-pulse\">\n  <span class=\"icon--pulsing\"></span>\n  <span>In stock, ready to ship</span>\n</div>\n\n<style>\n\n.instock-pulse {\n  display: flex;\n  flex-wrap: nowrap;\n  align-items: center;\n}\n\n.icon--pulsing {\n  position: relative;\n  width: 20px;\n  height: 20px;\n  margin-right: 10px;\n}\n\n.icon--pulsing:after, \n.icon--pulsing:before {\n    background: #54c63a;\n    width: 10px;\n    height: 10px;\n    border-radius: 10px;\n    position: absolute;\n    left: 0;\n    top: 0;\n    content: \"\";\n    margin: 5px;\n}\n\n@keyframes inventory-pulse{\n  0%{\n    opacity:0.5;\n  }\n  to{\n    transform:scale(2.5);\n    opacity:0;\n  }\n}\n\n.icon--pulsing:before {\n    animation: inventory-pulse 2s linear infinite;\n}\n\n</style>\n\n{% endif %}"
           }
         },
+        "db02c4ff041dee73": {
+          "type": "shopify://apps/section-store/blocks/block-shipping-info/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "settings": {
+            "use_dot": true,
+            "icon_color": "#307a07",
+            "icon_size": 10,
+            "ships_by_text": "Order now, ships by",
+            "shipping_within_days": 3,
+            "include_weekend": false,
+            "ships_by_font_size": 13,
+            "ships_by_text_color": "#1c1c1c",
+            "fast_shipping_text": "COUNTRY_FLAG <strong>Fast</strong> COUNTRY_CODE Shipping",
+            "allow_all_countries": true,
+            "allowed_countries": "US,CH,DE,AT,FR,IT",
+            "fast_shipping_text_for_rest_countries": "Fast European Shipping",
+            "fast_shipping_text_color": "#1c1c1c",
+            "border_style": "none",
+            "border_width": 1,
+            "border_color": "#d7d7d7",
+            "border_radius": 8,
+            "bg_color": "#f5f5f5",
+            "padding_vertical": 7,
+            "padding_horizontal": 14
+          }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -134,6 +287,32 @@
             "payment_button_text_color": ""
           }
         },
+        "69c80e04cef3e57e": {
+          "type": "shopify://apps/section-store/blocks/block-atc-style/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "settings": {
+            "background_color": "#1c1c1c",
+            "text_color": "#ffffff",
+            "hover_background_color": "#333333",
+            "hover_text_color": "#ffffff",
+            "font_size": 0,
+            "font_weight": "default",
+            "border_style": "none",
+            "border_width": 1,
+            "border_color": "#1c1c1c",
+            "border_radius": -1,
+            "padding_vertical": 0,
+            "background_effect": "none",
+            "gradient_color_end": "#333333",
+            "hover_effect": "lift",
+            "animation": "none",
+            "button_icon": "bag",
+            "use_custom_text": false,
+            "button_text": "Add to cart",
+            "show_price": true,
+            "round_price": false,
+            "compare_at_price_color": "#999999"
+          }
+        },
         "separator": {
           "type": "separator",
           "settings": {}
@@ -143,155 +322,11 @@
           "settings": {
             "collapse_content": false,
             "show_below_gallery": false
-          },
-          "disabled": false
-        },
-        "complementary_products": {
-          "type": "complementary_products",
-          "settings": {
-            "title": "Pairs well with",
-            "products_count": 2,
-            "show_below_gallery": true,
-            "stack_products": false,
-            "show_quick_buy": true
-          }
-        },
-        "1a8adec4480d4b2c": {
-          "type": "shopify://apps/section-store/blocks/block-review-summary/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
-          "settings": {
-            "star_style": "mild",
-            "stars_count": 4.5,
-            "stars_size": 14.0,
-            "stars_gap": 1.0,
-            "stars_color": "#1c1c1c",
-            "stars_bg_color": "#1c1c1c",
-            "stars_bg_half_color": "#DDDDDD",
-            "avatars_position": "first",
-            "avatars_size": 22.0,
-            "avatars_animate": false,
-            "first_text": "<p>&nbsp;</p>",
-            "first_text_size": 12.0,
-            "first_text_color": "#1c1c1c",
-            "second_text": "<p>Rated 4.8 by fans | <strong>580+ sold</strong></p>",
-            "second_text_size": 12.0,
-            "second_text_color": "#1c1c1c",
-            "border": "none",
-            "border_thickness": 1.0,
-            "border_color": "#1c1c1c",
-            "radius": 0.0,
-            "effect": "none",
-            "block_padding_top": 0.0,
-            "block_padding_bottom": 0.0,
-            "padding_vertical": 6.0,
-            "padding_horizontal": 0.0
-          },
-          "disabled": true
-        },
-        "284b13221165f0c0": {
-          "type": "shopify://apps/section-store/blocks/block-badge/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
-          "settings": {
-            "first_icon": "shield_check",
-            "first_title": "Official Fighter Merch",
-            "first_bg_color": "#1c1c1c",
-            "first_title_color": "#ffffff",
-            "second_icon": "star_sparkle",
-            "second_title": "Premium Cotton",
-            "second_bg_color": "#1c1c1c",
-            "second_title_color": "#ffffff",
-            "third_icon": "heart",
-            "third_title": "Supports the Boxer",
-            "third_bg_color": "#1c1c1c",
-            "third_title_color": "#ffffff",
-            "title_size": 11.0,
-            "icon_size": 14.0,
-            "font_weight": "600",
-            "effect": "none",
-            "card_border": "solid",
-            "card_border_width": 0.5,
-            "card_border_color": "#333333",
-            "card_radius": 8.0,
-            "card_align": "left",
-            "padding_vertical": 4.0,
-            "padding_sides": 0.0,
-            "card_padding_horizontal": 12.0,
-            "card_padding_vertical": 7.0
-          }
-        },
-        "a187a9e4b968a9b7": {
-          "type": "shopify://apps/section-store/blocks/block-benefits-list/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
-          "settings": {
-            "items_gap": 8.0,
-            "first_text": "<p><strong>Heavyweight feel</strong> — 240-245GSM built to last</p>",
-            "second_text": "<p><strong>Signed collectible</strong> — personal photo from the fighter</p>",
-            "third_text": "<p><strong>Fight-ready fit</strong> — structured oversized silhouette</p>",
-            "fourth_text": "<p><strong>Limited run</strong> — once they're gone, they're gone</p>",
-            "icon_selection": "check_mark",
-            "icon_size": 18.0,
-            "icon_color": "#1c1c1c",
-            "text_size": 14.0,
-            "text_color": "#1c1c1c",
-            "content_align": "left",
-            "border": "dotted",
-            "border_thickness": 1.0,
-            "border_color": "#D7D7D7",
-            "radius": 10.0,
-            "padding_vertical": 14.0,
-            "padding_horizontal": 14.0
-          }
-        },
-        "402011192551e36c": {
-          "type": "shopify://apps/section-store/blocks/block-banner/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
-          "settings": {
-            "gap": 2.0,
-            "text_align": "center",
-            "use_image": false,
-            "icon": "rocket",
-            "image_size": 30.0,
-            "image_position": "left",
-            "icon_color": "#e32c2b",
-            "title_text": "<p>🥊 <strong>Fight Week — Limited Stock</strong></p>",
-            "title_size": 14.0,
-            "title_color": "#1c1c1c",
-            "body_text": "<p>Official tees sell out before fight night. Don't miss yours.</p>",
-            "body_size": 12.0,
-            "body_color": "#444444",
-            "border": "solid",
-            "border_thickness": 1.0,
-            "border_color": "#D7D7D7",
-            "radius": 10.0,
-            "background": "#F5F5F5",
-            "shadow": "none",
-            "padding_vertical": 12.0,
-            "padding_horizontal": 16.0
-          }
-        },
-        "db02c4ff041dee73": {
-          "type": "shopify://apps/section-store/blocks/block-shipping-info/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
-          "settings": {
-            "use_dot": true,
-            "icon_color": "#307a07",
-            "icon_size": 10.0,
-            "ships_by_text": "Order now, ships by",
-            "shipping_within_days": 3,
-            "include_weekend": false,
-            "ships_by_font_size": 13.0,
-            "ships_by_text_color": "#1c1c1c",
-            "fast_shipping_text": "COUNTRY_FLAG <strong>Fast</strong> COUNTRY_CODE Shipping",
-            "allow_all_countries": true,
-            "allowed_countries": "US,CH,DE,AT,FR,IT",
-            "fast_shipping_text_for_rest_countries": "Fast European Shipping",
-            "fast_shipping_text_color": "#1c1c1c",
-            "border_style": "none",
-            "border_width": 1.0,
-            "border_color": "#D7D7D7",
-            "border_radius": 8.0,
-            "bg_color": "#F5F5F5",
-            "padding_vertical": 7.0,
-            "padding_horizontal": 14.0
           }
         },
         "d1aff5a99ea98e46": {
           "type": "shopify://apps/section-store/blocks/block-tabs/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "disabled": true,
           "settings": {
             "default_tab": "first",
             "tab_layout": "filled",
@@ -308,56 +343,40 @@
             "fourth_title": "Specs",
             "fourth_text": "<p>Premium heavyweight cotton tee built for fans who demand quality.</p>",
             "star_style": "mild",
-            "stars_count": 5.0,
+            "stars_count": 5,
             "stars_color": "#1c1c1c",
-            "stars_bg_half_color": "#E5E7EB",
+            "stars_bg_half_color": "#e5e7eb",
             "reviewer_name": "Jake M.",
             "review_date": "May 2025",
             "reviewer_subtext": "Verified Buyer — Fight Night Regular",
             "show_verified_badge": true,
             "verified_badge_color": "#1c1c1c",
-            "tab_text_size": 13.0,
-            "tab_font_weight": 600.0,
-            "content_text_size": 13.0,
-            "light_color": "#FFFFFF",
-            "dark_color": "#F5F5F5",
+            "reviewer_image": "shopify://shop_images/ai-block-tabs-reviewer-image-1_fc2b1c8e-6584-4181-bcb5-44697bf1473d.jpg",
+            "tab_text_size": 13,
+            "tab_font_weight": 600,
+            "content_text_size": 13,
+            "light_color": "#ffffff",
+            "dark_color": "#f5f5f5",
             "tab_text_color": "#444444",
             "text_color": "#1c1c1c",
-            "muted_text_color": "#6B6B6B",
+            "muted_text_color": "#6b6b6b",
             "effect": "none",
             "border": "solid",
-            "border_thickness": 1.0,
-            "border_color": "#D7D7D7",
-            "radius": 10.0,
-            "padding_vertical": 18.0,
-            "padding_horizontal": 18.0,
-            "reviewer_image": "shopify://shop_images/ai-block-tabs-reviewer-image-1_fc2b1c8e-6584-4181-bcb5-44697bf1473d.jpg"
-          },
-          "disabled": true
+            "border_thickness": 1,
+            "border_color": "#d7d7d7",
+            "radius": 10,
+            "padding_vertical": 18,
+            "padding_horizontal": 18
+          }
         },
-        "69c80e04cef3e57e": {
-          "type": "shopify://apps/section-store/blocks/block-atc-style/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+        "complementary_products": {
+          "type": "complementary_products",
           "settings": {
-            "background_color": "#1c1c1c",
-            "text_color": "#FFFFFF",
-            "hover_background_color": "#333333",
-            "hover_text_color": "#FFFFFF",
-            "font_size": 0.0,
-            "font_weight": "default",
-            "border_style": "none",
-            "border_width": 1.0,
-            "border_color": "#1c1c1c",
-            "border_radius": -1.0,
-            "background_effect": "none",
-            "gradient_color_end": "#333333",
-            "hover_effect": "lift",
-            "animation": "none",
-            "button_icon": "bag",
-            "use_custom_text": false,
-            "button_text": "Add to cart",
-            "show_price": true,
-            "round_price": false,
-            "compare_at_price_color": "#999999"
+            "title": "Pairs well with",
+            "products_count": 2,
+            "show_below_gallery": true,
+            "stack_products": false,
+            "show_quick_buy": true
           }
         }
       },
@@ -392,6 +411,7 @@
         "product_info_size": 35,
         "show_sticky_add_to_cart": true,
         "center_basic_info": false,
+        "show_bundle_promo": false,
         "desktop_media_layout": "grid",
         "desktop_media_grid_gap": 30,
         "mobile_controls": "dots",
@@ -491,6 +511,8 @@
         "loox_reviews_loox_dynamic_section_hh9UCM": {
           "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
           "settings": {
+            "reviews_to_display": "",
+            "default_tab": "automatic",
             "only_photos": false,
             "aggregated": false,
             "limit": 25,
