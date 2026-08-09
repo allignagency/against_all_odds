@@ -178,7 +178,7 @@
       ],
       "name": "t:sections.image_with_text.presets.image_with_text.name",
       "settings": {
-        "color_scheme": "",
+        "color_scheme": "scheme-3",
         "separate_section_with_border": true,
         "image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_11_23_48_PM.png",
         "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_11_22_47_PM.png",
