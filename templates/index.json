@@ -354,7 +354,7 @@
       ],
       "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
       "settings": {
-        "color_scheme": "scheme-2",
+        "color_scheme": "scheme-3",
         "image_size": "lg",
         "image": "shopify://shop_images/website_site.webp",
         "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_09_28_31_PM.png",
