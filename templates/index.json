@@ -337,12 +337,6 @@
             "heading_tag": "h2"
           }
         },
-        "richtext_Kp3BDE": {
-          "type": "richtext",
-          "settings": {
-            "content": "<p>The original message that started Against All Odds.</p>"
-          }
-        },
         "button_AdAHDE": {
           "type": "button",
           "settings": {
@@ -356,7 +350,6 @@
       },
       "block_order": [
         "heading_hWYbxY",
-        "richtext_Kp3BDE",
         "button_AdAHDE"
       ],
       "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
