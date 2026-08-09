@@ -203,6 +203,26 @@
     "ss_slider_2_LQGNEa": {
       "type": "ss-slider-2",
       "blocks": {
+        "slide_3rgc3C": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/IMG_6585.webp",
+            "url": "",
+            "title": "RIO FERDINAND",
+            "button": "SEEN ON, WORN BY",
+            "button_url": ""
+          }
+        },
+        "slide_fQNWbd": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/IMG_6584.webp",
+            "url": "",
+            "title": "CHIP",
+            "button": "SEEN ON, WORN BY",
+            "button_url": ""
+          }
+        },
         "slide_nX9eGn": {
           "type": "slide",
           "settings": {
@@ -213,33 +233,13 @@
             "button_url": ""
           }
         },
-        "slide_3rgc3C": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/IMG_6585.webp",
-            "url": "",
-            "title": "RIO FERDINAND",
-            "button": "",
-            "button_url": ""
-          }
-        },
-        "slide_fQNWbd": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/IMG_6584.webp",
-            "url": "",
-            "title": "CHIP",
-            "button": "",
-            "button_url": ""
-          }
-        },
         "slide_yCPp4n": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/581B0951-1C51-4A53-AD3E-ACD94CE4BC73.webp",
             "url": "",
             "title": "BILLY WINGROVE",
-            "button": "",
+            "button": "SEEN ON, WORN BY",
             "button_url": ""
           }
         },
@@ -249,7 +249,7 @@
             "image": "shopify://shop_images/Untitled-1.webp",
             "url": "",
             "title": "DAPPY",
-            "button": "",
+            "button": "SEEN ON, WORN BY",
             "button_url": ""
           }
         },
@@ -259,15 +259,15 @@
             "image": "shopify://shop_images/IMG_6594.webp",
             "url": "",
             "title": "CHARLIE EDWARDS",
-            "button": "",
+            "button": "SEEN ON, WORN BY",
             "button_url": ""
           }
         }
       },
       "block_order": [
-        "slide_nX9eGn",
         "slide_3rgc3C",
         "slide_fQNWbd",
+        "slide_nX9eGn",
         "slide_yCPp4n",
         "slide_L9fk3J",
         "slide_ynQEhw"
@@ -300,12 +300,12 @@
         "button_font": "archivo_black_n4",
         "button_size": 14,
         "button_size_mobile": 14,
-        "button_height": 100,
+        "button_height": 50,
         "button_mt": 16,
         "button_padding_vertical": 12,
         "button_padding_horizontal": 20,
         "button_radius": 0,
-        "button_border_thickness": 1,
+        "button_border_thickness": 0,
         "arrow_size": 50,
         "arrow_size_mobile": 32,
         "arrow_icon_size": 20,
