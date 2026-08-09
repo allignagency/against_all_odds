@@ -234,9 +234,10 @@
         "slide_ynQEhw": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/IMG_6594.webp",
             "url": "",
-            "title": "New Slide",
-            "button": "Learn more",
+            "title": "CHARLIE EDWARDS",
+            "button": "",
             "button_url": ""
           }
         }
