@@ -97,27 +97,6 @@
         "remove_vertical_spacing": true
       }
     },
-    "main": {
-      "type": "main-collection",
-      "settings": {
-        "color_scheme": "scheme-2",
-        "hide_product_information": false,
-        "products_per_page": 48,
-        "products_per_row_mobile": "2",
-        "products_size_desktop": "medium",
-        "show_grid_mode_selector": true,
-        "horizontal_spacing_factor": 1,
-        "vertical_spacing_factor": 1,
-        "filter_layout": "sidebar",
-        "quick_links_menu": "",
-        "show_sort_by": true,
-        "show_filters": true,
-        "show_results_count": true,
-        "show_filter_group_name": false,
-        "show_filter_values_count": true,
-        "open_filters_by_default": false
-      }
-    },
     "rich_text_hTMGLD": {
       "type": "rich-text",
       "blocks": {
@@ -154,13 +133,34 @@
         "text_position": "center",
         "remove_vertical_spacing": false
       }
+    },
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "hide_product_information": false,
+        "products_per_page": 48,
+        "products_per_row_mobile": "2",
+        "products_size_desktop": "medium",
+        "show_grid_mode_selector": true,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "filter_layout": "sidebar",
+        "quick_links_menu": "",
+        "show_sort_by": true,
+        "show_filters": true,
+        "show_results_count": true,
+        "show_filter_group_name": false,
+        "show_filter_values_count": true,
+        "open_filters_by_default": false
+      }
     }
   },
   "order": [
     "collection-banner",
     "image_with_text_overlay_MPNXKi",
     "image_with_text_block_9jk7tC",
-    "main",
-    "rich_text_hTMGLD"
+    "rich_text_hTMGLD",
+    "main"
   ]
 }
