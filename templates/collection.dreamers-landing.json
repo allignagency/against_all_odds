@@ -66,37 +66,6 @@
         "overlay_opacity": 30
       }
     },
-    "image_with_text_block_9jk7tC": {
-      "type": "image-with-text-block",
-      "blocks": {
-        "subheading_jWY9JC": {
-          "type": "subheading",
-          "settings": {
-            "text": "EVERYTHING STARTS WITH A DREAM"
-          }
-        },
-        "richtext_hFGdbk": {
-          "type": "richtext",
-          "settings": {
-            "content": "<p>Before the achievements.<br/>Before the recognition.<br/>Before anyone believes.</p><p>There is a decision to keep going.</p><p>Dreamers was created for those people.</p><p>The fighters. The creators. The builders. The ones chasing something nobody else can see yet.</p><p>Against All Odds.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "subheading_jWY9JC",
-        "richtext_hFGdbk"
-      ],
-      "name": "t:sections.image_with_text_block.presets.image_with_text_block.name",
-      "settings": {
-        "color_scheme": "",
-        "image_size": "lg",
-        "image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_10_59_03_PM.png",
-        "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_10_58_17_PM.png",
-        "content_width": "sm",
-        "enable_parallax": true,
-        "remove_vertical_spacing": true
-      }
-    },
     "rich_text_hTMGLD": {
       "type": "rich-text",
       "blocks": {
@@ -168,7 +137,7 @@
         "richtext_AeGrm7": {
           "type": "richtext",
           "settings": {
-            "content": "<p>Not made to be worn once.</p><p>The Dreamers collection is created using heavyweight 100% organic cotton with a focus on quality, comfort and longevity.</p><p>Premium construction. Premium materials.</p><p>The difference is felt when you put it on.</p>"
+            "content": "<p>Not made to be worn once.</p><p>The Dreamers collection is created using heavyweight 100% organic cotton with a focus on quality, comfort and longevity.<br/><strong>Made in Portugal</strong>.</p><p>Premium construction. Premium materials.</p><p>The difference is felt when you put it on.</p>"
           }
         }
       },
@@ -385,7 +354,14 @@
         "subheading_D3NyAQ": {
           "type": "subheading",
           "settings": {
-            "text": "EVERYTHING STARTS WITH A DREAM"
+            "text": "Subheading"
+          }
+        },
+        "heading_3AGMpH": {
+          "type": "heading",
+          "settings": {
+            "text": "Image with text",
+            "heading_tag": "h1"
           }
         },
         "richtext_UAxTf9": {
@@ -397,13 +373,15 @@
       },
       "block_order": [
         "subheading_D3NyAQ",
+        "heading_3AGMpH",
         "richtext_UAxTf9"
       ],
       "name": "t:sections.image_with_text.presets.image_with_text.name",
       "settings": {
-        "color_scheme": "",
+        "color_scheme": "scheme-3",
         "separate_section_with_border": true,
         "image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_10_58_17_PM.png",
+        "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_10_58_17_PM.png",
         "reveal_on_scroll": true,
         "image_position": "start",
         "content_width": "sm",
@@ -414,7 +392,6 @@
   "order": [
     "collection-banner",
     "image_with_text_overlay_MPNXKi",
-    "image_with_text_block_9jk7tC",
     "rich_text_hTMGLD",
     "main",
     "image_with_text_hdnNEG",
