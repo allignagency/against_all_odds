@@ -11,6 +11,7 @@
   "sections": {
     "collection-banner": {
       "type": "collection-banner",
+      "disabled": true,
       "settings": {
         "color_scheme": "scheme-3",
         "image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_09_57_37_PM.png",
@@ -48,10 +49,48 @@
         "show_filter_values_count": true,
         "open_filters_by_default": false
       }
+    },
+    "image_with_text_overlay_MPNXKi": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_Tftymc": {
+          "type": "heading",
+          "settings": {
+            "text": "Image with text overlay",
+            "heading_tag": "h4"
+          }
+        },
+        "richtext_XpjBwi": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Add your own custom content to give more information about your store, availability details...</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Tftymc",
+        "richtext_XpjBwi"
+      ],
+      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
+      "settings": {
+        "color_scheme": "",
+        "image_size": "auto",
+        "image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_09_22_39_PM.png",
+        "mobile_image": "shopify://shop_images/mobile_site.webp",
+        "allow_transparent_header": false,
+        "reveal_on_scroll": true,
+        "remove_vertical_spacing": true,
+        "content_width": "md",
+        "mobile_text_position": "place-self-center text-center",
+        "desktop_text_position": "sm:place-self-center sm:text-center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
     }
   },
   "order": [
     "collection-banner",
-    "main"
+    "main",
+    "image_with_text_overlay_MPNXKi"
   ]
 }
