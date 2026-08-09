@@ -32,16 +32,6 @@
     "image_with_text_overlay_MPNXKi": {
       "type": "image-with-text-overlay",
       "blocks": {
-        "button_JegnkA": {
-          "type": "button",
-          "settings": {
-            "style": "solid",
-            "text": "SHOP DREAMERS",
-            "url": "",
-            "background": "",
-            "text_color": ""
-          }
-        },
         "heading_Tftymc": {
           "type": "heading",
           "settings": {
@@ -54,12 +44,22 @@
           "settings": {
             "content": "<p>For those still chasing something bigger.</p>"
           }
+        },
+        "button_JegnkA": {
+          "type": "button",
+          "settings": {
+            "style": "solid",
+            "text": "SHOP DREAMERS",
+            "url": "",
+            "background": "",
+            "text_color": ""
+          }
         }
       },
       "block_order": [
-        "button_JegnkA",
         "heading_Tftymc",
-        "richtext_XpjBwi"
+        "richtext_XpjBwi",
+        "button_JegnkA"
       ],
       "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
       "settings": {
