@@ -158,28 +158,21 @@
     "image_with_text_hdnNEG": {
       "type": "image-with-text",
       "blocks": {
-        "subheading_aUTB9M": {
-          "type": "subheading",
-          "settings": {
-            "text": "Subheading"
-          }
-        },
         "heading_HNPN6Y": {
           "type": "heading",
           "settings": {
-            "text": "Image with text",
+            "text": "BUILT DIFFERENT",
             "heading_tag": "h1"
           }
         },
         "richtext_AeGrm7": {
           "type": "richtext",
           "settings": {
-            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+            "content": "<p>Not made to be worn once.</p><p>The Dreamers collection is created using heavyweight 100% organic cotton with a focus on quality, comfort and longevity.</p><p>Premium construction. Premium materials.</p><p>The difference is felt when you put it on.</p>"
           }
         }
       },
       "block_order": [
-        "subheading_aUTB9M",
         "heading_HNPN6Y",
         "richtext_AeGrm7"
       ],
