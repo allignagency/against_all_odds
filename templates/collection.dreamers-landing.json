@@ -338,8 +338,10 @@
         "image_Dfk6FM": {
           "type": "image",
           "settings": {
-            "subheading": "Tell your story",
-            "title": "Slide 1",
+            "image": "shopify://shop_images/hf_20260402_211055_65b73da1-f2e8-4781-8242-559b12b2bca7-2.png",
+            "mobile_image": "shopify://shop_images/hf_20260402_211055_65b73da1-f2e8-4781-8242-559b12b2bca7-2.png",
+            "subheading": "Wear your journey.",
+            "title": "STILL CHASING?",
             "mobile_text_position": "place-self-center text-center",
             "desktop_text_position": "sm:place-self-center sm:text-center",
             "content_max_width": 780,
@@ -357,7 +359,7 @@
             "background_opacity": 50,
             "text_color": "#ffffff",
             "border_color": "",
-            "gradient_overlay": "linear-gradient(180deg, rgba(54, 54, 54, 0.2) 0%, rgba(4, 4, 4, 0.65) 100%)"
+            "gradient_overlay": "linear-gradient(180deg, rgba(54, 54, 54, 0.2), rgba(4, 4, 4, 0.65) 100%)"
           }
         },
         "image_9aQYMD": {
