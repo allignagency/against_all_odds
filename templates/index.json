@@ -361,10 +361,10 @@
       ],
       "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
       "settings": {
-        "color_scheme": "scheme-3",
+        "color_scheme": "scheme-2",
         "image_size": "lg",
-        "image": "shopify://shop_images/ChatGPT_Image_Aug_2_2026_at_08_51_50_PM.png",
-        "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_2_2026_at_08_52_13_PM.png",
+        "image": "shopify://shop_images/website_site.webp",
+        "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_09_28_31_PM.png",
         "allow_transparent_header": false,
         "reveal_on_scroll": true,
         "remove_vertical_spacing": true,
