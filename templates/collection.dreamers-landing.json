@@ -117,12 +117,50 @@
         "show_filter_values_count": true,
         "open_filters_by_default": false
       }
+    },
+    "rich_text_hTMGLD": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_BgeMRc": {
+          "type": "subheading",
+          "settings": {
+            "text": "Premium heavyweight garments created for everyday wear."
+          }
+        },
+        "heading_Gw7MhG": {
+          "type": "heading",
+          "settings": {
+            "text": "THE DREAMERS COLLECTION",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_zQxN84": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>100% Organic Cotton · Heavyweight Construction · Premium Finish · Designed to Last</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_BgeMRc",
+        "heading_Gw7MhG",
+        "richtext_zQxN84"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
     }
   },
   "order": [
     "collection-banner",
     "image_with_text_overlay_MPNXKi",
     "image_with_text_block_9jk7tC",
-    "main"
+    "main",
+    "rich_text_hTMGLD"
   ]
 }
