@@ -32,6 +32,16 @@
     "image_with_text_overlay_MPNXKi": {
       "type": "image-with-text-overlay",
       "blocks": {
+        "button_JegnkA": {
+          "type": "button",
+          "settings": {
+            "style": "solid",
+            "text": "SHOP DREAMERS",
+            "url": "",
+            "background": "",
+            "text_color": ""
+          }
+        },
         "heading_Tftymc": {
           "type": "heading",
           "settings": {
@@ -47,6 +57,7 @@
         }
       },
       "block_order": [
+        "button_JegnkA",
         "heading_Tftymc",
         "richtext_XpjBwi"
       ],
