@@ -224,9 +224,10 @@
         "slide_L9fk3J": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/Untitled-1.webp",
             "url": "",
-            "title": "New Slide",
-            "button": "Learn more",
+            "title": "DAPPY",
+            "button": "",
             "button_url": ""
           }
         },
