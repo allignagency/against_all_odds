@@ -13,7 +13,7 @@
       "type": "collection-banner",
       "settings": {
         "color_scheme": "scheme-3",
-        "image": "shopify://shop_images/ChatGPT_Image_Aug_2_2026_at_08_51_50_PM.png",
+        "image": "shopify://shop_images/website_site.webp",
         "mobile_image": "shopify://shop_images/mobile_site.webp",
         "image_size": "sm",
         "allow_transparent_header": true,
