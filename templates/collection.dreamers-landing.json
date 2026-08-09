@@ -154,6 +154,46 @@
         "show_filter_values_count": true,
         "open_filters_by_default": false
       }
+    },
+    "image_with_text_hdnNEG": {
+      "type": "image-with-text",
+      "blocks": {
+        "subheading_aUTB9M": {
+          "type": "subheading",
+          "settings": {
+            "text": "Subheading"
+          }
+        },
+        "heading_HNPN6Y": {
+          "type": "heading",
+          "settings": {
+            "text": "Image with text",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_AeGrm7": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_aUTB9M",
+        "heading_HNPN6Y",
+        "richtext_AeGrm7"
+      ],
+      "name": "t:sections.image_with_text.presets.image_with_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_11_23_48_PM.png",
+        "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_11_22_47_PM.png",
+        "reveal_on_scroll": true,
+        "image_position": "start",
+        "content_width": "sm",
+        "remove_vertical_spacing": true
+      }
     }
   },
   "order": [
@@ -161,6 +201,7 @@
     "image_with_text_overlay_MPNXKi",
     "image_with_text_block_9jk7tC",
     "rich_text_hTMGLD",
-    "main"
+    "main",
+    "image_with_text_hdnNEG"
   ]
 }
