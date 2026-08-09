@@ -354,14 +354,7 @@
         "subheading_D3NyAQ": {
           "type": "subheading",
           "settings": {
-            "text": "Subheading"
-          }
-        },
-        "heading_3AGMpH": {
-          "type": "heading",
-          "settings": {
-            "text": "Image with text",
-            "heading_tag": "h1"
+            "text": "EVERYONE STARTS WITH A DREAM"
           }
         },
         "richtext_UAxTf9": {
@@ -373,7 +366,6 @@
       },
       "block_order": [
         "subheading_D3NyAQ",
-        "heading_3AGMpH",
         "richtext_UAxTf9"
       ],
       "name": "t:sections.image_with_text.presets.image_with_text.name",
