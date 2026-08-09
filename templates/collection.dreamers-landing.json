@@ -191,6 +191,16 @@
     "ss_slider_2_LQGNEa": {
       "type": "ss-slider-2",
       "blocks": {
+        "slide_nX9eGn": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/IMG_6580.webp",
+            "url": "",
+            "title": "SHABAZ MASOUD",
+            "button": "",
+            "button_url": ""
+          }
+        },
         "slide_3rgc3C": {
           "type": "slide",
           "settings": {
@@ -243,6 +253,7 @@
         }
       },
       "block_order": [
+        "slide_nX9eGn",
         "slide_3rgc3C",
         "slide_fQNWbd",
         "slide_yCPp4n",
