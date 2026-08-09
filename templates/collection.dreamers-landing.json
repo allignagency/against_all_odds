@@ -367,7 +367,7 @@
             "mobile_image": "shopify://shop_images/hf_20260402_211055_65b73da1-f2e8-4781-8242-559b12b2bca7-2.png",
             "subheading": "Wear your journey.",
             "title": "STILL CHASING?",
-            "mobile_text_position": "place-self-center text-center",
+            "mobile_text_position": "place-self-start-center text-center",
             "desktop_text_position": "sm:place-self-center sm:text-center",
             "content_max_width": 780,
             "button_1_text": "",
