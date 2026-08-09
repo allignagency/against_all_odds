@@ -214,9 +214,10 @@
         "slide_yCPp4n": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/581B0951-1C51-4A53-AD3E-ACD94CE4BC73.webp",
             "url": "",
-            "title": "New Slide",
-            "button": "Learn more",
+            "title": "BILLY WINGROVE",
+            "button": "",
             "button_url": ""
           }
         },
