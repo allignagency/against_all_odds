@@ -13,9 +13,7 @@
       "type": "collection-banner",
       "settings": {
         "color_scheme": "scheme-3",
-        "image": "shopify://shop_images/website_site.webp",
-        "mobile_image": "shopify://shop_images/mobile_site.webp",
-        "image_size": "sm",
+        "image_size": "md",
         "allow_transparent_header": true,
         "show_image": true,
         "reveal": true,
