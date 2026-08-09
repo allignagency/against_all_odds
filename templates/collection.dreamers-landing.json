@@ -66,6 +66,38 @@
         "overlay_opacity": 30
       }
     },
+    "image_with_text_K94BD8": {
+      "type": "image-with-text",
+      "blocks": {
+        "subheading_D3NyAQ": {
+          "type": "subheading",
+          "settings": {
+            "text": "EVERYONE STARTS WITH A DREAM"
+          }
+        },
+        "richtext_UAxTf9": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Before the achievements.<br/>Before the recognition.<br/>Before anyone believes.</p><p>There is a decision to keep going.</p><p>Dreamers was created for those people.</p><p>The fighters. The creators. The builders. The ones chasing something nobody else can see yet.</p><p>Against All Odds.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_D3NyAQ",
+        "richtext_UAxTf9"
+      ],
+      "name": "t:sections.image_with_text.presets.image_with_text.name",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "separate_section_with_border": true,
+        "image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_10_58_17_PM.png",
+        "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_10_58_17_PM.png",
+        "reveal_on_scroll": true,
+        "image_position": "start",
+        "content_width": "sm",
+        "remove_vertical_spacing": true
+      }
+    },
     "rich_text_hTMGLD": {
       "type": "rich-text",
       "blocks": {
@@ -347,48 +379,16 @@
         "background": "#000000",
         "controls_color": "#ffffff"
       }
-    },
-    "image_with_text_K94BD8": {
-      "type": "image-with-text",
-      "blocks": {
-        "subheading_D3NyAQ": {
-          "type": "subheading",
-          "settings": {
-            "text": "EVERYONE STARTS WITH A DREAM"
-          }
-        },
-        "richtext_UAxTf9": {
-          "type": "richtext",
-          "settings": {
-            "content": "<p>Before the achievements.<br/>Before the recognition.<br/>Before anyone believes.</p><p>There is a decision to keep going.</p><p>Dreamers was created for those people.</p><p>The fighters. The creators. The builders. The ones chasing something nobody else can see yet.</p><p>Against All Odds.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "subheading_D3NyAQ",
-        "richtext_UAxTf9"
-      ],
-      "name": "t:sections.image_with_text.presets.image_with_text.name",
-      "settings": {
-        "color_scheme": "scheme-3",
-        "separate_section_with_border": true,
-        "image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_10_58_17_PM.png",
-        "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_9_2026_at_10_58_17_PM.png",
-        "reveal_on_scroll": true,
-        "image_position": "start",
-        "content_width": "sm",
-        "remove_vertical_spacing": true
-      }
     }
   },
   "order": [
     "collection-banner",
     "image_with_text_overlay_MPNXKi",
+    "image_with_text_K94BD8",
     "rich_text_hTMGLD",
     "main",
     "image_with_text_hdnNEG",
     "ss_slider_2_LQGNEa",
-    "slideshow_VAYmKC",
-    "image_with_text_K94BD8"
+    "slideshow_VAYmKC"
   ]
 }
