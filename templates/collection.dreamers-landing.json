@@ -154,7 +154,7 @@
         "products_per_page": 48,
         "products_per_row_mobile": "2",
         "products_size_desktop": "medium",
-        "show_grid_mode_selector": true,
+        "show_grid_mode_selector": false,
         "horizontal_spacing_factor": 1,
         "vertical_spacing_factor": 1,
         "filter_layout": "sidebar",
