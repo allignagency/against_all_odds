@@ -77,6 +77,27 @@
         "overlay_opacity": 30
       }
     },
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "hide_product_information": false,
+        "products_per_page": 48,
+        "products_per_row_mobile": "2",
+        "products_size_desktop": "medium",
+        "show_grid_mode_selector": false,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "filter_layout": "sidebar",
+        "quick_links_menu": "",
+        "show_sort_by": false,
+        "show_filters": false,
+        "show_results_count": true,
+        "show_filter_group_name": false,
+        "show_filter_values_count": false,
+        "open_filters_by_default": false
+      }
+    },
     "image_with_text_K94BD8": {
       "type": "image-with-text",
       "blocks": {
@@ -156,27 +177,6 @@
         "remove_horizontal_spacing": false,
         "liquid": "<div id=\"dreamers-products\"></div>\n\n<style>\n  #shopify-section-{{ section.id }} {\n    margin: 0 !important;\n    padding: 0 !important;\n  }\n\n  #shopify-section-{{ section.id }} .section,\n  #shopify-section-{{ section.id }} .section-spacing,\n  #shopify-section-{{ section.id }} .container {\n    margin: 0 !important;\n    padding: 0 !important;\n    min-height: 0 !important;\n  }\n\n  #dreamers-products {\n    height: 0 !important;\n    margin: 0 !important;\n    padding: 0 !important;\n    scroll-margin-top: 140px;\n  }\n</style>",
         "text_alignment": "center"
-      }
-    },
-    "main": {
-      "type": "main-collection",
-      "settings": {
-        "color_scheme": "scheme-2",
-        "hide_product_information": false,
-        "products_per_page": 48,
-        "products_per_row_mobile": "2",
-        "products_size_desktop": "medium",
-        "show_grid_mode_selector": false,
-        "horizontal_spacing_factor": 1,
-        "vertical_spacing_factor": 1,
-        "filter_layout": "sidebar",
-        "quick_links_menu": "",
-        "show_sort_by": false,
-        "show_filters": false,
-        "show_results_count": true,
-        "show_filter_group_name": false,
-        "show_filter_values_count": false,
-        "open_filters_by_default": false
       }
     },
     "image_with_text_hdnNEG": {
@@ -407,10 +407,10 @@
   "order": [
     "collection-banner",
     "image_with_text_overlay_MPNXKi",
-    "image_with_text_K94BD8",
     "rich_text_hTMGLD",
-    "custom_liquid_47eeny",
     "main",
+    "image_with_text_K94BD8",
+    "custom_liquid_47eeny",
     "image_with_text_hdnNEG",
     "ss_slider_2_LQGNEa",
     "slideshow_VAYmKC"
