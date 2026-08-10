@@ -154,7 +154,7 @@
         "separate_section_with_border": false,
         "remove_vertical_spacing": false,
         "remove_horizontal_spacing": false,
-        "liquid": "<div id=\"dreamers-products\" style=\"height:0; margin:0; padding:0; scroll-margin-top:140px;\"></div>\n\n<style>\n  #shopify-section-{{ section.id }} {\n    margin: 0 !important;\n    padding: 0 !important;\n  }\n</style>",
+        "liquid": "<div id=\"dreamers-products\"></div>\n\n<style>\n  #shopify-section-{{ section.id }} {\n    margin: 0 !important;\n    padding: 0 !important;\n  }\n\n  #shopify-section-{{ section.id }} .section,\n  #shopify-section-{{ section.id }} .section-spacing,\n  #shopify-section-{{ section.id }} .container {\n    margin: 0 !important;\n    padding: 0 !important;\n    min-height: 0 !important;\n  }\n\n  #dreamers-products {\n    height: 0 !important;\n    margin: 0 !important;\n    padding: 0 !important;\n    scroll-margin-top: 140px;\n  }\n</style>",
         "text_alignment": "center"
       }
     },
