@@ -151,7 +151,7 @@
       "name": "t:sections.custom_liquid.presets.custom_liquid.name",
       "settings": {
         "color_scheme": "scheme-2",
-        "separate_section_with_border": true,
+        "separate_section_with_border": false,
         "remove_vertical_spacing": false,
         "remove_horizontal_spacing": false,
         "liquid": "<div id=\"dreamers-products\" style=\"height:0; margin:0; padding:0; scroll-margin-top:140px;\"></div>\n\n<style>\n  #shopify-section-{{ section.id }} {\n    margin: 0 !important;\n    padding: 0 !important;\n  }\n</style>",
