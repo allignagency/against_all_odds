@@ -370,7 +370,7 @@
             "desktop_text_position": "sm:place-self-center sm:text-center",
             "content_max_width": 780,
             "button_1_text": "SHOP DREAMERS",
-            "button_1_link": "",
+            "button_1_link": "#dreamers-products",
             "button_1_style": "solid",
             "button_1_background": "#ffffff",
             "button_1_text_color": "#000000",
