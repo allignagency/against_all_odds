@@ -50,7 +50,7 @@
           "settings": {
             "style": "solid",
             "text": "SHOP DREAMERS",
-            "url": "shopify://collections/dreamers-the-collection",
+            "url": "#dreamers-products",
             "background": "",
             "text_color": ""
           }
