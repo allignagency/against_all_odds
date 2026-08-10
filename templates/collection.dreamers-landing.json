@@ -146,6 +146,18 @@
         "remove_vertical_spacing": false
       }
     },
+    "custom_liquid_47eeny": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom_liquid.presets.custom_liquid.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false,
+        "liquid": "<div id=\"dreamers-products\"></div>",
+        "text_alignment": "center"
+      }
+    },
     "main": {
       "type": "main-collection",
       "settings": {
@@ -397,6 +409,7 @@
     "image_with_text_overlay_MPNXKi",
     "image_with_text_K94BD8",
     "rich_text_hTMGLD",
+    "custom_liquid_47eeny",
     "main",
     "image_with_text_hdnNEG",
     "ss_slider_2_LQGNEa",
