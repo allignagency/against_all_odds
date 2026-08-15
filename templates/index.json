@@ -333,7 +333,7 @@
         "heading_hWYbxY": {
           "type": "heading",
           "settings": {
-            "text": "DREAMERS",
+            "text": "FIGHT WEEK",
             "heading_tag": "h2"
           }
         },
@@ -341,8 +341,8 @@
           "type": "button",
           "settings": {
             "style": "solid",
-            "text": "SHOP DREAMERS",
-            "url": "shopify://collections/dreamers-to-believers",
+            "text": "SHOP FIGHT WEEK",
+            "url": "shopify://collections/fight-tees",
             "background": "",
             "text_color": ""
           }
