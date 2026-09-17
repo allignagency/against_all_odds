@@ -71,7 +71,7 @@
       },
       "4571859552318407796": {
         "type": "shopify://apps/glo-color-swatch-variant-image/blocks/app-embed-block/4394f710-096c-4021-bbde-8ebb26057c11",
-        "disabled": false,
+        "disabled": true,
         "settings": {
           "customCssGCW": ""
         }
@@ -83,12 +83,12 @@
       },
       "14826766009936288847": {
         "type": "shopify://apps/discounty/blocks/sdk/d65eb522-0d94-499f-9831-d4b3301f5340",
-        "disabled": false,
+        "disabled": true,
         "settings": {}
       },
       "14952540001915115444": {
         "type": "shopify://apps/upcart-cart-drawer/blocks/app-embed/af3da5fb-f5f7-40ec-8273-41bf50059d4b",
-        "disabled": false,
+        "disabled": true,
         "settings": {}
       }
     },
