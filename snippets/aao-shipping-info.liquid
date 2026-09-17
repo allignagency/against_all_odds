@@ -1,0 +1,202 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+AAO SHIPPING INFO
+----------------------------------------------------------------------------------------------------------------------
+
+Native replacement for the Section Store app block
+"shopify://apps/section-store/blocks/block-shipping-info/...".
+
+Markup, CSS and CSS-variable computation transcribed from the app's own client bundle
+(section-factory-352/assets/block-shipping-info.js and block-shipping-info.css).
+
+Two things the app did in JS are kept in JS here because they cannot be resolved at render time:
+
+1. the "ships by" date, which counts forward N calendar or business days from *today* in the shopper's
+   locale (a cached Liquid render would freeze the date);
+2. the visitor's country, which the app read from Shopify's browsing_context_suggestions endpoint. The
+   Liquid `localization.country` is used as the server-side default so the block is correct without JS.
+
+********************************************
+Supported variables
+********************************************
+
+* block: the section block holding the settings
+{%- endcomment -%}
+
+{%- liquid
+  assign s = block.settings
+  assign uid = 'aao-b-' | append: block.id
+
+  assign country_code = localization.country.iso_code | default: 'GB' | downcase
+
+  assign border_style = s.border_style | default: 'none'
+  if border_style == 'none'
+    capture border_vars
+      echo '--border-width:0px;--border-style:none;--border-color:transparent;'
+    endcapture
+  else
+    capture border_vars
+      echo '--border-width:'
+      echo s.border_width | default: 1
+      echo 'px;--border-style:'
+      echo border_style
+      echo ';--border-color:'
+      echo s.border_color | default: '#d7d7d7'
+      echo ';'
+    endcapture
+  endif
+
+  assign allowed = s.allowed_countries | default: '' | downcase | split: ','
+  assign country_allowed = false
+  if s.allow_all_countries
+    assign country_allowed = true
+  else
+    for entry in allowed
+      assign entry_code = entry | strip
+      if entry_code == country_code
+        assign country_allowed = true
+        break
+      endif
+    endfor
+  endif
+
+  if country_allowed
+    assign shipping_type_template = s.fast_shipping_text
+  else
+    assign shipping_type_template = s.fast_shipping_text_for_rest_countries
+  endif
+
+  comment
+    COUNTRY_CODE is resolvable server-side; COUNTRY_FLAG needs codepoint maths, so it is dropped from the
+    server-rendered copy and substituted by the inline script (which also corrects the code when the
+    shopper's detected country differs from the active market).
+  endcomment
+  assign country_code_upcase = country_code | upcase
+  assign shipping_type_text = shipping_type_template | replace: 'COUNTRY_CODE', country_code_upcase | replace: 'COUNTRY_FLAG', ''
+-%}
+
+<style>
+  #{{ uid }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+    border-radius: var(--border-radius);
+    padding: var(--padding-y) var(--padding-x);
+    background-color: var(--bg-color);
+    font-size: calc(var(--ships-by-font-size) * 0.9);
+    border: var(--border-width) var(--border-style) var(--border-color);
+    gap: 15px;
+    line-height: 150%;
+  }
+
+  #{{ uid }} .aao-ship__estimate {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #{{ uid }} .aao-ship__indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #{{ uid }} .aao-ship__indicator img { object-fit: cover; }
+
+  #{{ uid }} .aao-ship__indicator .aao-ship__dot {
+    animation: 1s ease-in-out infinite aao-ship-fade;
+  }
+
+  @keyframes aao-ship-fade {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  #{{ uid }} .aao-ship__content {
+    display: flex;
+    align-items: center;
+    color: var(--ships-by-text-color);
+    font-size: calc(var(--ships-by-font-size) * 0.9);
+  }
+
+  #{{ uid }} .aao-ship__label { padding-right: 4px; }
+  #{{ uid }} .aao-ship__date { font-weight: 700; }
+
+  #{{ uid }} .aao-ship__type,
+  #{{ uid }} .aao-ship__type a { color: var(--shipping-type-text-color); }
+
+  @media (min-width: 1024px) {
+    #{{ uid }},
+    #{{ uid }} .aao-ship__content { font-size: var(--ships-by-font-size); }
+  }
+</style>
+
+<div
+  id="{{ uid }}"
+  class="aao-ss-block aao-ss-shipping-info"
+  data-shipping-days="{{ s.shipping_within_days | default: 3 }}"
+  data-include-weekend="{{ s.include_weekend | default: false }}"
+  style="--padding-y:{{ s.padding_vertical | default: 0 }}px;--padding-x:{{ s.padding_horizontal | default: 0 }}px;--border-radius:{{ s.border_radius | default: 0 }}px;--bg-color:{{ s.bg_color }};--ships-by-text-color:{{ s.ships_by_text_color | default: '#1c1c1c' }};--ships-by-font-size:{{ s.ships_by_font_size | default: 13 }}px;--shipping-type-text-color:{{ s.fast_shipping_text_color | default: '#1c1c1c' }};{{ border_vars }}"
+>
+  <div class="aao-ship__estimate">
+    {%- if s.use_dot -%}
+      <div class="aao-ship__indicator">
+        <svg class="aao-ship__dot" xmlns="http://www.w3.org/2000/svg" width="{{ s.icon_size | default: 10 }}" height="{{ s.icon_size | default: 10 }}" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="6" fill="{{ s.icon_color | default: '#15c625' }}"></circle></svg>
+      </div>
+    {%- endif -%}
+
+    <div class="aao-ship__content">
+      <span class="aao-ship__label">{{ s.ships_by_text }}</span>
+      <span class="aao-ship__date" data-aao-ship-date></span>
+    </div>
+  </div>
+
+  <div
+    class="aao-ship__type"
+    data-aao-ship-type
+    data-country="{{ country_code }}"
+    data-template="{{ shipping_type_template | escape }}"
+  >{{ shipping_type_text }}</div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById({{ uid | json }});
+    if (!root) return;
+
+    var days = Math.max(0, parseInt(root.dataset.shippingDays, 10) || 0);
+    var includeWeekend = root.dataset.includeWeekend === 'true';
+
+    var date = new Date();
+    if (includeWeekend) {
+      date.setDate(date.getDate() + days);
+    } else {
+      var counted = 0;
+      while (counted < days) {
+        date.setDate(date.getDate() + 1);
+        var day = date.getDay();
+        if (day !== 0 && day !== 6) counted++;
+      }
+    }
+
+    var locale = window.Shopify && window.Shopify.locale;
+    try {
+      if (!locale || Intl.DateTimeFormat.supportedLocalesOf(locale).length === 0) locale = 'en-US';
+    } catch (e) {
+      locale = 'en-US';
+    }
+
+    var target = root.querySelector('[data-aao-ship-date]');
+    if (target) {
+      target.textContent = date.toLocaleDateString(locale, { weekday: 'short', month: 'short', day: 'numeric' });
+    }
+
+    var typeEl = root.querySelector('[data-aao-ship-type]');
+    if (typeEl) {
+      var code = (typeEl.dataset.country || '').toUpperCase();
+      var flag = code.replace(/./g, function (c) { return String.fromCodePoint(127397 + c.charCodeAt(0)); });
+      typeEl.innerHTML = (typeEl.dataset.template || '').replace('COUNTRY_FLAG', flag).replace('COUNTRY_CODE', code);
+    }
+  })();
+</script>

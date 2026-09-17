@@ -1,0 +1,180 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+AAO BANNER
+----------------------------------------------------------------------------------------------------------------------
+
+Native replacement for the Section Store app block
+"shopify://apps/section-store/blocks/block-banner/...".
+
+Markup, CSS and CSS-variable computation transcribed from the app's own client bundle
+(section-factory-352/assets/block-banner.js). The app rendered into a shadow root; here the styles are
+scoped to the block id instead.
+
+********************************************
+Supported variables
+********************************************
+
+* block: the section block holding the settings
+{%- endcomment -%}
+
+{%- liquid
+  assign s = block.settings
+  assign uid = 'aao-b-' | append: block.id
+
+  assign text_align = s.text_align | default: 'left'
+
+  case s.shadow
+    when 'shadow_1'
+      assign box_shadow = '0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.06)'
+    when 'shadow_2'
+      assign box_shadow = '0 2px 4px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.06)'
+    when 'shadow_3'
+      assign box_shadow = '0 4px 6px rgba(0, 0, 0, 0.04), 0 10px 24px rgba(0, 0, 0, 0.08)'
+    when 'shadow_4'
+      assign box_shadow = '0 8px 16px rgba(0, 0, 0, 0.06), 0 20px 40px rgba(0, 0, 0, 0.10)'
+    else
+      assign box_shadow = 'none'
+  endcase
+
+  assign flex_direction = 'row'
+  if s.image_position == 'right'
+    assign flex_direction = 'row-reverse'
+  endif
+
+  assign image_size = s.image_size | default: 30
+  assign image_size_m = image_size | times: 0.9 | round
+  assign title_size = s.title_size | default: 14
+  assign title_size_m = title_size | times: 0.9 | round
+  assign body_size = s.body_size | default: 12
+  assign body_size_m = body_size | times: 0.9 | round
+
+  assign background = s.background_gradient | default: s.background
+
+  assign border_style = s.border | default: 'none'
+  if border_style == 'none'
+    capture border_vars
+      echo '--border-width:0px;--border-style:none;--border-color:transparent;'
+    endcapture
+  else
+    capture border_vars
+      echo '--border-width:'
+      echo s.border_thickness | default: 1
+      echo 'px;--border-style:'
+      echo border_style
+      echo ';--border-color:'
+      echo s.border_color | default: '#d7d7d7'
+      echo ';'
+    endcapture
+  endif
+
+  capture icon_markup
+    if s.use_image and s.icon != blank and s.icon != 'none'
+      render 'aao-ss-icon', icon: s.icon
+    endif
+  endcapture
+
+  assign banner_tag = 'div'
+  if s.link != blank
+    assign banner_tag = 'a'
+  endif
+-%}
+
+<style>
+  #{{ uid }} .aao-banner__container {
+    display: flex !important;
+    flex-direction: var(--flex-direction);
+    align-items: center;
+    gap: 14px;
+    padding: var(--padding-top) var(--padding-right) var(--padding-bottom) var(--padding-left);
+    background: var(--background-color);
+    border: var(--border-width) var(--border-style) var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+  }
+
+  #{{ uid }} a.aao-banner__container {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  #{{ uid }} .aao-banner__title {
+    font-size: var(--title-size-mobile);
+    color: var(--title-color);
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  #{{ uid }} .aao-banner__title p { margin: 0; line-height: inherit; }
+  #{{ uid }} .aao-banner__title strong,
+  #{{ uid }} .aao-banner__title b { font-weight: 700; }
+  #{{ uid }} .aao-banner__title a { color: var(--title-color); text-decoration: underline; }
+
+  #{{ uid }} .aao-banner__body {
+    font-size: var(--body-size-mobile);
+    color: var(--body-color);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  #{{ uid }} .aao-banner__body:not(:first-child) { margin-top: var(--gap); }
+  #{{ uid }} .aao-banner__body p { margin: 0; line-height: inherit; }
+  #{{ uid }} .aao-banner__body p + p { margin-top: 8px; }
+  #{{ uid }} .aao-banner__body strong,
+  #{{ uid }} .aao-banner__body b { font-weight: 700; }
+  #{{ uid }} .aao-banner__body a { color: var(--body-color); text-decoration: underline; }
+
+  #{{ uid }} .aao-banner__image {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--image-size-mobile);
+    height: var(--image-size-mobile);
+  }
+
+  #{{ uid }} .aao-banner__image img,
+  #{{ uid }} .aao-banner__image svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  #{{ uid }} .aao-banner__image svg path { fill: var(--icon-color); }
+
+  #{{ uid }} .aao-banner__content {
+    flex: 1;
+    min-width: 0;
+    text-align: var(--text-align);
+  }
+
+  @media (min-width: 1024px) {
+    #{{ uid }} .aao-banner__title { font-size: var(--title-size-desktop); }
+    #{{ uid }} .aao-banner__body { font-size: var(--body-size-desktop); }
+    #{{ uid }} .aao-banner__body:not(:first-child) { margin-top: var(--gap); }
+    #{{ uid }} .aao-banner__body p + p { margin-top: 12px; }
+    #{{ uid }} .aao-banner__image { width: var(--image-size-desktop); height: var(--image-size-desktop); }
+  }
+</style>
+
+<div
+  id="{{ uid }}"
+  class="aao-ss-block aao-ss-banner"
+  style="--gap:{{ s.gap | default: 0 }}px;--padding-top:{{ s.padding_vertical | default: 0 }}px;--padding-bottom:{{ s.padding_vertical | default: 0 }}px;--padding-left:{{ s.padding_horizontal | default: 0 }}px;--padding-right:{{ s.padding_horizontal | default: 0 }}px;--border-radius:{{ s.radius | default: 0 }}px;--background-color:{{ background }};--box-shadow:{{ box_shadow }};--text-align:{{ text_align }};--image-size-mobile:{{ image_size_m }}px;--image-size-desktop:{{ image_size }}px;--flex-direction:{{ flex_direction }};--icon-color:{{ s.icon_color | default: '#1c1c1c' }};--title-size-mobile:{{ title_size_m }}px;--title-size-desktop:{{ title_size }}px;--title-color:{{ s.title_color | default: '#1c1c1c' }};--body-size-mobile:{{ body_size_m }}px;--body-size-desktop:{{ body_size }}px;--body-color:{{ s.body_color | default: '#444444' }};{{ border_vars }}"
+>
+  <{{ banner_tag }} class="aao-banner__container"{% if banner_tag == 'a' %} href="{{ s.link }}"{% endif %}>
+    {%- if icon_markup != blank -%}
+      <div class="aao-banner__image">{{ icon_markup }}</div>
+    {%- endif -%}
+
+    <div class="aao-banner__content">
+      {%- if s.title_text != blank -%}
+        <div class="aao-banner__title">{{ s.title_text }}</div>
+      {%- endif -%}
+
+      {%- if s.body_text != blank -%}
+        <div class="aao-banner__body">{{ s.body_text }}</div>
+      {%- endif -%}
+    </div>
+  </{{ banner_tag }}>
+</div>

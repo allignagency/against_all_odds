@@ -543,6 +543,35 @@ Supported variables
                 {%- render 'icon' with 'chevron-right' -%}
               </a>
             {%- endif -%}
+
+          {%- comment -%}
+            AAO: native replacements for the paid "Section Store" app blocks. See snippets/aao-*.liquid.
+            These render the same markup the app used to inject client-side, so the app subscription can
+            be cancelled without the product pages losing content.
+          {%- endcomment -%}
+          {%- when 'aao-review-summary' -%}
+            {%- render 'aao-review-summary', block: block -%}
+
+          {%- when 'aao-badge' -%}
+            {%- render 'aao-badge', block: block -%}
+
+          {%- when 'aao-benefits-list' -%}
+            {%- render 'aao-benefits-list', block: block -%}
+
+          {%- when 'aao-benefits-boxes' -%}
+            {%- render 'aao-benefits-boxes', block: block -%}
+
+          {%- when 'aao-banner' -%}
+            {%- render 'aao-banner', block: block -%}
+
+          {%- when 'aao-shipping-info' -%}
+            {%- render 'aao-shipping-info', block: block -%}
+
+          {%- when 'aao-tabs' -%}
+            {%- render 'aao-tabs', block: block, product: product -%}
+
+          {%- when 'aao-atc-style' -%}
+            {%- render 'aao-atc-style', block: block, product_form_id: product_form_id -%}
         {%- endcase -%}
       {%- endcapture -%}
       

@@ -4,7 +4,7 @@
       "type": "main-product",
       "blocks": {
         "eb7f994270af10aa": {
-          "type": "shopify://apps/section-store/blocks/block-review-summary/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "type": "aao-review-summary",
           "settings": {
             "star_style": "sharp",
             "stars_count": 4.5,
@@ -101,7 +101,7 @@
           }
         },
         "da6b0d65452c043b": {
-          "type": "shopify://apps/section-store/blocks/block-badge/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "type": "aao-badge",
           "settings": {
             "first_icon": "shield_check",
             "first_title": "Premium Quality",
@@ -135,7 +135,7 @@
           }
         },
         "b215bd2b7603fc90": {
-          "type": "shopify://apps/section-store/blocks/block-benefits-list/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "type": "aao-benefits-list",
           "settings": {
             "items_gap": 10,
             "first_text": "<p><strong>Designed for fighters</strong> — Built to move with you</p>",
@@ -217,7 +217,7 @@
           }
         },
         "6139dd1366ef1c34": {
-          "type": "shopify://apps/section-store/blocks/block-shipping-info/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "type": "aao-shipping-info",
           "settings": {
             "use_dot": true,
             "icon_color": "#15c625",
@@ -253,7 +253,7 @@
           }
         },
         "44e1a8ebb31c9b6a": {
-          "type": "shopify://apps/section-store/blocks/block-atc-style/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "type": "aao-atc-style",
           "settings": {
             "background_color": "#1c1c1c",
             "text_color": "#ffffff",
@@ -279,7 +279,7 @@
           }
         },
         "63d36541f275604e": {
-          "type": "shopify://apps/section-store/blocks/block-benefits-boxes-2/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "type": "aao-benefits-boxes",
           "settings": {
             "cards_design": "horizontal",
             "cards_row": "2",
@@ -306,7 +306,7 @@
           }
         },
         "7789be86edb5df6b": {
-          "type": "shopify://apps/section-store/blocks/block-tabs/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "type": "aao-tabs",
           "settings": {
             "default_tab": "first",
             "tab_layout": "filled",

@@ -1,0 +1,233 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+AAO REVIEW SUMMARY
+----------------------------------------------------------------------------------------------------------------------
+
+Native replacement for the Section Store app block
+"shopify://apps/section-store/blocks/block-review-summary/...".
+
+Markup, CSS, star SVGs and the CSS-variable computation are transcribed from the app's own client bundle
+(section-factory-352/assets/block-review-summary.js). The app rendered into a shadow root; here the
+styles are scoped to the block id instead.
+
+NOT reproduced: the app's "avatars" option, which injected 3-5 random stock portraits fetched live from
+randomuser.me as if they were reviewer photos. That is a third-party runtime dependency and fabricated
+reviewer imagery, so the setting is kept for parity but renders nothing. Both AAO instances of this block
+are disabled in their templates, and the enabled-store-wide value was "none", so nothing changes visually.
+
+********************************************
+Supported variables
+********************************************
+
+* block: the section block holding the settings
+{%- endcomment -%}
+
+{%- liquid
+  assign s = block.settings
+  assign uid = 'aao-b-' | append: block.id
+
+  assign stars_count = s.stars_count | default: 5
+  assign stars_size = s.stars_size | default: 14
+  assign stars_size_m = stars_size | times: 0.9 | round
+  assign star_style = s.star_style | default: 'standard'
+
+  assign first_size = s.first_text_size | default: 12
+  assign first_size_m = first_size | times: 0.9 | round
+  assign second_size = s.second_text_size | default: 12
+  assign second_size_m = second_size | times: 0.9 | round
+
+  assign background = s.background_gradient | default: s.background
+
+  assign effect = s.effect | default: 'none'
+  case effect
+    when 'shadow_1'
+      assign body_shadow = '0 1px 2px rgba(17, 17, 17, 0.025)'
+    when 'shadow_2'
+      assign body_shadow = '0 1px 2px rgba(17, 17, 17, 0.025), 0 3px 8px rgba(17, 17, 17, 0.04)'
+    else
+      assign body_shadow = 'none'
+  endcase
+
+  if effect == 'glow' and background != blank
+    assign glow_color = background
+    capture body_shadow
+      echo '0 0 0 1px '
+      echo glow_color | color_to_rgb | replace: 'rgb(', 'rgba(' | replace: ')', ', 0.16)'
+      echo ', 0 3px 10px '
+      echo glow_color | color_to_rgb | replace: 'rgb(', 'rgba(' | replace: ')', ', 0.16)'
+    endcapture
+  endif
+
+  assign border_style = s.border | default: 'none'
+  if border_style == 'none'
+    capture border_vars
+      echo '--border-thick:0px;--border-style:none;--border-color:transparent;'
+    endcapture
+  else
+    capture border_vars
+      echo '--border-thick:'
+      echo s.border_thickness | default: 1
+      echo 'px;--border-style:'
+      echo border_style
+      echo ';--border-color:'
+      echo s.border_color | default: '#1c1c1c'
+      echo ';'
+    endcapture
+  endif
+
+  comment
+    The app removed the text nodes when the HTML collapsed to nothing once tags and &nbsp; were stripped.
+  endcomment
+  assign first_text_plain = s.first_text | strip_html | replace: '&nbsp;', ' ' | replace: ' ', ' ' | strip
+  assign second_text_plain = s.second_text | strip_html | replace: '&nbsp;', ' ' | replace: ' ', ' ' | strip
+-%}
+
+<style>
+  #{{ uid }} {
+    display: block;
+    padding-top: var(--block-p-top, 0px);
+    padding-bottom: var(--block-p-bottom, 0px);
+    box-sizing: border-box;
+  }
+
+  #{{ uid }} .aao-rs__body {
+    width: fit-content;
+    max-width: 100%;
+    padding-top: var(--p-v);
+    padding-bottom: var(--p-v);
+    padding-left: var(--p-h);
+    padding-right: var(--p-h);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--bg);
+    box-shadow: var(--body-shadow, none);
+  }
+
+  #{{ uid }} .aao-rs__body p { margin: 0; }
+
+  #{{ uid }} .aao-rs__body.has-border {
+    border: var(--border-thick) var(--border-style) var(--border-color);
+  }
+
+  #{{ uid }} .aao-rs__content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #{{ uid }} .aao-rs__first-text,
+  #{{ uid }} .aao-rs__second-text {
+    margin: 0;
+    line-height: 100%;
+    text-transform: unset;
+    display: flex;
+    align-items: center;
+    align-self: center;
+    min-height: var(--star-size-m);
+    transform: translateY(0.5px);
+  }
+
+  #{{ uid }} .aao-rs__first-text > *,
+  #{{ uid }} .aao-rs__second-text > * {
+    display: block;
+    margin: 0;
+    line-height: 1;
+  }
+
+  #{{ uid }} .aao-rs__first-text * { font-size: var(--first-size-m); color: var(--first-color); }
+  #{{ uid }} .aao-rs__second-text * { font-size: var(--second-size-m); color: var(--second-color); }
+
+  #{{ uid }} .aao-rs__stars {
+    display: flex;
+    align-items: center;
+    gap: var(--stars-gap);
+    max-width: fit-content;
+  }
+
+  #{{ uid }} .aao-rs__stars svg,
+  #{{ uid }} .aao-rs__stars img {
+    display: block;
+    width: var(--star-size-m);
+    height: var(--star-size-m);
+    object-fit: cover;
+  }
+
+  @media (min-width: 1024px) {
+    #{{ uid }} .aao-rs__first-text,
+    #{{ uid }} .aao-rs__second-text { min-height: var(--star-size); }
+    #{{ uid }} .aao-rs__first-text * { font-size: var(--first-size); }
+    #{{ uid }} .aao-rs__second-text * { font-size: var(--second-size); }
+    #{{ uid }} .aao-rs__stars svg,
+    #{{ uid }} .aao-rs__stars img { width: var(--star-size); height: var(--star-size); }
+  }
+</style>
+
+<div
+  id="{{ uid }}"
+  class="aao-ss-block aao-ss-review-summary"
+  style="--block-p-top:{{ s.block_padding_top | default: 0 }}px;--block-p-bottom:{{ s.block_padding_bottom | default: 0 }}px;"
+>
+  <div
+    class="aao-rs__body{% unless border_style == 'none' %} has-border{% endunless %}"
+    style="--p-v:{{ s.padding_vertical | default: 0 }}px;--p-h:{{ s.padding_horizontal | default: 0 }}px;--radius:{{ s.radius | default: 0 }}px;--bg:{{ background }};--body-shadow:{{ body_shadow }};--first-size-m:{{ first_size_m }}px;--first-size:{{ first_size }}px;--first-color:{{ s.first_text_color | default: '#1c1c1c' }};--second-size-m:{{ second_size_m }}px;--second-size:{{ second_size }}px;--second-color:{{ s.second_text_color | default: '#1c1c1c' }};--stars-gap:{{ s.stars_gap | default: 0 }}px;--star-size:{{ stars_size }}px;--star-size-m:{{ stars_size_m }}px;{{ border_vars }}"
+  >
+    <div class="aao-rs__content">
+      {%- if first_text_plain != blank -%}
+        <div class="aao-rs__first-text">{{ s.first_text }}</div>
+      {%- endif -%}
+
+      <div class="aao-rs__stars">
+        {%- for index in (1..5) -%}
+          {%- liquid
+            assign half_value = index | minus: 1 | plus: 0.5
+            assign gradient_id = 'aao-rs-grad-' | append: block.id | append: '-' | append: index
+            assign clip_id = 'aao-rs-clip-' | append: block.id | append: '-' | append: index
+
+            assign is_standard = false
+            if star_style == blank or star_style == 'standard'
+              assign is_standard = true
+            endif
+
+            if is_standard
+              assign filled_color = s.stars_bg_color | default: '#1c1c1c'
+            else
+              assign filled_color = s.stars_color | default: '#1c1c1c'
+            endif
+
+            assign fill_value = s.stars_bg_half_color | default: '#dddddd'
+            assign defs = ''
+
+            if stars_count == half_value
+              assign fill_value = 'url(#' | append: gradient_id | append: ')'
+              capture defs
+                echo '<linearGradient id="'
+                echo gradient_id
+                echo '"><stop offset="0%" stop-color="'
+                echo filled_color
+                echo '"/><stop offset="50%" stop-color="'
+                echo filled_color
+                echo '"/><stop offset="50%" stop-color="'
+                echo s.stars_bg_half_color | default: '#dddddd'
+                echo '"/><stop offset="100%" stop-color="'
+                echo s.stars_bg_half_color | default: '#dddddd'
+                echo '"/></linearGradient>'
+              endcapture
+            elsif stars_count >= index
+              assign fill_value = filled_color
+            endif
+          -%}
+
+          {%- if is_standard -%}
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><defs>{{ defs }}<clipPath id="{{ clip_id }}"><rect width="22" height="22" fill="{{ s.stars_color }}" shape-rendering="crispEdges" transform="translate(5 5)"/></clipPath></defs><rect width="32" height="32" fill="{{ fill_value }}" shape-rendering="crispEdges"/><g clip-path="url(#{{ clip_id }})"><path d="M9.20283 27L16.001 21.807L22.7972 27L20.2018 18.596L27 13.403H18.5984L16.001 5L13.4037 13.403H5L11.7982 18.596L9.20283 27Z" fill="{{ s.stars_color }}"/></g></svg>
+          {%- else -%}
+            <svg width="32" height="32" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg"><defs>{{ defs }}</defs><g fill="{{ fill_value }}">{% if star_style == 'sharp' %}<path d="M11.9928 5.14597L7.85231 4.54447L6.00031 0.792969L4.14831 4.54447L0.0078125 5.14597L3.00431 8.06697L2.29681 12.1905L6.00031 10.2445L9.70381 12.1905L8.99631 8.06697L11.9928 5.14597Z" />{% else %}<path d="M6.86447 2.11566L7.74447 3.87566C7.86447 4.12066 8.18447 4.35566 8.45447 4.40066L10.0495 4.66566C11.0695 4.83566 11.3095 5.57566 10.5745 6.30566L9.33447 7.54566C9.12446 7.75566 9.00947 8.16066 9.07446 8.45066L9.42947 9.98566C9.70947 11.2007 9.06447 11.6707 7.98947 11.0357L6.49447 10.1507C6.22447 9.99066 5.77947 9.99066 5.50447 10.1507L4.00947 11.0357C2.93947 11.6707 2.28947 11.1957 2.56947 9.98566L2.92447 8.45066C2.98947 8.16066 2.87447 7.75566 2.66447 7.54566L1.42447 6.30566C0.694466 5.57566 0.929466 4.83566 1.94947 4.66566L3.54447 4.40066C3.80947 4.35566 4.12947 4.12066 4.24947 3.87566L5.12947 2.11566C5.60947 1.16066 6.38947 1.16066 6.86447 2.11566Z" />{% endif %}</g></svg>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if second_text_plain != blank -%}
+        <div class="aao-rs__second-text">{{ s.second_text }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

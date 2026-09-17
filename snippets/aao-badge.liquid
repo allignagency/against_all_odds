@@ -1,0 +1,269 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+AAO BADGE
+----------------------------------------------------------------------------------------------------------------------
+
+Native replacement for the Section Store app block
+"shopify://apps/section-store/blocks/block-badge/...".
+
+Markup, CSS and CSS-variable computation transcribed from the app's own client bundle
+(section-factory-352/assets/block-badge.js). The app rendered into a shadow root; here the styles are
+scoped to the block id instead.
+
+********************************************
+Supported variables
+********************************************
+
+* block: the section block holding the settings
+{%- endcomment -%}
+
+{%- liquid
+  assign s = block.settings
+  assign uid = 'aao-b-' | append: block.id
+
+  assign card_align = s.card_align | default: 'left'
+  case card_align
+    when 'center'
+      assign h_align = 'center'
+    when 'right'
+      assign h_align = 'end'
+    else
+      assign h_align = 'start'
+  endcase
+
+  assign flex_direction = 'row'
+  if card_align == 'right'
+    assign flex_direction = 'row-reverse'
+  endif
+
+  assign title_size = s.title_size | default: 11
+  assign icon_size = s.icon_size | default: 15
+  assign title_size_m = title_size | times: 0.95 | round
+  assign icon_size_m = icon_size | times: 0.95 | round
+
+  assign card_padding_vertical = s.card_padding_vertical | default: 6
+  assign card_padding_horizontal = s.card_padding_horizontal | default: 12
+  assign card_padding_vertical_m = card_padding_vertical | times: 0.95 | round
+  assign card_padding_horizontal_m = card_padding_horizontal | times: 0.95 | round
+
+  assign gradient = s.background_gradient
+  assign first_bg = gradient | default: s.first_background_gradient | default: s.first_bg_color
+  assign second_bg = gradient | default: s.second_background_gradient | default: s.second_bg_color
+  assign third_bg = gradient | default: s.third_background_gradient | default: s.third_bg_color
+
+  assign effect = s.effect | default: 'none'
+  case effect
+    when 'shadow_1'
+      assign card_shadow = '0 1px 2px rgba(17, 17, 17, 0.04)'
+    when 'shadow_2'
+      assign card_shadow = '0 1px 2px rgba(17, 17, 17, 0.04), 0 2px 6px rgba(17, 17, 17, 0.05)'
+    else
+      assign card_shadow = 'none'
+  endcase
+
+  assign first_shadow = card_shadow
+  assign second_shadow = card_shadow
+  assign third_shadow = card_shadow
+
+  case s.font_weight
+    when 'normal'
+      assign font_weight = 400
+    when 'bold'
+      assign font_weight = 800
+    else
+      assign font_weight = s.font_weight | default: 800
+  endcase
+
+  assign card_border = s.card_border | default: 'none'
+  if card_border == 'none'
+    capture border_vars
+      echo '--card-border-width:0px;--card-border-style:none;--card-border-color:transparent;'
+    endcapture
+  else
+    capture border_vars
+      echo '--card-border-width:'
+      echo s.card_border_width | default: 1
+      echo 'px;--card-border-style:'
+      echo card_border
+      echo ';--card-border-color:'
+      echo s.card_border_color | default: '#e5e7eb'
+      echo ';'
+    endcapture
+  endif
+-%}
+
+{%- comment -%}
+The app derived the "glow" effect shadow from the card background colour in JS. Liquid has no colour maths
+filter chain for that in one expression, so it is computed here with the theme colour filters instead.
+{%- endcomment -%}
+{%- liquid
+  if effect == 'glow'
+    assign glow_first = first_bg | default: '#111111'
+    assign glow_second = second_bg | default: '#111111'
+    assign glow_third = third_bg | default: '#111111'
+
+    capture first_shadow
+      echo '0 0 0 1px '
+      echo glow_first | color_to_rgb | replace: 'rgb(', 'rgba(' | replace: ')', ', 0.8)'
+      echo ', 0 4px 12px '
+      echo glow_first | color_to_rgb | replace: 'rgb(', 'rgba(' | replace: ')', ', 0.25)'
+    endcapture
+
+    capture second_shadow
+      echo '0 0 0 1px '
+      echo glow_second | color_to_rgb | replace: 'rgb(', 'rgba(' | replace: ')', ', 0.8)'
+      echo ', 0 4px 12px '
+      echo glow_second | color_to_rgb | replace: 'rgb(', 'rgba(' | replace: ')', ', 0.25)'
+    endcapture
+
+    capture third_shadow
+      echo '0 0 0 1px '
+      echo glow_third | color_to_rgb | replace: 'rgb(', 'rgba(' | replace: ')', ', 0.8)'
+      echo ', 0 4px 12px '
+      echo glow_third | color_to_rgb | replace: 'rgb(', 'rgba(' | replace: ')', ', 0.25)'
+    endcapture
+  endif
+-%}
+
+<style>
+  #{{ uid }} .aao-badge__cards {
+    display: flex;
+    justify-content: var(--card-horizontal-align);
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: var(--padding-vertical);
+    padding-bottom: var(--padding-vertical);
+    padding-left: var(--padding-sides);
+    padding-right: var(--padding-sides);
+    overflow: visible;
+  }
+
+  #{{ uid }} .aao-badge__card {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: var(--card-padding-vertical-mobile) var(--card-padding-horizontal-mobile);
+    border: var(--card-border-width) var(--card-border-style) var(--card-border-color);
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+    flex-direction: var(--flex-direction);
+  }
+
+  #{{ uid }} .aao-badge__card--first {
+    background: var(--first-bg-color);
+    box-shadow: var(--first-card-shadow, var(--card-shadow));
+  }
+
+  #{{ uid }} .aao-badge__card--second {
+    background: var(--second-bg-color);
+    box-shadow: var(--second-card-shadow, var(--card-shadow));
+  }
+
+  #{{ uid }} .aao-badge__card--third {
+    background: var(--third-bg-color);
+    box-shadow: var(--third-card-shadow, var(--card-shadow));
+  }
+
+  #{{ uid }} .aao-badge__title {
+    margin: 0;
+    text-align: var(--card-align);
+    font-size: var(--title-size-mobile);
+    line-height: 130%;
+    text-transform: unset;
+    font-weight: var(--font-weight);
+  }
+
+  #{{ uid }} .aao-badge__card--first .aao-badge__title { color: var(--first-title-color); }
+  #{{ uid }} .aao-badge__card--second .aao-badge__title { color: var(--second-title-color); }
+  #{{ uid }} .aao-badge__card--third .aao-badge__title { color: var(--third-title-color); }
+
+  #{{ uid }} .aao-badge__icon {
+    flex-shrink: 0;
+    color: inherit;
+  }
+
+  #{{ uid }} .aao-badge__icon img,
+  #{{ uid }} .aao-badge__icon svg {
+    display: block;
+    width: var(--icon-size-mobile);
+    height: var(--icon-size-mobile);
+    object-fit: cover;
+  }
+
+  #{{ uid }} .aao-badge__icon svg path:not([fill="none"]),
+  #{{ uid }} .aao-badge__icon svg circle:not([fill="none"]),
+  #{{ uid }} .aao-badge__icon svg rect:not([fill="none"]) {
+    fill: currentColor;
+  }
+
+  #{{ uid }} .aao-badge__icon svg path[stroke],
+  #{{ uid }} .aao-badge__icon svg circle[stroke],
+  #{{ uid }} .aao-badge__icon svg rect[stroke],
+  #{{ uid }} .aao-badge__icon svg polyline[stroke],
+  #{{ uid }} .aao-badge__icon svg line[stroke] {
+    stroke: currentColor;
+  }
+
+  #{{ uid }} .aao-badge__card--first .aao-badge__icon { color: var(--first-title-color); }
+  #{{ uid }} .aao-badge__card--second .aao-badge__icon { color: var(--second-title-color); }
+  #{{ uid }} .aao-badge__card--third .aao-badge__icon { color: var(--third-title-color); }
+
+  @media (min-width: 1024px) {
+    #{{ uid }} .aao-badge__card {
+      padding: var(--card-padding-vertical) var(--card-padding-horizontal);
+    }
+
+    #{{ uid }} .aao-badge__title {
+      font-size: var(--title-size-desktop);
+    }
+
+    #{{ uid }} .aao-badge__icon img,
+    #{{ uid }} .aao-badge__icon svg {
+      width: var(--icon-size-desktop);
+      height: var(--icon-size-desktop);
+    }
+  }
+</style>
+
+<div
+  id="{{ uid }}"
+  class="aao-ss-block aao-ss-badge"
+  style="--card-horizontal-align:{{ h_align }};--padding-vertical:{{ s.padding_vertical | default: 0 }}px;--padding-sides:{{ s.padding_sides | default: 0 }}px;--card-padding-vertical-mobile:{{ card_padding_vertical_m }}px;--card-padding-horizontal-mobile:{{ card_padding_horizontal_m }}px;--card-padding-vertical:{{ card_padding_vertical }}px;--card-padding-horizontal:{{ card_padding_horizontal }}px;--card-radius:{{ s.card_radius | default: 0 }}px;--first-bg-color:{{ first_bg }};--second-bg-color:{{ second_bg }};--third-bg-color:{{ third_bg }};--card-shadow:{{ card_shadow }};--first-card-shadow:{{ first_shadow }};--second-card-shadow:{{ second_shadow }};--third-card-shadow:{{ third_shadow }};--card-align:{{ card_align }};--title-size-mobile:{{ title_size_m }}px;--title-size-desktop:{{ title_size }}px;--icon-size-mobile:{{ icon_size_m }}px;--icon-size-desktop:{{ icon_size }}px;--font-weight:{{ font_weight }};--first-title-color:{{ s.first_title_color | default: '#ffffff' }};--second-title-color:{{ s.second_title_color | default: '#ffffff' }};--third-title-color:{{ s.third_title_color | default: '#ffffff' }};--flex-direction:{{ flex_direction }};{{ border_vars }}"
+>
+  <div class="aao-badge__cards">
+    {%- comment -%}
+      The app strips zero-width characters from the title, then hides the whole card when both the icon
+      and the (stripped) title are empty. "​" placeholders therefore collapse the card.
+    {%- endcomment -%}
+    {%- liquid
+      assign first_title = s.first_title | replace: '​', '' | replace: '‌', '' | replace: '‍', '' | replace: '﻿', ''
+      assign second_title = s.second_title | replace: '​', '' | replace: '‌', '' | replace: '‍', '' | replace: '﻿', ''
+      assign third_title = s.third_title | replace: '​', '' | replace: '‌', '' | replace: '‍', '' | replace: '﻿', ''
+    -%}
+
+    {%- capture first_icon -%}{%- render 'aao-ss-icon', icon: s.first_icon, normalize: true -%}{%- endcapture -%}
+    {%- capture second_icon -%}{%- render 'aao-ss-icon', icon: s.second_icon, normalize: true -%}{%- endcapture -%}
+    {%- capture third_icon -%}{%- render 'aao-ss-icon', icon: s.third_icon, normalize: true -%}{%- endcapture -%}
+
+    {%- unless first_icon == blank and first_title == blank -%}
+      <div class="aao-badge__card aao-badge__card--first">
+        {%- unless first_icon == blank -%}<div class="aao-badge__icon">{{ first_icon }}</div>{%- endunless -%}
+        {%- unless first_title == blank -%}<p class="aao-badge__title">{{ first_title }}</p>{%- endunless -%}
+      </div>
+    {%- endunless -%}
+
+    {%- unless second_icon == blank and second_title == blank -%}
+      <div class="aao-badge__card aao-badge__card--second">
+        {%- unless second_icon == blank -%}<div class="aao-badge__icon">{{ second_icon }}</div>{%- endunless -%}
+        {%- unless second_title == blank -%}<p class="aao-badge__title">{{ second_title }}</p>{%- endunless -%}
+      </div>
+    {%- endunless -%}
+
+    {%- unless third_icon == blank and third_title == blank -%}
+      <div class="aao-badge__card aao-badge__card--third">
+        {%- unless third_icon == blank -%}<div class="aao-badge__icon">{{ third_icon }}</div>{%- endunless -%}
+        {%- unless third_title == blank -%}<p class="aao-badge__title">{{ third_title }}</p>{%- endunless -%}
+      </div>
+    {%- endunless -%}
+  </div>
+</div>

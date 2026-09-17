@@ -1,0 +1,689 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+AAO TABS
+----------------------------------------------------------------------------------------------------------------------
+
+Native replacement for the Section Store app block
+"shopify://apps/section-store/blocks/block-tabs/...".
+
+Markup, CSS, star SVGs, verified-badge SVG and the CSS-variable computation are transcribed from the
+app's own client bundle (section-factory-352/assets/block-tabs.js). The app rendered into a shadow root
+and built every panel in JS; here all panels are rendered server-side and a small vanilla controller
+handles tab switching (and the sliding underline for the "underline" layout).
+
+Payment icons come from `shop.enabled_payment_types` instead of the app's own injected markup.
+
+The app's UI strings came from its own locale bundle; they are inlined in English here (single-locale store).
+
+********************************************
+Supported variables
+********************************************
+
+* block: the section block holding the settings
+* product: the product whose description feeds the "description" tab
+{%- endcomment -%}
+
+{%- liquid
+  assign s = block.settings
+  assign uid = 'aao-b-' | append: block.id
+
+  assign tab_layout = 'filled'
+  if s.tab_layout == 'underline'
+    assign tab_layout = 'underline'
+  endif
+
+  case s.effect
+    when 'shadow_1'
+      assign box_shadow = '0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.04)'
+    when 'shadow_2'
+      assign box_shadow = '0 1px 2px rgba(0, 0, 0, 0.03), 0 3px 10px rgba(0, 0, 0, 0.05)'
+    else
+      assign box_shadow = 'none'
+  endcase
+
+  assign has_border = true
+  assign border_style = s.border | default: 'none'
+  if border_style == 'none'
+    assign has_border = false
+  endif
+
+  assign radius = s.radius | default: 0
+  assign border_thickness = 0
+  if has_border
+    assign border_thickness = s.border_thickness | default: 0
+  endif
+  assign tab_radius = radius | minus: border_thickness
+  if tab_radius < 0
+    assign tab_radius = 0
+  endif
+
+  assign content_size = s.content_text_size | default: 18
+  assign content_size_m = content_size | times: 0.92 | round
+  assign star_size = content_size | times: 1.25 | round | minus: 1
+  if star_size < 0
+    assign star_size = 0
+  endif
+  assign star_size_m = content_size_m | times: 1.25 | round | minus: 1
+  if star_size_m < 0
+    assign star_size_m = 0
+  endif
+
+  assign light_color = s.light_color | default: '#FFFFFF'
+  if tab_layout == 'underline'
+    assign inactive_bg = light_color
+  else
+    assign inactive_bg = s.dark_color | default: '#111111'
+  endif
+  assign text_color = s.text_color | default: '#111111'
+  assign verified_color = s.verified_badge_color | default: '#1A7A4F'
+  assign tab_text_color = s.tab_text_color | default: light_color
+
+  assign divider_color = tab_text_color | color_to_rgb | replace: 'rgb(', 'rgba(' | replace: ')', ', 0.14)'
+  assign verified_bg = verified_color | color_to_rgb | replace: 'rgb(', 'rgba(' | replace: ')', ', 0.08)'
+
+  assign tab_text_size = s.tab_text_size | default: 13
+  assign tab_text_size_m = tab_text_size | times: 0.88 | round
+
+  assign meta_size = content_size | minus: 2
+  assign meta_size_m = content_size_m | minus: 2
+
+  if has_border
+    capture border_vars
+      echo '--border-width:'
+      echo border_thickness
+      echo 'px;--border-style:'
+      echo border_style
+      echo ';--border-color:'
+      echo s.border_color | default: '#E5E7EB'
+      echo ';'
+    endcapture
+  else
+    capture border_vars
+      echo '--border-width:0px;--border-style:none;--border-color:transparent;'
+    endcapture
+  endif
+
+  comment
+    Build the tab list. "fourth" only exists when enable_fourth_tab is on. The tab named by
+    product_description_tab renders the product description instead of its own rich text.
+  endcomment
+  assign tab_keys = 'first,second,third,fourth' | split: ','
+  assign description_tab = s.product_description_tab
+  assign review_tab = s.review_tab
+  unless s.enable_fourth_tab
+    if description_tab == 'fourth'
+      assign description_tab = ''
+    endif
+    if review_tab == 'fourth'
+      assign review_tab = ''
+    endif
+  endunless
+
+  assign payment_target = s.show_payment_icons | default: 'none'
+  unless s.enable_fourth_tab
+    if payment_target == 'fourth'
+      assign payment_target = 'none'
+    endif
+  endunless
+
+  capture payment_icons_html
+    if shop.enabled_payment_types.size > 0
+      echo '<ul class="aao-tabs__payment-icons" role="list">'
+      for type in shop.enabled_payment_types
+        echo '<li class="aao-tabs__payment-icon">'
+        echo type | payment_type_svg_tag: class: 'aao-tabs__payment-icon-svg'
+        echo '</li>'
+      endfor
+      echo '</ul>'
+    endif
+  endcapture
+
+  comment
+    Resolve the default tab, falling back to the first rendered tab when the configured one does not exist.
+  endcomment
+  assign rendered_keys = ''
+  for key in tab_keys
+    if key == 'fourth' and s.enable_fourth_tab != true
+      continue
+    endif
+    assign rendered_keys = rendered_keys | append: key | append: ','
+  endfor
+  assign rendered_keys = rendered_keys | split: ','
+
+  assign default_tab = s.default_tab | default: 'first'
+  assign default_is_valid = false
+  for key in rendered_keys
+    if key == default_tab
+      assign default_is_valid = true
+    endif
+  endfor
+  unless default_is_valid
+    assign default_tab = rendered_keys.first
+  endunless
+-%}
+
+<style>
+  #{{ uid }} {
+    display: block;
+    color: var(--text-color);
+  }
+
+  #{{ uid }},
+  #{{ uid }} * { box-sizing: border-box; }
+
+  #{{ uid }} .aao-tabs__shell {
+    background: var(--panel-background);
+    border-radius: var(--radius);
+    border: var(--border-width) var(--border-style) var(--border-color);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+  }
+
+  #{{ uid }} .aao-tabs__list {
+    display: grid;
+    grid-template-columns: repeat(var(--tab-count), minmax(0, 1fr));
+    background: var(--inactive-tab-background);
+    position: relative;
+  }
+
+  #{{ uid }} .aao-tabs__button {
+    appearance: none;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--inactive-tab-text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    min-width: 0;
+    padding: 8px 14px;
+    position: relative;
+    text-align: center;
+    font-family: inherit;
+    font-size: var(--tab-text-size-desktop);
+    font-weight: var(--tab-font-weight);
+    line-height: 1.05;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: manual;
+    transition: background-color 0.18s ease, color 0.18s ease;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  #{{ uid }} .aao-tabs__button + .aao-tabs__button::before {
+    background: var(--divider-color);
+    content: "";
+    height: 22px;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+  }
+
+  #{{ uid }} .aao-tabs__button.is-active {
+    background: var(--active-tab-background);
+    color: var(--active-tab-text-color);
+    border-top-left-radius: var(--tab-radius);
+    border-top-right-radius: var(--tab-radius);
+  }
+
+  #{{ uid }} .aao-tabs__button.is-active::before,
+  #{{ uid }} .aao-tabs__button.is-active + .aao-tabs__button::before { display: none; }
+
+  #{{ uid }} .aao-tabs__panel { background: var(--panel-background); }
+  #{{ uid }} .aao-tabs__panel[hidden] { display: none !important; }
+
+  #{{ uid }}[data-tab-layout="underline"] .aao-tabs__list {
+    align-items: end;
+    background: var(--inactive-tab-background);
+    box-shadow: inset 0 -1px 0 var(--panel-divider-color);
+    padding: 0;
+  }
+
+  #{{ uid }}[data-tab-layout="underline"] .aao-tabs__list::after {
+    background: var(--active-underline-color);
+    border-radius: 999px;
+    bottom: 0;
+    content: "";
+    height: 2px;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transform: translate(var(--underline-left, 0px));
+    width: var(--underline-width, 0px);
+  }
+
+  #{{ uid }}[data-tab-layout="underline"] .aao-tabs__list[data-underline-visible="true"]::after { opacity: 1; }
+
+  #{{ uid }}[data-tab-layout="underline"] .aao-tabs__list[data-underline-ready="true"]::after {
+    transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), width 0.24s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.16s ease;
+  }
+
+  #{{ uid }}[data-tab-layout="underline"] .aao-tabs__button {
+    background: transparent;
+    border-radius: 0;
+    min-height: 46px;
+    padding: 8px 14px;
+  }
+
+  #{{ uid }}[data-tab-layout="underline"] .aao-tabs__button + .aao-tabs__button::before { display: none; }
+
+  #{{ uid }}[data-tab-layout="underline"] .aao-tabs__button.is-active {
+    background: transparent;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  #{{ uid }} .aao-tabs__stack {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: var(--padding-top) var(--padding-right) var(--padding-bottom) var(--padding-left);
+  }
+
+  #{{ uid }} .aao-tabs__content {
+    color: var(--text-color);
+    font-size: var(--content-text-size-desktop);
+    line-height: 1.58;
+  }
+
+  #{{ uid }} .aao-tabs__content > *:first-child,
+  #{{ uid }} .aao-tabs__content p:first-child,
+  #{{ uid }} .aao-tabs__content ul:first-child,
+  #{{ uid }} .aao-tabs__content ol:first-child,
+  #{{ uid }} .aao-tabs__content blockquote:first-child,
+  #{{ uid }} .aao-tabs__content table:first-child { margin-top: 0; }
+
+  #{{ uid }} .aao-tabs__content > *:last-child,
+  #{{ uid }} .aao-tabs__content p:last-child,
+  #{{ uid }} .aao-tabs__content ul:last-child,
+  #{{ uid }} .aao-tabs__content ol:last-child,
+  #{{ uid }} .aao-tabs__content blockquote:last-child,
+  #{{ uid }} .aao-tabs__content table:last-child { margin-bottom: 0; }
+
+  #{{ uid }} .aao-tabs__content p,
+  #{{ uid }} .aao-tabs__content ul,
+  #{{ uid }} .aao-tabs__content ol,
+  #{{ uid }} .aao-tabs__content blockquote,
+  #{{ uid }} .aao-tabs__content table { margin: 0 0 1em; }
+
+  #{{ uid }} .aao-tabs__content ul,
+  #{{ uid }} .aao-tabs__content ol { padding-left: 1.25em; }
+
+  #{{ uid }} .aao-tabs__content img { display: block; max-width: 100%; height: auto; }
+  #{{ uid }} .aao-tabs__content table { width: 100%; border-collapse: collapse; }
+
+  #{{ uid }} .aao-tabs__content th,
+  #{{ uid }} .aao-tabs__content td {
+    border-bottom: 1px solid rgba(17, 17, 17, 0.12);
+    padding: 10px 0;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  #{{ uid }} .aao-tabs__stars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    color: var(--stars-color);
+  }
+
+  #{{ uid }} .aao-tabs__star {
+    display: inline-flex;
+    width: var(--star-size-desktop);
+    height: var(--star-size-desktop);
+  }
+
+  #{{ uid }} .aao-tabs__star svg { display: block; width: 100%; height: 100%; }
+
+  #{{ uid }} .aao-tabs__review-footer { display: flex; align-items: center; gap: 14px; }
+
+  #{{ uid }} .aao-tabs__payment-section {
+    border-top: 1px solid var(--panel-divider-color);
+    margin-left: calc(var(--padding-left) * -1);
+    margin-right: calc(var(--padding-right) * -1);
+    margin-top: 2px;
+    padding: 14px var(--padding-right) 0 var(--padding-left);
+  }
+
+  #{{ uid }} .aao-tabs__payment-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  #{{ uid }} .aao-tabs__payment-icon { display: block; flex: 0 0 auto; height: 20px; }
+  #{{ uid }} .aao-tabs__payment-icon svg { display: block; width: auto; height: 100%; }
+
+  #{{ uid }} .aao-tabs__reviewer-image-wrap {
+    flex: 0 0 auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: #1111110f;
+  }
+
+  #{{ uid }} .aao-tabs__reviewer-image { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  #{{ uid }} .aao-tabs__reviewer-image-wrap--initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #{{ uid }} .aao-tabs__reviewer-initials {
+    color: var(--muted-text-color);
+    font-size: calc(var(--reviewer-name-size-desktop) * 0.95);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+
+  #{{ uid }} .aao-tabs__reviewer-copy { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+  #{{ uid }} .aao-tabs__reviewer-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+
+  #{{ uid }} .aao-tabs__reviewer-name {
+    color: var(--text-color);
+    font-size: var(--reviewer-name-size-desktop);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  #{{ uid }} .aao-tabs__reviewer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 999px;
+    background: var(--verified-badge-background);
+    color: var(--verified-badge-color);
+    padding: 3px 8px;
+    font-size: calc(var(--reviewer-meta-size-desktop) - 1px);
+    font-weight: 400;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  #{{ uid }} .aao-tabs__reviewer-badge-label { display: block; line-height: 1; transform: translateY(0.5px); }
+  #{{ uid }} .aao-tabs__reviewer-badge-icon { display: inline-flex; width: 12px; height: 12px; }
+  #{{ uid }} .aao-tabs__reviewer-badge-icon svg { display: block; width: 100%; height: 100%; }
+
+  #{{ uid }} .aao-tabs__reviewer-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 6px; }
+
+  #{{ uid }} .aao-tabs__reviewer-date,
+  #{{ uid }} .aao-tabs__reviewer-subtext,
+  #{{ uid }} .aao-tabs__reviewer-meta-separator {
+    color: var(--muted-text-color);
+    font-size: var(--reviewer-meta-size-desktop);
+    line-height: 1.35;
+  }
+
+  @media (max-width: 749px) {
+    #{{ uid }} .aao-tabs__button { min-height: 42px; padding: 7px 10px; font-size: var(--tab-text-size-mobile); }
+    #{{ uid }}[data-tab-layout="underline"] .aao-tabs__list { padding: 0; }
+    #{{ uid }}[data-tab-layout="underline"] .aao-tabs__button { min-height: 42px; padding: 7px 10px; }
+    #{{ uid }} .aao-tabs__stack { gap: 16px; }
+    #{{ uid }} .aao-tabs__content { font-size: var(--content-text-size-mobile); line-height: 1.55; }
+    #{{ uid }} .aao-tabs__reviewer-name { font-size: var(--reviewer-name-size-mobile); }
+    #{{ uid }} .aao-tabs__reviewer-initials { font-size: calc(var(--reviewer-name-size-mobile) * 0.95); }
+    #{{ uid }} .aao-tabs__reviewer-badge { font-size: calc(var(--reviewer-meta-size-mobile) - 1px); padding: 2px 7px; }
+    #{{ uid }} .aao-tabs__reviewer-badge-icon { width: 11px; height: 11px; }
+    #{{ uid }} .aao-tabs__reviewer-date,
+    #{{ uid }} .aao-tabs__reviewer-subtext,
+    #{{ uid }} .aao-tabs__reviewer-meta-separator { font-size: var(--reviewer-meta-size-mobile); }
+    #{{ uid }} .aao-tabs__reviewer-image-wrap { width: 44px; height: 44px; }
+    #{{ uid }} .aao-tabs__payment-icons { gap: 7px; }
+    #{{ uid }} .aao-tabs__payment-icon { height: 18px; }
+    #{{ uid }} .aao-tabs__star { width: var(--star-size-mobile); height: var(--star-size-mobile); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #{{ uid }}[data-tab-layout="underline"] .aao-tabs__list[data-underline-ready="true"]::after { transition: none; }
+  }
+</style>
+
+{%- capture stars_markup -%}
+  {%- assign stars_count = s.stars_count | default: 0 -%}
+  {%- if stars_count > 0 -%}
+    <div class="aao-tabs__stars" aria-label="Rated {{ stars_count }} out of 5">
+      {%- for index in (1..5) -%}
+        {%- liquid
+          assign half_value = index | minus: 1 | plus: 0.5
+          assign gradient_id = 'aao-tabs-star-' | append: block.id | append: '-' | append: index
+          assign filled_color = s.stars_color | default: '#111111'
+          assign half_color = s.stars_bg_half_color | default: '#E5E7EB'
+          assign fill_value = half_color
+          assign defs = ''
+
+          if stars_count == half_value
+            assign fill_value = 'url(#' | append: gradient_id | append: ')'
+            capture defs
+              echo '<linearGradient id="'
+              echo gradient_id
+              echo '"><stop offset="0%" stop-color="'
+              echo filled_color
+              echo '"/><stop offset="50%" stop-color="'
+              echo filled_color
+              echo '"/><stop offset="50%" stop-color="'
+              echo half_color
+              echo '"/><stop offset="100%" stop-color="'
+              echo half_color
+              echo '"/></linearGradient>'
+            endcapture
+          elsif stars_count >= index
+            assign fill_value = filled_color
+          endif
+        -%}
+        <span class="aao-tabs__star" aria-hidden="true">
+          <svg viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>{{ defs }}</defs>
+            <g fill="{{ fill_value }}">{% if s.star_style == 'sharp' %}<path d="M11.9928 5.14597L7.85231 4.54447L6.00031 0.792969L4.14831 4.54447L0.0078125 5.14597L3.00431 8.06697L2.29681 12.1905L6.00031 10.2445L9.70381 12.1905L8.99631 8.06697L11.9928 5.14597Z"></path>{% else %}<path d="M6.86447 2.11566L7.74447 3.87566C7.86447 4.12066 8.18447 4.35566 8.45447 4.40066L10.0495 4.66566C11.0695 4.83566 11.3095 5.57566 10.5745 6.30566L9.33447 7.54566C9.12446 7.75566 9.00947 8.16066 9.07446 8.45066L9.42947 9.98566C9.70947 11.2007 9.06447 11.6707 7.98947 11.0357L6.49447 10.1507C6.22447 9.99066 5.77947 9.99066 5.50447 10.1507L4.00947 11.0357C2.93947 11.6707 2.28947 11.1957 2.56947 9.98566L2.92447 8.45066C2.98947 8.16066 2.87447 7.75566 2.66447 7.54566L1.42447 6.30566C0.694466 5.57566 0.929466 4.83566 1.94947 4.66566L3.54447 4.40066C3.80947 4.35566 4.12947 4.12066 4.24947 3.87566L5.12947 2.11566C5.60947 1.16066 6.38947 1.16066 6.86447 2.11566Z"></path>{% endif %}</g>
+          </svg>
+        </span>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture reviewer_markup -%}
+  {%- liquid
+    assign reviewer_name = s.reviewer_name
+    assign review_date = s.review_date
+    assign reviewer_subtext = s.reviewer_subtext
+    assign reviewer_image = s.reviewer_image
+  -%}
+  {%- unless reviewer_name == blank and review_date == blank and reviewer_subtext == blank and reviewer_image == blank -%}
+    <div class="aao-tabs__review-footer">
+      {%- if reviewer_image != blank -%}
+        <div class="aao-tabs__reviewer-image-wrap">
+          <img class="aao-tabs__reviewer-image" src="{{ reviewer_image | image_url: width: 100 }}" alt="{{ reviewer_name | escape }}" width="50" height="50" loading="lazy">
+        </div>
+      {%- else -%}
+        {%- liquid
+          assign name_parts = reviewer_name | strip | split: ' '
+          assign initials = 'R'
+          if name_parts.size == 1
+            assign initials = name_parts[0] | slice: 0 | upcase
+          elsif name_parts.size > 1
+            assign first_initial = name_parts[0] | slice: 0 | upcase
+            assign last_part = name_parts | last
+            assign last_initial = last_part | slice: 0 | upcase
+            assign initials = first_initial | append: last_initial
+          endif
+        -%}
+        <div class="aao-tabs__reviewer-image-wrap aao-tabs__reviewer-image-wrap--initials" aria-hidden="true">
+          <span class="aao-tabs__reviewer-initials">{{ initials }}</span>
+        </div>
+      {%- endif -%}
+
+      <div class="aao-tabs__reviewer-copy">
+        <div class="aao-tabs__reviewer-top">
+          {%- if reviewer_name != blank -%}
+            <div class="aao-tabs__reviewer-name">{{ reviewer_name }}</div>
+          {%- endif -%}
+          {%- if s.show_verified_badge -%}
+            <div class="aao-tabs__reviewer-badge">
+              <span class="aao-tabs__reviewer-badge-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.5924 3.20027C9.34888 3.4078 9.22711 3.51158 9.09706 3.59874C8.79896 3.79854 8.46417 3.93721 8.1121 4.00672C7.95851 4.03705 7.79903 4.04977 7.48008 4.07522C6.6787 4.13918 6.278 4.17115 5.94371 4.28923C5.17051 4.56233 4.56233 5.17051 4.28923 5.94371C4.17115 6.278 4.13918 6.6787 4.07522 7.48008C4.04977 7.79903 4.03705 7.95851 4.00672 8.1121C3.93721 8.46417 3.79854 8.79896 3.59874 9.09706C3.51158 9.22711 3.40781 9.34887 3.20027 9.5924C2.67883 10.2043 2.4181 10.5102 2.26522 10.8301C1.91159 11.57 1.91159 12.43 2.26522 13.1699C2.41811 13.4898 2.67883 13.7957 3.20027 14.4076C3.40778 14.6511 3.51158 14.7729 3.59874 14.9029C3.79854 15.201 3.93721 15.5358 4.00672 15.8879C4.03705 16.0415 4.04977 16.201 4.07522 16.5199C4.13918 17.3213 4.17115 17.722 4.28923 18.0563C4.56233 18.8295 5.17051 19.4377 5.94371 19.7108C6.278 19.8288 6.6787 19.8608 7.48008 19.9248C7.79903 19.9502 7.95851 19.963 8.1121 19.9933C8.46417 20.0628 8.79896 20.2015 9.09706 20.4013C9.22711 20.4884 9.34887 20.5922 9.5924 20.7997C10.2043 21.3212 10.5102 21.5819 10.8301 21.7348C11.57 22.0884 12.43 22.0884 13.1699 21.7348C13.4898 21.5819 13.7957 21.3212 14.4076 20.7997C14.6511 20.5922 14.7729 20.4884 14.9029 20.4013C15.201 20.2015 15.5358 20.0628 15.8879 19.9933C16.0415 19.963 16.201 19.9502 16.5199 19.9248C17.3213 19.8608 17.722 19.8288 18.0563 19.7108C18.8295 19.4377 19.4377 18.8295 19.7108 18.0563C19.8288 17.722 19.8608 17.3213 19.9248 16.5199C19.9502 16.201 19.963 16.0415 19.9933 15.8879C20.0628 15.5358 20.2015 15.201 20.4013 14.9029C20.4884 14.7729 20.5922 14.6511 20.7997 14.4076C21.3212 13.7957 21.5819 13.4898 21.7348 13.1699C22.0884 12.43 22.0884 11.57 21.7348 10.8301C21.5819 10.5102 21.3212 10.2043 20.7997 9.5924C20.5922 9.34887 20.4884 9.22711 20.4013 9.09706C20.2015 8.79896 20.0628 8.46417 19.9933 8.1121C19.963 7.95851 19.9502 7.79903 19.9248 7.48008C19.8608 6.6787 19.8288 6.278 19.7108 5.94371C19.4377 5.17051 18.8295 4.56233 18.0563 4.28923C17.722 4.17115 17.3213 4.13918 16.5199 4.07522C16.201 4.04977 16.0415 4.03705 15.8879 4.00672C15.5358 3.93721 15.201 3.79854 14.9029 3.59874C14.7729 3.51158 14.6511 3.40781 14.4076 3.20027C13.7957 2.67883 13.4898 2.4181 13.1699 2.26522C12.43 1.91159 11.57 1.91159 10.8301 2.26522C10.5102 2.4181 10.2043 2.67883 9.5924 3.20027ZM16.3735 9.86314C16.6913 9.5453 16.6913 9.03 16.3735 8.71216C16.0557 8.39433 15.5403 8.39433 15.2225 8.71216L10.3723 13.5624L8.77746 11.9676C8.45963 11.6498 7.94432 11.6498 7.62649 11.9676C7.30866 12.2854 7.30866 12.8007 7.62649 13.1186L9.79678 15.2889C10.1146 15.6067 10.6299 15.6067 10.9478 15.2889L16.3735 9.86314Z" fill="currentColor"></path></svg>
+              </span>
+              <span class="aao-tabs__reviewer-badge-label">Verified expert</span>
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- if reviewer_subtext != blank or review_date != blank -%}
+          <div class="aao-tabs__reviewer-meta">
+            {%- if reviewer_subtext != blank -%}<span class="aao-tabs__reviewer-subtext">{{ reviewer_subtext }}</span>{%- endif -%}
+            {%- if reviewer_subtext != blank and review_date != blank -%}<span class="aao-tabs__reviewer-meta-separator" aria-hidden="true">·</span>{%- endif -%}
+            {%- if review_date != blank -%}<span class="aao-tabs__reviewer-date">{{ review_date }}</span>{%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endunless -%}
+{%- endcapture -%}
+
+<div
+  id="{{ uid }}"
+  class="aao-ss-block aao-ss-tabs"
+  data-tab-layout="{{ tab_layout }}"
+  style="--tab-count:{{ rendered_keys.size }};--padding-top:{{ s.padding_vertical | default: 0 }}px;--padding-bottom:{{ s.padding_vertical | default: 0 }}px;--padding-left:{{ s.padding_horizontal | default: 0 }}px;--padding-right:{{ s.padding_horizontal | default: 0 }}px;--radius:{{ radius }}px;--tab-radius:{{ tab_radius }}px;--box-shadow:{{ box_shadow }};--active-tab-background:{{ light_color }};--active-tab-text-color:{{ text_color }};--inactive-tab-background:{{ inactive_bg }};--inactive-tab-text-color:{{ tab_text_color }};--panel-background:{{ light_color }};--text-color:{{ text_color }};--muted-text-color:{{ s.muted_text_color | default: '#6b6b6b' }};--active-underline-color:{{ text_color }};--verified-badge-color:{{ verified_color }};--verified-badge-background:{{ verified_bg }};--tab-text-size-desktop:{{ tab_text_size }}px;--tab-text-size-mobile:{{ tab_text_size_m }}px;--tab-font-weight:{{ s.tab_font_weight | default: 700 }};--content-text-size-desktop:{{ content_size }}px;--content-text-size-mobile:{{ content_size_m }}px;--star-size-desktop:{{ star_size }}px;--star-size-mobile:{{ star_size_m }}px;--reviewer-name-size-desktop:{{ content_size }}px;--reviewer-name-size-mobile:{{ content_size_m }}px;--reviewer-meta-size-desktop:{{ meta_size }}px;--reviewer-meta-size-mobile:{{ meta_size_m }}px;--stars-color:{{ s.stars_color | default: '#111111' }};--divider-color:{{ divider_color }};--panel-divider-color:{{ s.border_color | default: '#E5E7EB' }};{{ border_vars }}"
+>
+  <div class="aao-tabs__shell">
+    <div class="aao-tabs__list" role="tablist" aria-label="Product tabs">
+      {%- for key in rendered_keys -%}
+        {%- liquid
+          assign title_key = key | append: '_title'
+          assign tab_title = s[title_key]
+          if tab_title == blank
+            assign tab_title = 'Tab ' | append: forloop.index
+          endif
+          assign is_active = false
+          if key == default_tab
+            assign is_active = true
+          endif
+        -%}
+        <button
+          type="button"
+          class="aao-tabs__button{% if is_active %} is-active{% endif %}"
+          id="{{ uid }}-tab-{{ key }}"
+          data-tab-key="{{ key }}"
+          role="tab"
+          aria-controls="{{ uid }}-panel-{{ key }}"
+          aria-selected="{{ is_active }}"
+          tabindex="{% if is_active %}0{% else %}-1{% endif %}"
+        >{{ tab_title }}</button>
+      {%- endfor -%}
+    </div>
+
+    {%- for key in rendered_keys -%}
+      {%- liquid
+        assign text_key = key | append: '_text'
+        assign tab_content = s[text_key]
+        if key == description_tab
+          assign tab_content = product.description
+        endif
+
+        assign is_review = false
+        if key == review_tab
+          assign is_review = true
+        endif
+
+        assign show_payment = false
+        if payment_target == 'all' or payment_target == key
+          assign show_payment = true
+        endif
+
+        assign is_active = false
+        if key == default_tab
+          assign is_active = true
+        endif
+      -%}
+      <div
+        class="aao-tabs__panel"
+        id="{{ uid }}-panel-{{ key }}"
+        role="tabpanel"
+        aria-labelledby="{{ uid }}-tab-{{ key }}"
+        data-tab-key="{{ key }}"
+        {% unless is_active %}hidden{% endunless %}
+      >
+        <div class="aao-tabs__stack">
+          {%- if is_review -%}{{ stars_markup }}{%- endif -%}
+          {%- if tab_content != blank -%}<div class="aao-tabs__content">{{ tab_content }}</div>{%- endif -%}
+          {%- if is_review -%}{{ reviewer_markup }}{%- endif -%}
+          {%- if show_payment and payment_icons_html != blank -%}
+            <div class="aao-tabs__payment-section">{{ payment_icons_html }}</div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById({{ uid | json }});
+    if (!root) return;
+
+    var list = root.querySelector('.aao-tabs__list');
+    var buttons = Array.prototype.slice.call(root.querySelectorAll('.aao-tabs__button'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll('.aao-tabs__panel'));
+    var isUnderline = root.dataset.tabLayout === 'underline';
+
+    function syncUnderline() {
+      if (!isUnderline || !list) return;
+      var active = buttons.filter(function (b) { return b.classList.contains('is-active'); })[0];
+      if (!active) {
+        list.style.setProperty('--underline-left', '0px');
+        list.style.setProperty('--underline-width', '0px');
+        list.dataset.underlineVisible = 'false';
+        return;
+      }
+      var listRect = list.getBoundingClientRect();
+      var rect = active.getBoundingClientRect();
+      list.style.setProperty('--underline-left', Math.max(0, rect.left - listRect.left) + 'px');
+      list.style.setProperty('--underline-width', Math.max(0, rect.width) + 'px');
+      list.dataset.underlineVisible = rect.width > 0 ? 'true' : 'false';
+    }
+
+    function activate(key) {
+      buttons.forEach(function (b) {
+        var on = b.dataset.tabKey === key;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-selected', String(on));
+        b.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(function (p) { p.hidden = p.dataset.tabKey !== key; });
+      syncUnderline();
+    }
+
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () { activate(b.dataset.tabKey); });
+    });
+
+    if (isUnderline && list) {
+      list.dataset.underlineReady = 'false';
+      list.dataset.underlineVisible = 'false';
+      syncUnderline();
+      requestAnimationFrame(function () { list.dataset.underlineReady = 'true'; });
+      window.addEventListener('resize', syncUnderline);
+      if (typeof ResizeObserver !== 'undefined') {
+        var ro = new ResizeObserver(syncUnderline);
+        ro.observe(list);
+        buttons.forEach(function (b) { ro.observe(b); });
+      }
+    }
+  })();
+</script>

@@ -13,7 +13,7 @@
       "type": "main-product",
       "blocks": {
         "1a8adec4480d4b2c": {
-          "type": "shopify://apps/section-store/blocks/block-review-summary/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "type": "aao-review-summary",
           "disabled": true,
           "settings": {
             "star_style": "mild",
@@ -106,7 +106,7 @@
           }
         },
         "284b13221165f0c0": {
-          "type": "shopify://apps/section-store/blocks/block-badge/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "type": "aao-badge",
           "disabled": true,
           "settings": {
             "first_icon": "shield_check",
@@ -141,7 +141,7 @@
           }
         },
         "a187a9e4b968a9b7": {
-          "type": "shopify://apps/section-store/blocks/block-benefits-list/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "type": "aao-benefits-list",
           "disabled": true,
           "settings": {
             "items_gap": 8,
@@ -166,7 +166,7 @@
           }
         },
         "402011192551e36c": {
-          "type": "shopify://apps/section-store/blocks/block-banner/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "type": "aao-banner",
           "disabled": true,
           "settings": {
             "gap": 2,
@@ -252,7 +252,7 @@
           }
         },
         "db02c4ff041dee73": {
-          "type": "shopify://apps/section-store/blocks/block-shipping-info/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "type": "aao-shipping-info",
           "settings": {
             "use_dot": true,
             "icon_color": "#307a07",
@@ -288,7 +288,7 @@
           }
         },
         "69c80e04cef3e57e": {
-          "type": "shopify://apps/section-store/blocks/block-atc-style/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "type": "aao-atc-style",
           "settings": {
             "background_color": "#1c1c1c",
             "text_color": "#ffffff",
@@ -325,7 +325,7 @@
           }
         },
         "d1aff5a99ea98e46": {
-          "type": "shopify://apps/section-store/blocks/block-tabs/d7a2e423-ea88-4344-b866-6d0fb487c3dd",
+          "type": "aao-tabs",
           "disabled": true,
           "settings": {
             "default_tab": "first",

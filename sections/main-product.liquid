@@ -1926,6 +1926,1886 @@ quick buy information in a template, that will be extracted in JS, which ensures
           "default": "More information"
         }
       ]
+    },
+    {
+      "type": "aao-review-summary",
+      "name": "Review summary (AAO)",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Stars"
+        },
+        {
+          "type": "select",
+          "id": "star_style",
+          "label": "Star style",
+          "options": [
+            { "value": "standard", "label": "Standard" },
+            { "value": "mild", "label": "Mild" },
+            { "value": "sharp", "label": "Sharp" }
+          ],
+          "default": "mild"
+        },
+        {
+          "type": "range",
+          "id": "stars_count",
+          "label": "Stars count",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 4.5
+        },
+        {
+          "type": "number",
+          "id": "stars_size",
+          "label": "Star size",
+          "default": 14
+        },
+        {
+          "type": "number",
+          "id": "stars_gap",
+          "label": "Star gap",
+          "default": 2
+        },
+        {
+          "type": "color",
+          "id": "stars_color",
+          "label": "Star colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "color",
+          "id": "stars_bg_color",
+          "label": "Star background colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "color",
+          "id": "stars_bg_half_color",
+          "label": "Empty star colour",
+          "default": "#dddddd"
+        },
+        {
+          "type": "header",
+          "content": "Avatars"
+        },
+        {
+          "type": "paragraph",
+          "content": "The original app filled this with random stock portraits fetched from a third-party site. The native block keeps the setting for parity but renders no avatars."
+        },
+        {
+          "type": "select",
+          "id": "avatars_position",
+          "label": "Avatars position",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "first", "label": "First" },
+            { "value": "last", "label": "Last" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "number",
+          "id": "avatars_size",
+          "label": "Avatar size",
+          "default": 22
+        },
+        {
+          "type": "checkbox",
+          "id": "avatars_animate",
+          "label": "Animate avatars",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Text"
+        },
+        {
+          "type": "richtext",
+          "id": "first_text",
+          "label": "Text before stars"
+        },
+        {
+          "type": "number",
+          "id": "first_text_size",
+          "label": "Text size",
+          "default": 12
+        },
+        {
+          "type": "color",
+          "id": "first_text_color",
+          "label": "Text colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "richtext",
+          "id": "second_text",
+          "label": "Text after stars"
+        },
+        {
+          "type": "number",
+          "id": "second_text_size",
+          "label": "Text size",
+          "default": 12
+        },
+        {
+          "type": "color",
+          "id": "second_text_color",
+          "label": "Text colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "header",
+          "content": "Container"
+        },
+        {
+          "type": "select",
+          "id": "border",
+          "label": "Border",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "solid", "label": "Solid" },
+            { "value": "dashed", "label": "Dashed" },
+            { "value": "dotted", "label": "Dotted" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "range",
+          "id": "border_thickness",
+          "label": "Border thickness",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 1
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "number",
+          "id": "radius",
+          "label": "Corner radius",
+          "default": 0
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "Background gradient"
+        },
+        {
+          "type": "select",
+          "id": "effect",
+          "label": "Shadow",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "shadow_1", "label": "Shadow 1" },
+            { "value": "shadow_2", "label": "Shadow 2" },
+            { "value": "glow", "label": "Glow" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "number",
+          "id": "block_padding_top",
+          "label": "Block padding top",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "block_padding_bottom",
+          "label": "Block padding bottom",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "padding_vertical",
+          "label": "Vertical padding",
+          "default": 6
+        },
+        {
+          "type": "number",
+          "id": "padding_horizontal",
+          "label": "Horizontal padding",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "aao-badge",
+      "name": "Badges (AAO)",
+      "settings": [
+        {
+          "type": "header",
+          "content": "First badge"
+        },
+        {
+          "type": "select",
+          "id": "first_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "check_mark", "label": "Check Mark" },
+            { "value": "icon_2", "label": "Icon 2" },
+            { "value": "icon_3", "label": "Icon 3" },
+            { "value": "icon_4", "label": "Icon 4" },
+            { "value": "icon_5", "label": "Icon 5" },
+            { "value": "icon_6", "label": "Icon 6" },
+            { "value": "shield_check", "label": "Shield Check" },
+            { "value": "credit_card", "label": "Credit Card" },
+            { "value": "earth", "label": "Earth" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "star_sparkle", "label": "Star Sparkle" },
+            { "value": "rocket", "label": "Rocket" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "headset", "label": "Headset" },
+            { "value": "leaf_outline", "label": "Leaf Outline" },
+            { "value": "box", "label": "Box" },
+            { "value": "box_outline", "label": "Box Outline" },
+            { "value": "shield_security_outline", "label": "Shield Security Outline" },
+            { "value": "credit_card_outline", "label": "Credit Card Outline" },
+            { "value": "earth_outline", "label": "Earth Outline" },
+            { "value": "heart_outline", "label": "Heart Outline" },
+            { "value": "gift_outline", "label": "Gift Outline" },
+            { "value": "lock_outline", "label": "Lock Outline" },
+            { "value": "star_sparkle_outline", "label": "Star Sparkle Outline" },
+            { "value": "rocket_outline", "label": "Rocket Outline" },
+            { "value": "store", "label": "Store" },
+            { "value": "store_outline", "label": "Store Outline" },
+            { "value": "price_tag", "label": "Price Tag" },
+            { "value": "price_tag_outline", "label": "Price Tag Outline" }
+          ],
+          "default": "shield_check"
+        },
+        {
+          "type": "text",
+          "id": "first_title",
+          "label": "Title"
+        },
+        {
+          "type": "color",
+          "id": "first_bg_color",
+          "label": "Background colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "color_background",
+          "id": "first_background_gradient",
+          "label": "Background gradient"
+        },
+        {
+          "type": "color",
+          "id": "first_title_color",
+          "label": "Title colour",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "Second badge"
+        },
+        {
+          "type": "select",
+          "id": "second_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "check_mark", "label": "Check Mark" },
+            { "value": "icon_2", "label": "Icon 2" },
+            { "value": "icon_3", "label": "Icon 3" },
+            { "value": "icon_4", "label": "Icon 4" },
+            { "value": "icon_5", "label": "Icon 5" },
+            { "value": "icon_6", "label": "Icon 6" },
+            { "value": "shield_check", "label": "Shield Check" },
+            { "value": "credit_card", "label": "Credit Card" },
+            { "value": "earth", "label": "Earth" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "star_sparkle", "label": "Star Sparkle" },
+            { "value": "rocket", "label": "Rocket" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "headset", "label": "Headset" },
+            { "value": "leaf_outline", "label": "Leaf Outline" },
+            { "value": "box", "label": "Box" },
+            { "value": "box_outline", "label": "Box Outline" },
+            { "value": "shield_security_outline", "label": "Shield Security Outline" },
+            { "value": "credit_card_outline", "label": "Credit Card Outline" },
+            { "value": "earth_outline", "label": "Earth Outline" },
+            { "value": "heart_outline", "label": "Heart Outline" },
+            { "value": "gift_outline", "label": "Gift Outline" },
+            { "value": "lock_outline", "label": "Lock Outline" },
+            { "value": "star_sparkle_outline", "label": "Star Sparkle Outline" },
+            { "value": "rocket_outline", "label": "Rocket Outline" },
+            { "value": "store", "label": "Store" },
+            { "value": "store_outline", "label": "Store Outline" },
+            { "value": "price_tag", "label": "Price Tag" },
+            { "value": "price_tag_outline", "label": "Price Tag Outline" }
+          ],
+          "default": "star_sparkle"
+        },
+        {
+          "type": "text",
+          "id": "second_title",
+          "label": "Title"
+        },
+        {
+          "type": "color",
+          "id": "second_bg_color",
+          "label": "Background colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "color_background",
+          "id": "second_background_gradient",
+          "label": "Background gradient"
+        },
+        {
+          "type": "color",
+          "id": "second_title_color",
+          "label": "Title colour",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "Third badge"
+        },
+        {
+          "type": "select",
+          "id": "third_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "check_mark", "label": "Check Mark" },
+            { "value": "icon_2", "label": "Icon 2" },
+            { "value": "icon_3", "label": "Icon 3" },
+            { "value": "icon_4", "label": "Icon 4" },
+            { "value": "icon_5", "label": "Icon 5" },
+            { "value": "icon_6", "label": "Icon 6" },
+            { "value": "shield_check", "label": "Shield Check" },
+            { "value": "credit_card", "label": "Credit Card" },
+            { "value": "earth", "label": "Earth" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "star_sparkle", "label": "Star Sparkle" },
+            { "value": "rocket", "label": "Rocket" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "headset", "label": "Headset" },
+            { "value": "leaf_outline", "label": "Leaf Outline" },
+            { "value": "box", "label": "Box" },
+            { "value": "box_outline", "label": "Box Outline" },
+            { "value": "shield_security_outline", "label": "Shield Security Outline" },
+            { "value": "credit_card_outline", "label": "Credit Card Outline" },
+            { "value": "earth_outline", "label": "Earth Outline" },
+            { "value": "heart_outline", "label": "Heart Outline" },
+            { "value": "gift_outline", "label": "Gift Outline" },
+            { "value": "lock_outline", "label": "Lock Outline" },
+            { "value": "star_sparkle_outline", "label": "Star Sparkle Outline" },
+            { "value": "rocket_outline", "label": "Rocket Outline" },
+            { "value": "store", "label": "Store" },
+            { "value": "store_outline", "label": "Store Outline" },
+            { "value": "price_tag", "label": "Price Tag" },
+            { "value": "price_tag_outline", "label": "Price Tag Outline" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "text",
+          "id": "third_title",
+          "label": "Title"
+        },
+        {
+          "type": "color",
+          "id": "third_bg_color",
+          "label": "Background colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "color_background",
+          "id": "third_background_gradient",
+          "label": "Background gradient"
+        },
+        {
+          "type": "color",
+          "id": "third_title_color",
+          "label": "Title colour",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "number",
+          "id": "title_size",
+          "label": "Title size",
+          "default": 11
+        },
+        {
+          "type": "number",
+          "id": "icon_size",
+          "label": "Icon size",
+          "default": 15
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Font weight",
+          "options": [
+            { "value": "default", "label": "Default" },
+            { "value": "normal", "label": "Normal" },
+            { "value": "400", "label": "400" },
+            { "value": "500", "label": "500" },
+            { "value": "600", "label": "600" },
+            { "value": "700", "label": "700" },
+            { "value": "bold", "label": "Bold" }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "select",
+          "id": "effect",
+          "label": "Shadow",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "shadow_1", "label": "Shadow 1" },
+            { "value": "shadow_2", "label": "Shadow 2" },
+            { "value": "glow", "label": "Glow" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "select",
+          "id": "card_border",
+          "label": "Card border",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "solid", "label": "Solid" },
+            { "value": "dashed", "label": "Dashed" },
+            { "value": "dotted", "label": "Dotted" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "range",
+          "id": "card_border_width",
+          "label": "Card border width",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 1
+        },
+        {
+          "type": "color",
+          "id": "card_border_color",
+          "label": "Card border colour",
+          "default": "#e5e7eb"
+        },
+        {
+          "type": "number",
+          "id": "card_radius",
+          "label": "Card corner radius",
+          "default": 10
+        },
+        {
+          "type": "select",
+          "id": "card_align",
+          "label": "Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "Shared background gradient"
+        },
+        {
+          "type": "number",
+          "id": "padding_vertical",
+          "label": "Vertical padding",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "padding_sides",
+          "label": "Horizontal padding",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "card_padding_horizontal",
+          "label": "Card horizontal padding",
+          "default": 12
+        },
+        {
+          "type": "number",
+          "id": "card_padding_vertical",
+          "label": "Card vertical padding",
+          "default": 6
+        }
+      ]
+    },
+    {
+      "type": "aao-benefits-list",
+      "name": "Benefits list (AAO)",
+      "settings": [
+        {
+          "type": "number",
+          "id": "items_gap",
+          "label": "Gap between items",
+          "default": 10
+        },
+        {
+          "type": "richtext",
+          "id": "first_text",
+          "label": "First item"
+        },
+        {
+          "type": "richtext",
+          "id": "second_text",
+          "label": "Second item"
+        },
+        {
+          "type": "richtext",
+          "id": "third_text",
+          "label": "Third item"
+        },
+        {
+          "type": "richtext",
+          "id": "fourth_text",
+          "label": "Fourth item"
+        },
+        {
+          "type": "select",
+          "id": "icon_selection",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "check_mark", "label": "Check Mark" },
+            { "value": "icon_2", "label": "Icon 2" },
+            { "value": "icon_3", "label": "Icon 3" },
+            { "value": "icon_4", "label": "Icon 4" },
+            { "value": "icon_5", "label": "Icon 5" },
+            { "value": "icon_6", "label": "Icon 6" },
+            { "value": "shield_check", "label": "Shield Check" },
+            { "value": "credit_card", "label": "Credit Card" },
+            { "value": "earth", "label": "Earth" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "star_sparkle", "label": "Star Sparkle" },
+            { "value": "rocket", "label": "Rocket" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "headset", "label": "Headset" },
+            { "value": "leaf_outline", "label": "Leaf Outline" },
+            { "value": "box", "label": "Box" },
+            { "value": "box_outline", "label": "Box Outline" },
+            { "value": "shield_security_outline", "label": "Shield Security Outline" },
+            { "value": "credit_card_outline", "label": "Credit Card Outline" },
+            { "value": "earth_outline", "label": "Earth Outline" },
+            { "value": "heart_outline", "label": "Heart Outline" },
+            { "value": "gift_outline", "label": "Gift Outline" },
+            { "value": "lock_outline", "label": "Lock Outline" },
+            { "value": "star_sparkle_outline", "label": "Star Sparkle Outline" },
+            { "value": "rocket_outline", "label": "Rocket Outline" },
+            { "value": "store", "label": "Store" },
+            { "value": "store_outline", "label": "Store Outline" },
+            { "value": "price_tag", "label": "Price Tag" },
+            { "value": "price_tag_outline", "label": "Price Tag Outline" }
+          ],
+          "default": "check_mark"
+        },
+        {
+          "type": "number",
+          "id": "icon_size",
+          "label": "Icon size",
+          "default": 18
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "number",
+          "id": "text_size",
+          "label": "Text size",
+          "default": 13
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "select",
+          "id": "content_align",
+          "label": "Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "header",
+          "content": "Container"
+        },
+        {
+          "type": "select",
+          "id": "border",
+          "label": "Border",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "solid", "label": "Solid" },
+            { "value": "dashed", "label": "Dashed" },
+            { "value": "dotted", "label": "Dotted" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "range",
+          "id": "border_thickness",
+          "label": "Border thickness",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 1
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "number",
+          "id": "radius",
+          "label": "Corner radius",
+          "default": 0
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "Background gradient"
+        },
+        {
+          "type": "number",
+          "id": "padding_vertical",
+          "label": "Vertical padding",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "padding_horizontal",
+          "label": "Horizontal padding",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "aao-benefits-boxes",
+      "name": "Benefits boxes (AAO)",
+      "settings": [
+        {
+          "type": "select",
+          "id": "cards_design",
+          "label": "Card design",
+          "options": [
+            { "value": "vertical", "label": "Vertical" },
+            { "value": "horizontal", "label": "Horizontal" },
+            { "value": "boxed", "label": "Boxed" }
+          ],
+          "default": "horizontal"
+        },
+        {
+          "type": "select",
+          "id": "cards_row",
+          "label": "Cards per row",
+          "options": [
+            { "value": "1", "label": "1" },
+            { "value": "2", "label": "2" },
+            { "value": "3", "label": "3" },
+            { "value": "4", "label": "4" }
+          ],
+          "default": "2"
+        },
+        {
+          "type": "select",
+          "id": "card_align",
+          "label": "Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "header",
+          "content": "First card"
+        },
+        {
+          "type": "select",
+          "id": "first_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "check_mark", "label": "Check Mark" },
+            { "value": "icon_2", "label": "Icon 2" },
+            { "value": "icon_3", "label": "Icon 3" },
+            { "value": "icon_4", "label": "Icon 4" },
+            { "value": "icon_5", "label": "Icon 5" },
+            { "value": "icon_6", "label": "Icon 6" },
+            { "value": "shield_check", "label": "Shield Check" },
+            { "value": "credit_card", "label": "Credit Card" },
+            { "value": "earth", "label": "Earth" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "star_sparkle", "label": "Star Sparkle" },
+            { "value": "rocket", "label": "Rocket" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "headset", "label": "Headset" },
+            { "value": "leaf_outline", "label": "Leaf Outline" },
+            { "value": "box", "label": "Box" },
+            { "value": "box_outline", "label": "Box Outline" },
+            { "value": "shield_security_outline", "label": "Shield Security Outline" },
+            { "value": "credit_card_outline", "label": "Credit Card Outline" },
+            { "value": "earth_outline", "label": "Earth Outline" },
+            { "value": "heart_outline", "label": "Heart Outline" },
+            { "value": "gift_outline", "label": "Gift Outline" },
+            { "value": "lock_outline", "label": "Lock Outline" },
+            { "value": "star_sparkle_outline", "label": "Star Sparkle Outline" },
+            { "value": "rocket_outline", "label": "Rocket Outline" },
+            { "value": "store", "label": "Store" },
+            { "value": "store_outline", "label": "Store Outline" },
+            { "value": "price_tag", "label": "Price Tag" },
+            { "value": "price_tag_outline", "label": "Price Tag Outline" }
+          ],
+          "default": "heart_outline"
+        },
+        {
+          "type": "text",
+          "id": "first_title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "first_sub_title",
+          "label": "Subtitle"
+        },
+        {
+          "type": "header",
+          "content": "Second card"
+        },
+        {
+          "type": "select",
+          "id": "second_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "check_mark", "label": "Check Mark" },
+            { "value": "icon_2", "label": "Icon 2" },
+            { "value": "icon_3", "label": "Icon 3" },
+            { "value": "icon_4", "label": "Icon 4" },
+            { "value": "icon_5", "label": "Icon 5" },
+            { "value": "icon_6", "label": "Icon 6" },
+            { "value": "shield_check", "label": "Shield Check" },
+            { "value": "credit_card", "label": "Credit Card" },
+            { "value": "earth", "label": "Earth" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "star_sparkle", "label": "Star Sparkle" },
+            { "value": "rocket", "label": "Rocket" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "headset", "label": "Headset" },
+            { "value": "leaf_outline", "label": "Leaf Outline" },
+            { "value": "box", "label": "Box" },
+            { "value": "box_outline", "label": "Box Outline" },
+            { "value": "shield_security_outline", "label": "Shield Security Outline" },
+            { "value": "credit_card_outline", "label": "Credit Card Outline" },
+            { "value": "earth_outline", "label": "Earth Outline" },
+            { "value": "heart_outline", "label": "Heart Outline" },
+            { "value": "gift_outline", "label": "Gift Outline" },
+            { "value": "lock_outline", "label": "Lock Outline" },
+            { "value": "star_sparkle_outline", "label": "Star Sparkle Outline" },
+            { "value": "rocket_outline", "label": "Rocket Outline" },
+            { "value": "store", "label": "Store" },
+            { "value": "store_outline", "label": "Store Outline" },
+            { "value": "price_tag", "label": "Price Tag" },
+            { "value": "price_tag_outline", "label": "Price Tag Outline" }
+          ],
+          "default": "lock_outline"
+        },
+        {
+          "type": "text",
+          "id": "second_title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "second_sub_title",
+          "label": "Subtitle"
+        },
+        {
+          "type": "header",
+          "content": "Third card"
+        },
+        {
+          "type": "select",
+          "id": "third_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "check_mark", "label": "Check Mark" },
+            { "value": "icon_2", "label": "Icon 2" },
+            { "value": "icon_3", "label": "Icon 3" },
+            { "value": "icon_4", "label": "Icon 4" },
+            { "value": "icon_5", "label": "Icon 5" },
+            { "value": "icon_6", "label": "Icon 6" },
+            { "value": "shield_check", "label": "Shield Check" },
+            { "value": "credit_card", "label": "Credit Card" },
+            { "value": "earth", "label": "Earth" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "star_sparkle", "label": "Star Sparkle" },
+            { "value": "rocket", "label": "Rocket" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "headset", "label": "Headset" },
+            { "value": "leaf_outline", "label": "Leaf Outline" },
+            { "value": "box", "label": "Box" },
+            { "value": "box_outline", "label": "Box Outline" },
+            { "value": "shield_security_outline", "label": "Shield Security Outline" },
+            { "value": "credit_card_outline", "label": "Credit Card Outline" },
+            { "value": "earth_outline", "label": "Earth Outline" },
+            { "value": "heart_outline", "label": "Heart Outline" },
+            { "value": "gift_outline", "label": "Gift Outline" },
+            { "value": "lock_outline", "label": "Lock Outline" },
+            { "value": "star_sparkle_outline", "label": "Star Sparkle Outline" },
+            { "value": "rocket_outline", "label": "Rocket Outline" },
+            { "value": "store", "label": "Store" },
+            { "value": "store_outline", "label": "Store Outline" },
+            { "value": "price_tag", "label": "Price Tag" },
+            { "value": "price_tag_outline", "label": "Price Tag Outline" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "text",
+          "id": "third_title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "third_sub_title",
+          "label": "Subtitle"
+        },
+        {
+          "type": "header",
+          "content": "Fourth card"
+        },
+        {
+          "type": "select",
+          "id": "fourth_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "check_mark", "label": "Check Mark" },
+            { "value": "icon_2", "label": "Icon 2" },
+            { "value": "icon_3", "label": "Icon 3" },
+            { "value": "icon_4", "label": "Icon 4" },
+            { "value": "icon_5", "label": "Icon 5" },
+            { "value": "icon_6", "label": "Icon 6" },
+            { "value": "shield_check", "label": "Shield Check" },
+            { "value": "credit_card", "label": "Credit Card" },
+            { "value": "earth", "label": "Earth" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "star_sparkle", "label": "Star Sparkle" },
+            { "value": "rocket", "label": "Rocket" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "headset", "label": "Headset" },
+            { "value": "leaf_outline", "label": "Leaf Outline" },
+            { "value": "box", "label": "Box" },
+            { "value": "box_outline", "label": "Box Outline" },
+            { "value": "shield_security_outline", "label": "Shield Security Outline" },
+            { "value": "credit_card_outline", "label": "Credit Card Outline" },
+            { "value": "earth_outline", "label": "Earth Outline" },
+            { "value": "heart_outline", "label": "Heart Outline" },
+            { "value": "gift_outline", "label": "Gift Outline" },
+            { "value": "lock_outline", "label": "Lock Outline" },
+            { "value": "star_sparkle_outline", "label": "Star Sparkle Outline" },
+            { "value": "rocket_outline", "label": "Rocket Outline" },
+            { "value": "store", "label": "Store" },
+            { "value": "store_outline", "label": "Store Outline" },
+            { "value": "price_tag", "label": "Price Tag" },
+            { "value": "price_tag_outline", "label": "Price Tag Outline" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "text",
+          "id": "fourth_title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "fourth_sub_title",
+          "label": "Subtitle"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "number",
+          "id": "all_size",
+          "label": "Base size",
+          "default": 14
+        },
+        {
+          "type": "color",
+          "id": "all_color",
+          "label": "Colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Font weight",
+          "options": [
+            { "value": "400", "label": "400" },
+            { "value": "500", "label": "500" },
+            { "value": "600", "label": "600" },
+            { "value": "700", "label": "700" }
+          ],
+          "default": "400"
+        },
+        {
+          "type": "select",
+          "id": "border",
+          "label": "Border",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "solid", "label": "Solid" },
+            { "value": "dashed", "label": "Dashed" },
+            { "value": "dotted", "label": "Dotted" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "range",
+          "id": "border_thickness",
+          "label": "Border thickness",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 1
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "number",
+          "id": "radius",
+          "label": "Corner radius",
+          "default": 0
+        },
+        {
+          "type": "color",
+          "id": "cards_bg_color",
+          "label": "Cards background"
+        },
+        {
+          "type": "number",
+          "id": "padding_vertical",
+          "label": "Vertical padding",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "padding_horizontal",
+          "label": "Horizontal padding",
+          "default": 24
+        }
+      ]
+    },
+    {
+      "type": "aao-banner",
+      "name": "Banner (AAO)",
+      "settings": [
+        {
+          "type": "number",
+          "id": "gap",
+          "label": "Gap between title and body",
+          "default": 2
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_image",
+          "label": "Show icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "check_mark", "label": "Check Mark" },
+            { "value": "icon_2", "label": "Icon 2" },
+            { "value": "icon_3", "label": "Icon 3" },
+            { "value": "icon_4", "label": "Icon 4" },
+            { "value": "icon_5", "label": "Icon 5" },
+            { "value": "icon_6", "label": "Icon 6" },
+            { "value": "shield_check", "label": "Shield Check" },
+            { "value": "credit_card", "label": "Credit Card" },
+            { "value": "earth", "label": "Earth" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "star_sparkle", "label": "Star Sparkle" },
+            { "value": "rocket", "label": "Rocket" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "headset", "label": "Headset" },
+            { "value": "leaf_outline", "label": "Leaf Outline" },
+            { "value": "box", "label": "Box" },
+            { "value": "box_outline", "label": "Box Outline" },
+            { "value": "shield_security_outline", "label": "Shield Security Outline" },
+            { "value": "credit_card_outline", "label": "Credit Card Outline" },
+            { "value": "earth_outline", "label": "Earth Outline" },
+            { "value": "heart_outline", "label": "Heart Outline" },
+            { "value": "gift_outline", "label": "Gift Outline" },
+            { "value": "lock_outline", "label": "Lock Outline" },
+            { "value": "star_sparkle_outline", "label": "Star Sparkle Outline" },
+            { "value": "rocket_outline", "label": "Rocket Outline" },
+            { "value": "store", "label": "Store" },
+            { "value": "store_outline", "label": "Store Outline" },
+            { "value": "price_tag", "label": "Price Tag" },
+            { "value": "price_tag_outline", "label": "Price Tag Outline" }
+          ],
+          "default": "rocket"
+        },
+        {
+          "type": "number",
+          "id": "image_size",
+          "label": "Icon size",
+          "default": 30
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Icon position",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "header",
+          "content": "Text"
+        },
+        {
+          "type": "richtext",
+          "id": "title_text",
+          "label": "Title"
+        },
+        {
+          "type": "number",
+          "id": "title_size",
+          "label": "Title size",
+          "default": 14
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "richtext",
+          "id": "body_text",
+          "label": "Body"
+        },
+        {
+          "type": "number",
+          "id": "body_size",
+          "label": "Body size",
+          "default": 12
+        },
+        {
+          "type": "color",
+          "id": "body_color",
+          "label": "Body colour",
+          "default": "#444444"
+        },
+        {
+          "type": "header",
+          "content": "Container"
+        },
+        {
+          "type": "select",
+          "id": "border",
+          "label": "Border",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "solid", "label": "Solid" },
+            { "value": "dashed", "label": "Dashed" },
+            { "value": "dotted", "label": "Dotted" }
+          ],
+          "default": "solid"
+        },
+        {
+          "type": "range",
+          "id": "border_thickness",
+          "label": "Border thickness",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 1
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border colour",
+          "default": "#d7d7d7"
+        },
+        {
+          "type": "number",
+          "id": "radius",
+          "label": "Corner radius",
+          "default": 10
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background",
+          "default": "#f5f5f5"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "Background gradient"
+        },
+        {
+          "type": "select",
+          "id": "shadow",
+          "label": "Shadow",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "shadow_1", "label": "Shadow 1" },
+            { "value": "shadow_2", "label": "Shadow 2" },
+            { "value": "shadow_3", "label": "Shadow 3" },
+            { "value": "shadow_4", "label": "Shadow 4" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "number",
+          "id": "padding_vertical",
+          "label": "Vertical padding",
+          "default": 12
+        },
+        {
+          "type": "number",
+          "id": "padding_horizontal",
+          "label": "Horizontal padding",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "aao-shipping-info",
+      "name": "Shipping info (AAO)",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "use_dot",
+          "label": "Show pulsing dot",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Dot colour",
+          "default": "#15c625"
+        },
+        {
+          "type": "number",
+          "id": "icon_size",
+          "label": "Dot size",
+          "default": 10
+        },
+        {
+          "type": "header",
+          "content": "Delivery estimate"
+        },
+        {
+          "type": "text",
+          "id": "ships_by_text",
+          "label": "Label"
+        },
+        {
+          "type": "number",
+          "id": "shipping_within_days",
+          "label": "Days until shipped",
+          "default": 3
+        },
+        {
+          "type": "checkbox",
+          "id": "include_weekend",
+          "label": "Count weekends",
+          "default": false
+        },
+        {
+          "type": "number",
+          "id": "ships_by_font_size",
+          "label": "Text size",
+          "default": 13
+        },
+        {
+          "type": "color",
+          "id": "ships_by_text_color",
+          "label": "Text colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "header",
+          "content": "Shipping type"
+        },
+        {
+          "type": "paragraph",
+          "content": "COUNTRY_FLAG and COUNTRY_CODE are replaced with the visitor's country flag and code."
+        },
+        {
+          "type": "text",
+          "id": "fast_shipping_text",
+          "label": "Text for allowed countries"
+        },
+        {
+          "type": "checkbox",
+          "id": "allow_all_countries",
+          "label": "Allow all countries",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "allowed_countries",
+          "label": "Allowed country codes (comma separated)"
+        },
+        {
+          "type": "text",
+          "id": "fast_shipping_text_for_rest_countries",
+          "label": "Text for other countries"
+        },
+        {
+          "type": "color",
+          "id": "fast_shipping_text_color",
+          "label": "Text colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "header",
+          "content": "Container"
+        },
+        {
+          "type": "select",
+          "id": "border_style",
+          "label": "Border",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "solid", "label": "Solid" },
+            { "value": "dashed", "label": "Dashed" },
+            { "value": "dotted", "label": "Dotted" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "range",
+          "id": "border_width",
+          "label": "Border width",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 1
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border colour",
+          "default": "#d7d7d7"
+        },
+        {
+          "type": "number",
+          "id": "border_radius",
+          "label": "Corner radius",
+          "default": 8
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background",
+          "default": "#f5f5f5"
+        },
+        {
+          "type": "number",
+          "id": "padding_vertical",
+          "label": "Vertical padding",
+          "default": 7
+        },
+        {
+          "type": "number",
+          "id": "padding_horizontal",
+          "label": "Horizontal padding",
+          "default": 14
+        }
+      ]
+    },
+    {
+      "type": "aao-tabs",
+      "name": "Tabs (AAO)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "default_tab",
+          "label": "Default tab",
+          "options": [
+            { "value": "first", "label": "First" },
+            { "value": "second", "label": "Second" },
+            { "value": "third", "label": "Third" },
+            { "value": "fourth", "label": "Fourth" }
+          ],
+          "default": "first"
+        },
+        {
+          "type": "select",
+          "id": "tab_layout",
+          "label": "Tab layout",
+          "options": [
+            { "value": "filled", "label": "Filled" },
+            { "value": "underline", "label": "Underline" }
+          ],
+          "default": "filled"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_fourth_tab",
+          "label": "Enable fourth tab",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "product_description_tab",
+          "label": "Tab showing the product description",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "first", "label": "First" },
+            { "value": "second", "label": "Second" },
+            { "value": "third", "label": "Third" },
+            { "value": "fourth", "label": "Fourth" }
+          ],
+          "default": "second"
+        },
+        {
+          "type": "select",
+          "id": "review_tab",
+          "label": "Tab showing the review",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "first", "label": "First" },
+            { "value": "second", "label": "Second" },
+            { "value": "third", "label": "Third" },
+            { "value": "fourth", "label": "Fourth" }
+          ],
+          "default": "first"
+        },
+        {
+          "type": "select",
+          "id": "show_payment_icons",
+          "label": "Tab showing payment icons",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "all", "label": "All" },
+            { "value": "first", "label": "First" },
+            { "value": "second", "label": "Second" },
+            { "value": "third", "label": "Third" },
+            { "value": "fourth", "label": "Fourth" }
+          ],
+          "default": "first"
+        },
+        {
+          "type": "header",
+          "content": "First tab"
+        },
+        {
+          "type": "text",
+          "id": "first_title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "first_text",
+          "label": "Content"
+        },
+        {
+          "type": "header",
+          "content": "Second tab"
+        },
+        {
+          "type": "text",
+          "id": "second_title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "second_text",
+          "label": "Content"
+        },
+        {
+          "type": "header",
+          "content": "Third tab"
+        },
+        {
+          "type": "text",
+          "id": "third_title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "third_text",
+          "label": "Content"
+        },
+        {
+          "type": "header",
+          "content": "Fourth tab"
+        },
+        {
+          "type": "text",
+          "id": "fourth_title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "fourth_text",
+          "label": "Content"
+        },
+        {
+          "type": "header",
+          "content": "Review"
+        },
+        {
+          "type": "select",
+          "id": "star_style",
+          "label": "Star style",
+          "options": [
+            { "value": "mild", "label": "Mild" },
+            { "value": "sharp", "label": "Sharp" }
+          ],
+          "default": "mild"
+        },
+        {
+          "type": "range",
+          "id": "stars_count",
+          "label": "Stars count",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 5
+        },
+        {
+          "type": "color",
+          "id": "stars_color",
+          "label": "Star colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "color",
+          "id": "stars_bg_half_color",
+          "label": "Empty star colour",
+          "default": "#e5e7eb"
+        },
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer name"
+        },
+        {
+          "type": "text",
+          "id": "review_date",
+          "label": "Review date"
+        },
+        {
+          "type": "text",
+          "id": "reviewer_subtext",
+          "label": "Reviewer subtext"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_verified_badge",
+          "label": "Show verified badge",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "verified_badge_color",
+          "label": "Verified badge colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "image_picker",
+          "id": "reviewer_image",
+          "label": "Reviewer image"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "number",
+          "id": "tab_text_size",
+          "label": "Tab text size",
+          "default": 13
+        },
+        {
+          "type": "number",
+          "id": "tab_font_weight",
+          "label": "Tab font weight",
+          "default": 600
+        },
+        {
+          "type": "number",
+          "id": "content_text_size",
+          "label": "Content text size",
+          "default": 13
+        },
+        {
+          "type": "color",
+          "id": "light_color",
+          "label": "Panel colour",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "dark_color",
+          "label": "Inactive tab colour",
+          "default": "#f5f5f5"
+        },
+        {
+          "type": "color",
+          "id": "tab_text_color",
+          "label": "Inactive tab text colour",
+          "default": "#444444"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "color",
+          "id": "muted_text_color",
+          "label": "Muted text colour",
+          "default": "#6b6b6b"
+        },
+        {
+          "type": "select",
+          "id": "effect",
+          "label": "Shadow",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "shadow_1", "label": "Shadow 1" },
+            { "value": "shadow_2", "label": "Shadow 2" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "select",
+          "id": "border",
+          "label": "Border",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "solid", "label": "Solid" },
+            { "value": "dashed", "label": "Dashed" },
+            { "value": "dotted", "label": "Dotted" }
+          ],
+          "default": "solid"
+        },
+        {
+          "type": "range",
+          "id": "border_thickness",
+          "label": "Border thickness",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 1
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border colour",
+          "default": "#d7d7d7"
+        },
+        {
+          "type": "number",
+          "id": "radius",
+          "label": "Corner radius",
+          "default": 10
+        },
+        {
+          "type": "number",
+          "id": "padding_vertical",
+          "label": "Vertical padding",
+          "default": 18
+        },
+        {
+          "type": "number",
+          "id": "padding_horizontal",
+          "label": "Horizontal padding",
+          "default": 18
+        }
+      ]
+    },
+    {
+      "type": "aao-atc-style",
+      "name": "Add to cart button style (AAO)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Restyles the theme's add to cart button. Renders no markup of its own, so its position in the block list does not matter."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text colour",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "hover_background_color",
+          "label": "Hover background",
+          "default": "#333333"
+        },
+        {
+          "type": "color",
+          "id": "hover_text_color",
+          "label": "Hover text colour",
+          "default": "#ffffff"
+        },
+        {
+          "type": "number",
+          "id": "font_size",
+          "label": "Font size (0 keeps the theme size)",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Font weight",
+          "options": [
+            { "value": "default", "label": "Default" },
+            { "value": "400", "label": "400" },
+            { "value": "500", "label": "500" },
+            { "value": "600", "label": "600" },
+            { "value": "700", "label": "700" },
+            { "value": "800", "label": "800" }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "select",
+          "id": "border_style",
+          "label": "Border",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "solid", "label": "Solid" },
+            { "value": "dashed", "label": "Dashed" },
+            { "value": "dotted", "label": "Dotted" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "range",
+          "id": "border_width",
+          "label": "Border width",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 1
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border colour",
+          "default": "#1c1c1c"
+        },
+        {
+          "type": "number",
+          "id": "border_radius",
+          "label": "Corner radius (-1 keeps the theme radius)",
+          "default": -1
+        },
+        {
+          "type": "number",
+          "id": "padding_vertical",
+          "label": "Vertical padding (0 keeps the theme padding)",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "background_effect",
+          "label": "Background effect",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "lift", "label": "Lift" },
+            { "value": "gradient", "label": "Gradient" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "color",
+          "id": "gradient_color_end",
+          "label": "Gradient end colour",
+          "default": "#333333"
+        },
+        {
+          "type": "select",
+          "id": "hover_effect",
+          "label": "Hover effect",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "lift", "label": "Lift" },
+            { "value": "bounce", "label": "Bounce" },
+            { "value": "shine_lift", "label": "Shine Lift" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "select",
+          "id": "animation",
+          "label": "Animation",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "pulse", "label": "Pulse" },
+            { "value": "glow", "label": "Glow" },
+            { "value": "shake", "label": "Shake" },
+            { "value": "wiggle", "label": "Wiggle" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "select",
+          "id": "button_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "cart", "label": "Cart" },
+            { "value": "bag", "label": "Bag" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "lightning", "label": "Lightning" },
+            { "value": "arrow_right", "label": "Arrow Right" },
+            { "value": "fire", "label": "Fire" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "star", "label": "Star" },
+            { "value": "heart", "label": "Heart" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_custom_text",
+          "label": "Use custom button text",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text"
+        },
+        {
+          "type": "paragraph",
+          "content": "Price in the button is not reproduced by the native block; the theme already shows the price above the button."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_price",
+          "label": "Show price in button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "round_price",
+          "label": "Round price",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "compare_at_price_color",
+          "label": "Compare at price colour",
+          "default": "#999999"
+        }
+      ]
     }
   ]
 }

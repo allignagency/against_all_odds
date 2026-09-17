@@ -1,0 +1,303 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+AAO BENEFITS BOXES
+----------------------------------------------------------------------------------------------------------------------
+
+Native replacement for the Section Store app block
+"shopify://apps/section-store/blocks/block-benefits-boxes-2/...".
+
+Markup, CSS and CSS-variable computation transcribed from the app's own client bundle
+(section-factory-352/assets/block-benefits-boxes-2.js). The app rendered into a shadow root; here the
+styles are scoped to the block id instead.
+
+********************************************
+Supported variables
+********************************************
+
+* block: the section block holding the settings
+{%- endcomment -%}
+
+{%- liquid
+  assign s = block.settings
+  assign uid = 'aao-b-' | append: block.id
+
+  assign card_align = s.card_align | default: 'left'
+  case card_align
+    when 'center'
+      assign align_items = 'center'
+    when 'right'
+      assign align_items = 'end'
+    else
+      assign align_items = 'start'
+  endcase
+
+  assign design = s.cards_design | default: 'vertical'
+  assign is_horizontal = false
+  assign is_boxed = false
+  if design == 'horizontal'
+    assign is_horizontal = true
+  endif
+  if design == 'boxed'
+    assign is_boxed = true
+  endif
+
+  assign cards_justify = 'normal'
+  if is_horizontal
+    case card_align
+      when 'center'
+        assign cards_justify = 'space-around'
+      when 'right'
+        assign cards_justify = 'flex-end'
+      else
+        assign cards_justify = 'flex-start'
+    endcase
+  endif
+
+  assign all_size = s.all_size | default: 14
+  assign title_size = all_size | times: 0.7
+  assign sub_title_size = all_size | times: 0.65
+  assign boxed_title_size = all_size | times: 0.85
+  assign icon_size_m = all_size | times: 0.85 | round
+  assign icon_size = all_size
+
+  assign title_size_m = title_size | times: 0.88 | round
+  assign sub_title_size_m = sub_title_size | times: 0.88 | round
+  assign boxed_title_size_m = boxed_title_size | times: 0.88 | round
+  assign boxed_icon_size_m = icon_size_m | plus: 2
+  assign boxed_icon_size = icon_size | plus: 2
+
+  assign boxed_card_justify = 'flex-start'
+  assign boxed_card_direction = 'row'
+  assign boxed_title_align = 'left'
+  if card_align == 'center'
+    assign boxed_card_justify = 'center'
+    assign boxed_title_align = 'center'
+  elsif card_align == 'right'
+    assign boxed_card_justify = 'flex-end'
+    assign boxed_card_direction = 'row-reverse'
+    assign boxed_title_align = 'right'
+  endif
+
+  if is_boxed
+    assign cards_columns = 'repeat(2, minmax(0, 1fr))'
+  else
+    assign column_unit = '1fr'
+    if is_horizontal
+      assign column_unit = 'auto'
+    endif
+    assign cards_row = s.cards_row | default: '2'
+    assign cards_columns = 'repeat(' | append: cards_row | append: ', ' | append: column_unit | append: ')'
+  endif
+
+  assign card_justify_content = 'flex-start'
+  if card_align == 'center'
+    assign card_justify_content = 'center'
+  endif
+
+  assign content_width = '100%'
+  assign items_gap = '12px'
+  if is_horizontal
+    assign content_width = 'auto'
+    assign items_gap = '8px'
+  endif
+
+  assign border_style = s.border | default: 'none'
+  if border_style == 'none'
+    capture border_vars
+      echo '--border-width:0px;--border-style:none;--border-color:transparent;'
+    endcapture
+  else
+    capture border_vars
+      echo '--border-width:'
+      echo s.border_thickness | default: 1
+      echo 'px;--border-style:'
+      echo border_style
+      echo ';--border-color:'
+      echo s.border_color | default: '#1c1c1c'
+      echo ';'
+    endcapture
+  endif
+
+  if design == 'vertical'
+    capture direction_vars
+      echo '--card-direction:column;--card-align-items:'
+      echo align_items
+      echo ';'
+    endcapture
+  elsif is_horizontal and card_align == 'right'
+    capture direction_vars
+      echo '--card-direction:row-reverse;--card-align-items:center;'
+    endcapture
+  else
+    capture direction_vars
+      echo '--card-direction:row;--card-align-items:center;'
+    endcapture
+  endif
+-%}
+
+<style>
+  #{{ uid }} .aao-bb__cards {
+    display: grid;
+    grid-template-columns: var(--cards-columns-mobile);
+    background-color: var(--cards-bg-color);
+    gap: var(--items-gap);
+    padding-top: var(--padding-top);
+    padding-bottom: var(--padding-bottom);
+    padding-left: var(--padding-left);
+    padding-right: var(--padding-right);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: var(--border-width) var(--border-style) var(--border-color);
+    justify-content: var(--cards-justify-content);
+    align-content: center;
+  }
+
+  #{{ uid }} .aao-bb__card {
+    display: flex;
+    gap: 10px;
+    justify-content: var(--card-justify-content);
+    flex-direction: var(--card-direction);
+    align-items: var(--card-align-items);
+  }
+
+  #{{ uid }} .aao-bb__content { width: var(--content-width); }
+
+  #{{ uid }} .aao-bb__title {
+    margin: 0;
+    text-align: var(--card-align);
+    font-size: var(--title-size-mobile);
+    line-height: 130%;
+    color: var(--all-color);
+    text-transform: unset;
+    font-weight: var(--title-font-weight);
+  }
+
+  #{{ uid }} .aao-bb__subtitle {
+    margin: 1px 0 0;
+    text-align: var(--card-align);
+    font-size: var(--sub-title-size-mobile);
+    line-height: 130%;
+    color: var(--all-color);
+    text-transform: unset;
+  }
+
+  #{{ uid }} .aao-bb__icon { flex-shrink: 0; }
+
+  #{{ uid }} .aao-bb__icon img,
+  #{{ uid }} .aao-bb__icon svg {
+    display: block;
+    width: var(--icon-size-mobile);
+    height: var(--icon-size-mobile);
+    object-fit: cover;
+  }
+
+  #{{ uid }} .aao-bb__icon svg path { fill: var(--all-color); }
+
+  #{{ uid }} .aao-bb__icon svg.custom-stroke g,
+  #{{ uid }} .aao-bb__icon svg.custom-stroke path,
+  #{{ uid }} .aao-bb__icon svg.custom-stroke line,
+  #{{ uid }} .aao-bb__icon svg.custom-stroke rect,
+  #{{ uid }} .aao-bb__icon svg.custom-stroke circle,
+  #{{ uid }} .aao-bb__icon svg.custom-stroke polyline {
+    fill: none;
+    stroke: var(--all-color);
+  }
+
+  #{{ uid }}.is-boxed .aao-bb__cards {
+    grid-template-columns: var(--cards-columns-mobile);
+    gap: 8px;
+    background-color: transparent;
+    border: 0;
+  }
+
+  #{{ uid }}.is-boxed .aao-bb__card {
+    display: flex;
+    flex-direction: var(--boxed-card-direction);
+    align-items: center;
+    justify-content: var(--boxed-card-justify-content);
+    gap: 12px;
+    min-width: 0;
+    padding: 8px 12px;
+    border-radius: var(--boxed-card-radius);
+    border: var(--border-width) var(--border-style) var(--border-color);
+    background: var(--boxed-card-bg-color);
+  }
+
+  #{{ uid }}.is-boxed .aao-bb__content { width: auto; min-width: 0; }
+
+  #{{ uid }}.is-boxed .aao-bb__title {
+    text-align: var(--boxed-title-align);
+    font-size: var(--boxed-title-size-mobile);
+    line-height: 150%;
+    white-space: normal;
+  }
+
+  #{{ uid }}.is-boxed .aao-bb__subtitle { display: none; }
+
+  #{{ uid }}.is-boxed .aao-bb__icon img,
+  #{{ uid }}.is-boxed .aao-bb__icon svg {
+    width: var(--boxed-icon-size-mobile);
+    height: var(--boxed-icon-size-mobile);
+  }
+
+  @media (min-width: 1024px) {
+    #{{ uid }} .aao-bb__title { font-size: var(--title-size); }
+    #{{ uid }} .aao-bb__subtitle { font-size: var(--sub-title-size); }
+    #{{ uid }} .aao-bb__icon img,
+    #{{ uid }} .aao-bb__icon svg { width: var(--icon-size); height: var(--icon-size); }
+    #{{ uid }} .aao-bb__cards { gap: 15px; }
+    #{{ uid }}.is-boxed .aao-bb__cards { gap: 8px; }
+    #{{ uid }}.is-boxed .aao-bb__card { padding: 12px 16px; }
+    #{{ uid }}.is-boxed .aao-bb__title { font-size: var(--boxed-title-size); }
+    #{{ uid }}.is-boxed .aao-bb__icon img,
+    #{{ uid }}.is-boxed .aao-bb__icon svg { width: var(--boxed-icon-size); height: var(--boxed-icon-size); }
+  }
+</style>
+
+<div
+  id="{{ uid }}"
+  class="aao-ss-block aao-ss-benefits-boxes{% if is_boxed %} is-boxed{% endif %}"
+  style="--padding-top:{{ s.padding_vertical | default: 0 }}px;--padding-bottom:{{ s.padding_vertical | default: 0 }}px;--padding-left:{{ s.padding_horizontal | default: 0 }}px;--padding-right:{{ s.padding_horizontal | default: 0 }}px;--border-radius:{{ s.radius | default: 0 }}px;--cards-bg-color:{{ s.cards_bg_color }};--cards-columns-mobile:{{ cards_columns }};--cards-justify-content:{{ cards_justify }};--card-align:{{ card_align }};--all-color:{{ s.all_color | default: '#1c1c1c' }};--title-font-weight:{{ s.font_weight | default: 700 }};--title-size-mobile:{{ title_size_m }}px;--title-size:{{ title_size }}px;--boxed-title-size-mobile:{{ boxed_title_size_m }}px;--boxed-title-size:{{ boxed_title_size }}px;--sub-title-size-mobile:{{ sub_title_size_m }}px;--sub-title-size:{{ sub_title_size }}px;--icon-size-mobile:{{ icon_size_m }}px;--icon-size:{{ icon_size }}px;--boxed-icon-size-mobile:{{ boxed_icon_size_m }}px;--boxed-icon-size:{{ boxed_icon_size }}px;--card-justify-content:{{ card_justify_content }};--content-width:{{ content_width }};--items-gap:{{ items_gap }};--boxed-card-justify-content:{{ boxed_card_justify }};--boxed-card-direction:{{ boxed_card_direction }};--boxed-title-align:{{ boxed_title_align }};--boxed-card-bg-color:{{ s.cards_bg_color | default: '#f8f7f2' }};--boxed-card-radius:{{ s.radius | default: 0 }}px;{{ border_vars }}{{ direction_vars }}"
+>
+  <div class="aao-bb__cards">
+    {%- if s.first_title != blank -%}
+      <div class="aao-bb__card aao-bb__card--first">
+        <div class="aao-bb__icon">{%- render 'aao-ss-icon', icon: s.first_icon -%}</div>
+        <div class="aao-bb__content">
+          <p class="aao-bb__title">{{ s.first_title }}</p>
+          {%- if s.first_sub_title != blank -%}<p class="aao-bb__subtitle">{{ s.first_sub_title }}</p>{%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if s.second_title != blank -%}
+      <div class="aao-bb__card aao-bb__card--second">
+        <div class="aao-bb__icon">{%- render 'aao-ss-icon', icon: s.second_icon -%}</div>
+        <div class="aao-bb__content">
+          <p class="aao-bb__title">{{ s.second_title }}</p>
+          {%- if s.second_sub_title != blank -%}<p class="aao-bb__subtitle">{{ s.second_sub_title }}</p>{%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if s.third_title != blank -%}
+      <div class="aao-bb__card aao-bb__card--third">
+        <div class="aao-bb__icon">{%- render 'aao-ss-icon', icon: s.third_icon -%}</div>
+        <div class="aao-bb__content">
+          <p class="aao-bb__title">{{ s.third_title }}</p>
+          {%- if s.third_sub_title != blank -%}<p class="aao-bb__subtitle">{{ s.third_sub_title }}</p>{%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if s.fourth_title != blank -%}
+      <div class="aao-bb__card aao-bb__card--fourth">
+        <div class="aao-bb__icon">{%- render 'aao-ss-icon', icon: s.fourth_icon -%}</div>
+        <div class="aao-bb__content">
+          <p class="aao-bb__title">{{ s.fourth_title }}</p>
+          {%- if s.fourth_sub_title != blank -%}<p class="aao-bb__subtitle">{{ s.fourth_sub_title }}</p>{%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
