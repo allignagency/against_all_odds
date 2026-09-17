@@ -1,0 +1,80 @@
+{%- comment -%}
+  AAO browse-only Meta pixel (1131344577359160).
+  Purpose: write real _fbp browser cookies so Website Custom Audiences can build.
+  Fires PageView, ViewContent (PDPs) and AddToCart ONLY.
+  NEVER fire Purchase from here: WeTracked CAPI is the sole Purchase source and
+  there is no shared event_id, so a browser Purchase would double-count revenue.
+  content_ids = Shopify variant IDs, matching the retailer_id format of
+  "Againstallodd's Product Catalog" (1609249949270309).
+{%- endcomment -%}
+<script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1131344577359160');
+  fbq('track', 'PageView');
+  {%- if request.page_type == 'product' and product -%}
+    {%- assign aao_fb_variant = product.selected_or_first_available_variant -%}
+  fbq('track', 'ViewContent', {
+    content_ids: ['{{ aao_fb_variant.id }}'],
+    content_type: 'product',
+    content_name: {{ product.title | json }},
+    value: {{ aao_fb_variant.price | divided_by: 100.0 }},
+    currency: '{{ cart.currency.iso_code }}'
+  });
+  {%- endif -%}
+  (function () {
+    function trackAtc(item) {
+      try {
+        if (!item || !window.fbq) return;
+        var id = item.variant_id || item.id;
+        if (!id) return;
+        var price = (item.final_price || item.price || 0) / 100.0;
+        fbq('track', 'AddToCart', {
+          content_ids: [String(id)],
+          content_type: 'product',
+          value: price,
+          currency: '{{ cart.currency.iso_code }}'
+        });
+      } catch (e) {}
+    }
+    function handleAddResponse(json) {
+      if (!json) return;
+      if (json.items && json.items.length) { json.items.forEach(trackAtc); }
+      else { trackAtc(json); }
+    }
+    var origFetch = window.fetch;
+    window.fetch = function () {
+      var url = arguments[0] && (arguments[0].url || arguments[0]);
+      var p = origFetch.apply(this, arguments);
+      if (typeof url === 'string' && url.indexOf('/cart/add') !== -1) {
+        p.then(function (res) {
+          if (res && res.ok) {
+            res.clone().json().then(handleAddResponse).catch(function () {});
+          }
+          return res;
+        }).catch(function () {});
+      }
+      return p;
+    };
+    var origOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function (method, url) {
+      if (typeof url === 'string' && url.indexOf('/cart/add') !== -1) {
+        this.addEventListener('load', function () {
+          try {
+            if (this.status >= 200 && this.status < 300) {
+              handleAddResponse(JSON.parse(this.responseText));
+            }
+          } catch (e) {}
+        });
+      }
+      return origOpen.apply(this, arguments);
+    };
+  })();
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none" alt=""
+       src="https://www.facebook.com/tr?id=1131344577359160&ev=PageView&noscript=1">
+</noscript>
