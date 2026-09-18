@@ -81,9 +81,7 @@ Supported variables
           {%- if size_chart_page != blank and size_label_list contains option_downcase -%}
             {%- capture id -%}size-chart-{{ option.position }}-{{ form_id }}{%- endcapture -%}
 
-            <button type="button" class="link" aria-controls="{{ id | escape }}" aria-expanded="false">
-              {{- 'product.general.size_chart' | t -}}
-            </button>
+            <button type="button" class="link aao-size-guide-link" aria-controls="{{ id | escape }}" aria-expanded="false">Size guide</button>
 
             <x-modal id="{{ id | escape }}" class="modal modal--lg color-scheme color-scheme--dialog">
               <span class="h5" slot="header">{{ size_chart_page.title }}</span>
@@ -94,7 +92,12 @@ Supported variables
             </x-modal>
           {%- endif -%}
 
-          {%- comment -%} CRO: always expose a Size guide on size options (the chart was buried in a below-the-fold accordion; fit confidence is the #1 apparel conversion lever). Tee vs hoodie chart auto-selected. {%- endcomment -%}
+          {%- comment -%}
+            CRO: always expose a Size guide on size options (the chart was buried in a below-the-fold accordion; fit
+            confidence is the #1 apparel conversion lever). Tee vs hoodie chart auto-selected. This is the single
+            size-guide entry point on the PDP: the ".aao-size-guide-link" class is what the size quiz and the Globo
+            fallback in main-product.liquid both target, so do not add a second one.
+          {%- endcomment -%}
           {%- if option_display_name == 'Size' -%}{%- unless size_chart_page != blank and size_label_list contains option_downcase -%}
             {%- liquid
               assign sc_type = product.type | append: ' ' | append: product.title | downcase
@@ -106,12 +109,10 @@ Supported variables
             -%}
             {%- capture sg_id -%}size-guide-{{ option.position }}-{{ form_id }}{%- endcapture -%}
 
-            <button type="button" class="link" aria-controls="{{ sg_id | escape }}" aria-expanded="false">
-              {{- 'product.general.size_chart' | t -}}
-            </button>
+            <button type="button" class="link aao-size-guide-link" aria-controls="{{ sg_id | escape }}" aria-expanded="false">Size guide</button>
 
             <x-modal id="{{ sg_id | escape }}" class="modal modal--lg color-scheme color-scheme--dialog">
-              <span class="h5" slot="header">{{ 'product.general.size_chart' | t }}</span>
+              <span class="h5" slot="header">Size guide</span>
 
               <div class="prose">
                 <p><strong>Oversized fit.</strong> Size down for a regular fit. Measurements below are garment dimensions, laid flat.</p>

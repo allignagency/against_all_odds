@@ -358,6 +358,7 @@
       "continue_shopping": "Explorer nos produits",
       "weight": "Poids",
       "subtotal": "Sous-total",
+      "discounts": "Réductions",
       "total": "Total",
       "taxes_and_shipping_policy_at_checkout_html": "Taxes et <a href=\"{{ link }}\" class=\"link\">frais d'expédition</a> calculés lors du paiement",
       "taxes_included_but_shipping_at_checkout": "Taxes incluses et frais d'expédition calculés lors du paiement",

@@ -1,0 +1,622 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+AAO SIZE QUIZ
+----------------------------------------------------------------------------------------------------------------------
+
+Native replacement for the (dead) paid "Fit Quiz" app. Renders a "Find my size" button under the variant picker that
+opens a short accessible modal (height, weight, preferred fit, optional measured chest) and returns a size
+recommendation computed from the real AAO size charts.
+
+The charts below are transcribed from the two garment charts published on /pages/size-chart:
+  - tshirt_size_chart_upscaled_4x_pure_white_bg.webp
+  - hoodie_size_chart_upscaled_4x_pure_white_bg.webp
+A = chest, half garment width laid flat (cm). B = body length (cm). C = sleeve (cm).
+
+Honesty rule: we only recommend a size when we actually hold a chart for the garment type AND the product's size
+option uses the chart's labels. For anything else (bottoms, headwear, accessories, kids sizing, outerwear) the modal
+tells the customer which measurements to compare against the size guide instead of inventing a recommendation.
+
+********************************************
+Supported variables
+********************************************
+
+* product: the product object [REQUIRED]
+* product_form_id: the id of the product form, used to target the right variant inputs [REQUIRED]
+{%- endcomment -%}
+
+{%- liquid
+  assign sq_size_position = 0
+  assign sq_size_option = nil
+
+  for sq_option in product.options_with_values
+    assign sq_option_name = sq_option.name | downcase | strip
+
+    if sq_option_name contains 'size'
+      assign sq_size_position = sq_option.position
+      assign sq_size_option = sq_option
+      break
+    endif
+  endfor
+-%}
+
+{%- if sq_size_position > 0 and product_form_id != blank -%}
+  {%- liquid
+    assign sq_haystack = product.type | append: ' ' | append: product.title | downcase
+
+    assign sq_chart = ''
+    assign sq_skip = false
+
+    # Kids / youth sizing is a different block entirely, and bottoms + accessories have no published chart.
+    if sq_haystack contains 'kid' or sq_haystack contains 'youth' or sq_haystack contains 'junior' or sq_haystack contains 'baby'
+      assign sq_skip = true
+    endif
+
+    if sq_haystack contains 'pant' or sq_haystack contains 'short' or sq_haystack contains 'jogger' or sq_haystack contains 'hat' or sq_haystack contains 'cap' or sq_haystack contains 'beanie' or sq_haystack contains 'sock' or sq_haystack contains 'bag' or sq_haystack contains 'glove' or sq_haystack contains 'wrap' or sq_haystack contains 'belt'
+      assign sq_skip = true
+    endif
+
+    unless sq_skip
+      if sq_haystack contains 'hood' or sq_haystack contains 'crew' or sq_haystack contains 'sweatshirt'
+        assign sq_chart = 'hoodie'
+      elsif sq_haystack contains 'tee' or sq_haystack contains 't-shirt' or sq_haystack contains 'tshirt' or sq_haystack contains 'shirt' or sq_haystack contains 'top'
+        assign sq_chart = 'tee'
+      endif
+    endunless
+
+    # Matches the "RUNS OVERSIZED. SIZE DOWN FOR A REGULAR FIT." note the PDP already shows on tee-type products.
+    assign sq_oversized = false
+    if sq_chart == 'tee'
+      assign sq_oversized = true
+    endif
+
+    assign sq_caveat = ''
+    if sq_chart == 'tee' and sq_haystack contains 'long sleeve'
+      assign sq_caveat = 'This is a long-sleeve body, so sleeve length C on the chart does not apply. Chest A and length B do.'
+    endif
+
+    assign sq_uid = product_form_id | append: '-size-quiz'
+  -%}
+
+  {%- capture sq_values_json -%}
+    [
+    {%- for sq_value in sq_size_option.values -%}
+      {"label": {{ sq_value.name | strip | json }}, "available": {{ sq_value.available | json }}}
+      {%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+    ]
+  {%- endcapture -%}
+
+  <style>
+    .aao-sq { margin-block-start: 0.75rem; }
+    .aao-sq__trigger {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: none; border: 1px solid currentColor; cursor: pointer;
+      padding: 0.5rem 0.9rem; color: inherit; font: inherit; font-size: 0.8125rem;
+      text-transform: uppercase; letter-spacing: 0.08em; line-height: 1;
+    }
+    .aao-sq__trigger:hover { background: #111; color: #fff; border-color: #111; }
+    .aao-sq__overlay {
+      position: fixed; inset: 0; z-index: 10001; background: rgba(0, 0, 0, 0.72);
+      display: flex; align-items: center; justify-content: center; padding: 16px;
+    }
+    .aao-sq__overlay[hidden] { display: none; }
+    .aao-sq__dialog {
+      background: #fff; color: #111; width: 100%; max-width: 460px; max-height: 88vh;
+      overflow: auto; padding: 28px 24px 24px; position: relative; text-align: start;
+    }
+    .aao-sq__close {
+      position: absolute; inset-block-start: 6px; inset-inline-end: 10px;
+      background: none; border: 0; cursor: pointer; font-size: 26px; line-height: 1; color: #111;
+    }
+    .aao-sq__title { margin: 0 0 4px; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .aao-sq__sub { margin: 0 0 18px; font-size: 0.8125rem; color: #6b6b6b; }
+    .aao-sq__units { display: flex; gap: 0; margin-block-end: 18px; border: 1px solid #ddd; width: fit-content; }
+    .aao-sq__units button {
+      background: none; border: 0; cursor: pointer; font: inherit; font-size: 0.75rem;
+      padding: 6px 14px; text-transform: uppercase; letter-spacing: 0.06em; color: #6b6b6b;
+    }
+    .aao-sq__units button[aria-pressed='true'] { background: #111; color: #fff; }
+    .aao-sq__field { margin-block-end: 16px; }
+    .aao-sq__field > label, .aao-sq__legend {
+      display: block; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #6b6b6b; margin-block-end: 6px; padding: 0;
+    }
+    .aao-sq__inputs { display: flex; gap: 8px; }
+    .aao-sq__field input {
+      width: 100%; padding: 9px 10px; border: 1px solid #ddd; background: #fff; color: #111;
+      font: inherit; font-size: 0.9375rem; border-radius: 0; -moz-appearance: textfield;
+    }
+    .aao-sq__field input:focus-visible { outline: 2px solid #111; outline-offset: 1px; }
+    .aao-sq__fit { display: flex; gap: 8px; flex-wrap: wrap; border: 0; padding: 0; margin: 0 0 16px; }
+    .aao-sq__fit label {
+      flex: 1 1 0; min-width: 0; text-align: center; border: 1px solid #ddd; padding: 9px 6px; cursor: pointer;
+      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .aao-sq__fit input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+    .aao-sq__fit input:checked + span { font-weight: 700; }
+    .aao-sq__fit label:has(input:checked) { border-color: #111; background: #111; color: #fff; }
+    .aao-sq__fit label:has(input:focus-visible) { outline: 2px solid #111; outline-offset: 1px; }
+    .aao-sq__submit, .aao-sq__select {
+      width: 100%; background: #111; color: #fff; border: 1px solid #111; cursor: pointer;
+      padding: 12px; font: inherit; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .aao-sq__submit[disabled] { opacity: 0.45; cursor: not-allowed; }
+    .aao-sq__ghost {
+      width: 100%; background: none; color: #111; border: 1px solid #ddd; cursor: pointer;
+      padding: 10px; margin-block-start: 8px; font: inherit; font-size: 0.75rem;
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .aao-sq__error { margin: 0 0 12px; font-size: 0.8125rem; color: #111; font-weight: 700; }
+    .aao-sq__error:empty { display: none; }
+    .aao-sq__size { font-size: 3rem; line-height: 1; margin: 4px 0 10px; letter-spacing: 0.02em; }
+    .aao-sq__why { margin: 0 0 10px; font-size: 0.875rem; }
+    .aao-sq__specs { margin: 0 0 10px; font-size: 0.8125rem; color: #6b6b6b; }
+    .aao-sq__alt { margin: 0 0 14px; font-size: 0.8125rem; color: #6b6b6b; }
+    .aao-sq__fine { margin: 14px 0 0; font-size: 0.6875rem; color: #8a8a8a; line-height: 1.5; }
+    .aao-sq__list { margin: 0 0 14px; padding-inline-start: 18px; font-size: 0.875rem; }
+    .aao-sq__list li { margin-block-end: 6px; }
+  </style>
+
+  <div class="aao-sq" id="{{ sq_uid | escape }}">
+    <button type="button" class="aao-sq__trigger" aria-haspopup="dialog">
+      Find my size
+    </button>
+
+    <div class="aao-sq__overlay" hidden>
+      <div class="aao-sq__dialog" role="dialog" aria-modal="true" aria-labelledby="{{ sq_uid | escape }}-title">
+        <button type="button" class="aao-sq__close" aria-label="{{ 'general.accessibility.close' | t | escape }}">&times;</button>
+
+        <h2 class="aao-sq__title" id="{{ sq_uid | escape }}-title">Find my size</h2>
+
+        <div class="aao-sq__panel" data-panel="form">
+          <p class="aao-sq__sub">Three questions and we will point you at a size. Metric or imperial, your call.</p>
+
+          <div class="aao-sq__units" role="group" aria-label="Units">
+            <button type="button" data-units="metric" aria-pressed="true">cm / kg</button>
+            <button type="button" data-units="imperial" aria-pressed="false">ft / lb</button>
+          </div>
+
+          <p class="aao-sq__error" data-error role="alert"></p>
+
+          <div class="aao-sq__field" data-field="height-metric">
+            <label for="{{ sq_uid | escape }}-h-cm">Height (cm)</label>
+            <input type="number" id="{{ sq_uid | escape }}-h-cm" inputmode="numeric" min="120" max="220" step="1" autocomplete="off">
+          </div>
+
+          <div class="aao-sq__field" data-field="height-imperial" hidden>
+            <span class="aao-sq__legend" id="{{ sq_uid | escape }}-h-i-label">Height (ft / in)</span>
+            <div class="aao-sq__inputs">
+              <input type="number" id="{{ sq_uid | escape }}-h-ft" inputmode="numeric" min="4" max="7" step="1" aria-label="Height in feet" autocomplete="off">
+              <input type="number" id="{{ sq_uid | escape }}-h-in" inputmode="numeric" min="0" max="11" step="1" aria-label="Height in inches" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="aao-sq__field" data-field="weight">
+            <label for="{{ sq_uid | escape }}-w" data-label-metric="Weight (kg)" data-label-imperial="Weight (lb)">Weight (kg)</label>
+            <input type="number" id="{{ sq_uid | escape }}-w" inputmode="numeric" min="30" max="450" step="1" autocomplete="off">
+          </div>
+
+          <fieldset class="aao-sq__fit">
+            <legend class="aao-sq__legend">How do you want it to sit?</legend>
+
+            <label>
+              <input type="radio" name="{{ sq_uid | escape }}-fit" value="fitted"><span>Fitted</span>
+            </label>
+            <label>
+              <input type="radio" name="{{ sq_uid | escape }}-fit" value="regular" checked><span>Regular</span>
+            </label>
+            <label>
+              <input type="radio" name="{{ sq_uid | escape }}-fit" value="relaxed"><span>Relaxed</span>
+            </label>
+          </fieldset>
+
+          <div class="aao-sq__field" data-field="chest">
+            <label for="{{ sq_uid | escape }}-chest" data-label-metric="Chest around, if you know it (cm) &ndash; optional" data-label-imperial="Chest around, if you know it (in) &ndash; optional">Chest around, if you know it (cm) &ndash; optional</label>
+            <input type="number" id="{{ sq_uid | escape }}-chest" inputmode="numeric" min="20" max="200" step="0.5" autocomplete="off">
+          </div>
+
+          <button type="button" class="aao-sq__submit">Get my size</button>
+          <p class="aao-sq__fine">We use your height and weight to estimate your chest. A tape measure around the fullest part of your chest is always more accurate, so use the optional field if you have one to hand.</p>
+        </div>
+
+        <div class="aao-sq__panel" data-panel="result" hidden></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var CONFIG = {
+        rootId: {{ sq_uid | json }},
+        formId: {{ product_form_id | json }},
+        optionPosition: {{ sq_size_position | json }},
+        chart: {{ sq_chart | json }},
+        oversized: {{ sq_oversized | json }},
+        caveat: {{ sq_caveat | json }},
+        values: {{ sq_values_json | strip | json }}
+      };
+
+      // Garment measurements in cm, transcribed from the published AAO size charts.
+      // chest = A (half width laid flat), length = B, sleeve = C.
+      var CHARTS = {
+        tee: {
+          name: 'tee',
+          sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+          chest: [53.5, 57, 61, 65, 68.5, 71],
+          length: [72.5, 75, 77.5, 78.5, 80, 81],
+          sleeve: [24, 22.5, 21.5, 21, 20.5, 21],
+          // Target room (cm) between the body chest and the garment chest, per requested look.
+          ease: { fitted: 12, regular: 20, relaxed: 28 },
+          // Rough body length (shoulder to below the hip) as a share of height, used only to flag a short body.
+          lengthFactor: 0.41
+        },
+        hoodie: {
+          name: 'hoodie',
+          sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+          chest: [57, 61, 65, 68.5, 71, 73.5],
+          length: [66, 67.5, 68.5, 70, 71.5, 72.5],
+          sleeve: [67, 67, 67.5, 67.5, 68, 68],
+          // A hoodie is worn over a layer, so the same label carries one step more room than the tee.
+          ease: { fitted: 20, regular: 28, relaxed: 36 },
+          // This is a boxy, deliberately shorter body, so the bar for "long enough" is lower than the tee.
+          lengthFactor: 0.375
+        }
+      };
+
+      var root = document.getElementById(CONFIG.rootId);
+      if (!root) return;
+
+      var overlay = root.querySelector('.aao-sq__overlay');
+      var dialog = root.querySelector('.aao-sq__dialog');
+      var trigger = root.querySelector('.aao-sq__trigger');
+      var formPanel = root.querySelector('[data-panel="form"]');
+      var resultPanel = root.querySelector('[data-panel="result"]');
+      var errorEl = root.querySelector('[data-error]');
+      if (!overlay || !dialog || !trigger || !formPanel || !resultPanel) return;
+
+      var units = 'metric';
+      var lastFocused = null;
+
+      function q(sel) { return root.querySelector(sel); }
+      function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+      function round1(n) { return Math.round(n * 10) / 10; }
+      function norm(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
+
+      var values = [];
+      try { values = JSON.parse(CONFIG.values) || []; } catch (e) { values = []; }
+
+      // The chart only applies if the product actually sells the chart's labels (XS..XXL).
+      var chart = CHARTS[CONFIG.chart] || null;
+      var offered = [];
+      if (chart) {
+        offered = chart.sizes.map(function (size, i) {
+          var match = null;
+          for (var v = 0; v < values.length; v++) {
+            if (norm(values[v].label) === norm(size)) { match = values[v]; break; }
+          }
+          return match ? { size: size, index: i, label: match.label, available: match.available !== false } : null;
+        }).filter(Boolean);
+      }
+      var usable = chart && offered.length >= 2;
+
+      /* ------------------------------------------------------------------ modal */
+
+      function focusables() {
+        return [].slice.call(dialog.querySelectorAll('button, input, [href], select, textarea, [tabindex]:not([tabindex="-1"])'))
+          .filter(function (el) { return el.offsetParent !== null && !el.disabled; });
+      }
+
+      function open() {
+        lastFocused = document.activeElement;
+        overlay.hidden = false;
+        document.addEventListener('keydown', onKeydown, true);
+        var f = focusables();
+        if (f.length) f[0].focus();
+      }
+
+      function close() {
+        overlay.hidden = true;
+        document.removeEventListener('keydown', onKeydown, true);
+        if (lastFocused && lastFocused.focus) lastFocused.focus();
+      }
+
+      function onKeydown(event) {
+        if (overlay.hidden) return;
+        if (event.key === 'Escape') { event.preventDefault(); close(); return; }
+        if (event.key !== 'Tab') return;
+        var f = focusables();
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+
+      trigger.addEventListener('click', open);
+      root.querySelector('.aao-sq__close').addEventListener('click', close);
+      overlay.addEventListener('mousedown', function (event) { if (event.target === overlay) close(); });
+
+      /* ------------------------------------------------------------------ units */
+
+      function setUnits(next) {
+        if (next === units) return;
+        var hCm = q('[data-field="height-metric"] input');
+        var hFt = q('#' + CSS.escape(CONFIG.rootId + '-h-ft'));
+        var hIn = q('#' + CSS.escape(CONFIG.rootId + '-h-in'));
+        var weight = q('#' + CSS.escape(CONFIG.rootId + '-w'));
+        var chest = q('#' + CSS.escape(CONFIG.rootId + '-chest'));
+
+        if (next === 'imperial') {
+          var cm = parseFloat(hCm.value);
+          if (isFinite(cm) && cm > 0) {
+            var totalIn = cm / 2.54;
+            hFt.value = Math.floor(totalIn / 12);
+            hIn.value = Math.round(totalIn % 12);
+          }
+          if (weight.value !== '') weight.value = Math.round(parseFloat(weight.value) * 2.20462);
+          if (chest.value !== '') chest.value = round1(parseFloat(chest.value) / 2.54);
+        } else {
+          var ft = parseFloat(hFt.value), inches = parseFloat(hIn.value) || 0;
+          if (isFinite(ft) && ft > 0) hCm.value = Math.round((ft * 12 + inches) * 2.54);
+          if (weight.value !== '') weight.value = Math.round(parseFloat(weight.value) / 2.20462);
+          if (chest.value !== '') chest.value = round1(parseFloat(chest.value) * 2.54);
+        }
+
+        units = next;
+        q('[data-field="height-metric"]').hidden = next !== 'metric';
+        q('[data-field="height-imperial"]').hidden = next !== 'imperial';
+
+        [].slice.call(root.querySelectorAll('[data-label-metric]')).forEach(function (label) {
+          label.innerHTML = next === 'metric' ? label.getAttribute('data-label-metric') : label.getAttribute('data-label-imperial');
+        });
+        [].slice.call(root.querySelectorAll('.aao-sq__units button')).forEach(function (b) {
+          b.setAttribute('aria-pressed', String(b.getAttribute('data-units') === next));
+        });
+      }
+
+      [].slice.call(root.querySelectorAll('.aao-sq__units button')).forEach(function (b) {
+        b.addEventListener('click', function () { setUnits(b.getAttribute('data-units')); });
+      });
+
+      /* ------------------------------------------------------------------ logic */
+
+      function readInputs() {
+        var heightCm, weightKg, chestCm = null;
+
+        if (units === 'metric') {
+          heightCm = parseFloat(q('#' + CSS.escape(CONFIG.rootId + '-h-cm')).value);
+        } else {
+          var ft = parseFloat(q('#' + CSS.escape(CONFIG.rootId + '-h-ft')).value);
+          var inches = parseFloat(q('#' + CSS.escape(CONFIG.rootId + '-h-in')).value) || 0;
+          heightCm = isFinite(ft) ? (ft * 12 + inches) * 2.54 : NaN;
+        }
+
+        weightKg = parseFloat(q('#' + CSS.escape(CONFIG.rootId + '-w')).value);
+        if (units === 'imperial' && isFinite(weightKg)) weightKg = weightKg / 2.20462;
+
+        var rawChest = parseFloat(q('#' + CSS.escape(CONFIG.rootId + '-chest')).value);
+        if (isFinite(rawChest) && rawChest > 0) chestCm = units === 'imperial' ? rawChest * 2.54 : rawChest;
+
+        var fitEl = root.querySelector('input[name="' + CONFIG.rootId + '-fit"]:checked');
+        return { heightCm: heightCm, weightKg: weightKg, chestCm: chestCm, fit: fitEl ? fitEl.value : 'regular' };
+      }
+
+      // Body chest circumference estimated from BMI, with a small correction for frame height.
+      // It is an estimate, and the result copy says so; a measured chest always overrides it.
+      function estimateChest(heightCm, weightKg) {
+        var bmi = weightKg / Math.pow(heightCm / 100, 2);
+        var chest = 2.95 * bmi + 26.5 + 0.12 * (heightCm - 175);
+        return Math.min(150, Math.max(70, chest));
+      }
+
+      function pick(bodyChest, fit) {
+        var target = bodyChest + chart.ease[fit];
+        var best = null;
+        offered.forEach(function (entry) {
+          var garment = chart.chest[entry.index] * 2;
+          var delta = Math.abs(garment - target);
+          if (!best || delta < best.delta) best = { entry: entry, delta: delta, garment: garment };
+        });
+        return best ? { entry: best.entry, target: target, garment: best.garment } : null;
+      }
+
+      function neighbour(index, direction) {
+        for (var i = 0; i < offered.length; i++) {
+          if (offered[i].index === index + direction) return offered[i];
+        }
+        return null;
+      }
+
+      /* ------------------------------------------------------------------ select */
+
+      function sizeInputs() {
+        return [].slice.call(document.querySelectorAll(
+          'input[form="' + CONFIG.formId + '"][data-option-position="' + CONFIG.optionPosition + '"]'
+        ));
+      }
+
+      function labelFor(input) {
+        var byFor = input.id ? document.querySelector('label[for="' + input.id + '"]') : null;
+        return byFor || input.closest('label');
+      }
+
+      function selectSize(label) {
+        var inputs = sizeInputs();
+        for (var i = 0; i < inputs.length; i++) {
+          var lab = labelFor(inputs[i]);
+          var text = lab ? lab.textContent : inputs[i].value;
+          if (norm(text) === norm(label)) {
+            if (lab && lab.click) lab.click();
+            else { inputs[i].checked = true; inputs[i].dispatchEvent(new Event('change', { bubbles: true })); }
+            return true;
+          }
+        }
+        // Globo Product Options renders its own selector on some products.
+        var globo = [].slice.call(document.querySelectorAll('.swatch--gl label, .swatch--gl [data-value]'));
+        for (var g = 0; g < globo.length; g++) {
+          var gText = globo[g].getAttribute('data-value') || globo[g].textContent;
+          if (norm(gText) === norm(label)) { globo[g].click(); return true; }
+        }
+        return false;
+      }
+
+      function openSizeGuide() {
+        var link = document.querySelector('.aao-size-guide-link');
+        if (link) { close(); link.click(); return true; }
+        return false;
+      }
+
+      /* ------------------------------------------------------------------ render */
+
+      function show(html) {
+        resultPanel.innerHTML = html;
+        formPanel.hidden = true;
+        resultPanel.hidden = false;
+
+        var selectBtn = resultPanel.querySelector('[data-action="select"]');
+        if (selectBtn) {
+          selectBtn.addEventListener('click', function () {
+            if (selectSize(selectBtn.getAttribute('data-size'))) {
+              selectBtn.textContent = selectBtn.getAttribute('data-size') + ' selected';
+              selectBtn.disabled = true;
+              window.setTimeout(close, 450);
+            } else {
+              selectBtn.insertAdjacentHTML('afterend',
+                '<p class="aao-sq__alt">We could not tick it for you. Pick ' + esc(selectBtn.getAttribute('data-size')) + ' in the size selector above.</p>');
+              selectBtn.disabled = true;
+            }
+          });
+        }
+
+        var guideBtn = resultPanel.querySelector('[data-action="guide"]');
+        if (guideBtn) guideBtn.addEventListener('click', openSizeGuide);
+
+        var restartBtn = resultPanel.querySelector('[data-action="restart"]');
+        if (restartBtn) {
+          restartBtn.addEventListener('click', function () {
+            resultPanel.hidden = true;
+            formPanel.hidden = false;
+            var f = focusables();
+            if (f.length) f[0].focus();
+          });
+        }
+
+        var heading = resultPanel.querySelector('[data-focus]');
+        if (heading) heading.focus();
+      }
+
+      function guideButton() {
+        return document.querySelector('.aao-size-guide-link')
+          ? '<button type="button" class="aao-sq__ghost" data-action="guide">Open the size guide</button>'
+          : '';
+      }
+
+      // Used when we hold no chart for this garment, so we name the measurements to check instead of guessing.
+      function noChartHtml() {
+        return '<h3 class="aao-sq__title" tabindex="-1" data-focus>We do not have a fit chart for this one</h3>'
+          + '<p class="aao-sq__why">Our measurement charts cover adult tees and hoodies. This product is sized differently, so a recommendation here would be a guess.</p>'
+          + '<p class="aao-sq__why">Take a garment you already wear and like, lay it flat, and compare these against the size guide:</p>'
+          + '<ul class="aao-sq__list">'
+          + '<li><strong>A &ndash; chest:</strong> armpit to armpit, laid flat.</li>'
+          + '<li><strong>B &ndash; length:</strong> highest point of the shoulder straight down to the hem.</li>'
+          + '<li><strong>C &ndash; sleeve:</strong> shoulder seam to cuff.</li>'
+          + '</ul>'
+          + guideButton()
+          + '<button type="button" class="aao-sq__ghost" data-action="restart">Back</button>';
+      }
+
+      function resultHtml(data) {
+        var entry = data.pickResult.entry;
+        var i = entry.index;
+        var garment = chart.chest[i];
+        var room = Math.round(garment * 2 - data.bodyChest);
+
+        var basis = data.measured
+          ? 'Your chest measures ' + Math.round(data.bodyChest) + ' cm.'
+          : 'From your height and weight we estimate a chest of about ' + Math.round(data.bodyChest) + ' cm.';
+
+        var html = '<h3 class="aao-sq__title" tabindex="-1" data-focus>Your size</h3>'
+          + '<p class="aao-sq__size">' + esc(entry.label) + '</p>'
+          + '<p class="aao-sq__why">' + esc(basis) + ' For a <strong>' + esc(data.fit) + '</strong> look that puts you in <strong>' + esc(entry.label) + '</strong>.</p>'
+          + '<p class="aao-sq__specs">' + esc(entry.label) + ' measures ' + garment + ' cm across the chest laid flat ('
+          + round1(garment * 2) + ' cm around, about ' + room + ' cm of room) and ' + chart.length[i] + ' cm long.</p>';
+
+        if (CONFIG.oversized) {
+          html += '<p class="aao-sq__alt">This cut runs oversized, so this is already one step down from the size you would take in a standard-fit tee.</p>';
+        }
+        if (CONFIG.caveat) {
+          html += '<p class="aao-sq__alt">' + esc(CONFIG.caveat) + '</p>';
+        }
+        if (!entry.available) {
+          html += '<p class="aao-sq__alt"><strong>' + esc(entry.label) + ' is sold out right now.</strong></p>';
+        }
+
+        var down = neighbour(i, -1), up = neighbour(i, 1);
+        var alts = [];
+        if (down) alts.push('closer to the body, take ' + down.label + (down.available ? '' : ' (sold out)'));
+        if (up) alts.push('more room, take ' + up.label + (up.available ? '' : ' (sold out)'));
+        if (alts.length) html += '<p class="aao-sq__alt">Want it ' + esc(alts.join('; for ')) + '.</p>';
+
+        // Height is not part of the chest match, so call out a body that will read short rather than stay quiet.
+        var needed = chart.lengthFactor * data.heightCm;
+        if (chart.length[i] < needed - 1) {
+          var longer = null;
+          for (var n = 0; n < offered.length; n++) {
+            if (offered[n].index > i && chart.length[offered[n].index] >= needed - 1) { longer = offered[n]; break; }
+          }
+          html += longer
+            ? '<p class="aao-sq__alt">At ' + Math.round(data.heightCm) + ' cm this body (' + chart.length[i] + ' cm) will sit short on you. '
+              + esc(longer.label) + ' is ' + chart.length[longer.index] + ' cm long if you want the extra length.</p>'
+            : '<p class="aao-sq__alt">At ' + Math.round(data.heightCm) + ' cm you are taller than this block is cut for &ndash; the longest body we make is '
+              + chart.length[chart.sizes.length - 1] + ' cm. Check length B on the size guide before ordering.</p>';
+        }
+
+        if (i === 0 && data.pickResult.target < chart.chest[0] * 2 - 4) {
+          html += '<p class="aao-sq__alt">You are at the small end of our range &ndash; XS is the smallest we make.</p>';
+        }
+        if (i === chart.sizes.length - 1 && data.pickResult.target > chart.chest[i] * 2 + 4) {
+          html += '<p class="aao-sq__alt">You are at the top of our range &ndash; XXL is the largest we make. Check ' + chart.chest[i] + ' cm across the chest against your own measurement before ordering.</p>';
+        }
+
+        html += '<button type="button" class="aao-sq__select" data-action="select" data-size="' + esc(entry.label) + '">Select size ' + esc(entry.label) + '</button>'
+          + guideButton()
+          + '<button type="button" class="aao-sq__ghost" data-action="restart">Start over</button>'
+          + '<p class="aao-sq__fine">This is a recommendation, not a promise. If you are between sizes, compare your own measurements against the size guide.</p>';
+
+        return html;
+      }
+
+      root.querySelector('.aao-sq__submit').addEventListener('click', function () {
+        errorEl.textContent = '';
+
+        if (!usable) { show(noChartHtml()); return; }
+
+        var input = readInputs();
+
+        if (!isFinite(input.heightCm) || input.heightCm < 120 || input.heightCm > 220) {
+          errorEl.textContent = 'Enter a height between 120 and 220 cm (4ft and 7ft 3in).';
+          return;
+        }
+        if (!isFinite(input.weightKg) || input.weightKg < 35 || input.weightKg > 200) {
+          errorEl.textContent = 'Enter a weight between 35 and 200 kg (77 and 440 lb).';
+          return;
+        }
+        if (input.chestCm !== null && (input.chestCm < 60 || input.chestCm > 180)) {
+          errorEl.textContent = 'That chest measurement looks off. Measure around the fullest part of your chest, or leave it blank.';
+          return;
+        }
+
+        var bodyChest = input.chestCm !== null ? input.chestCm : estimateChest(input.heightCm, input.weightKg);
+        var pickResult = pick(bodyChest, input.fit);
+        if (!pickResult) { show(noChartHtml()); return; }
+
+        show(resultHtml({
+          bodyChest: bodyChest,
+          heightCm: input.heightCm,
+          measured: input.chestCm !== null,
+          fit: input.fit,
+          pickResult: pickResult
+        }));
+      });
+    })();
+  </script>
+{%- endif -%}

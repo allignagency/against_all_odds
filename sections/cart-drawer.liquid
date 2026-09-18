@@ -1,20 +1,109 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+CART DRAWER
+----------------------------------------------------------------------------------------------------------------------
+
+Native Prestige cart drawer, extended (aao- prefixed additions) to reach feature parity with the UpCart drawer that was
+previously installed on the store:
+
+* aao-rewards-bar      : progress meter + tier badge on top of the theme's free shipping bar (UpCart "rewards" module)
+* aao-cart-upsells     : styling around the theme's native cross sell products (UpCart "upsells" module)
+* aao-cart-summary     : subtotal + discounts rows above the checkout button (UpCart "cart summary" module)
+* aao-cart-trust       : payment icons below the checkout button (UpCart "trust badges" module)
+* cart-drawer__body-inner : keeps the line items at the top and pins the upsells to the bottom of the scroll area so the
+  drawer stays composed with a single item in the cart.
+{%- endcomment -%}
+
+{%- liquid
+  assign aao_fs_threshold = 0
+  assign aao_fs_progress = 0
+
+  if settings.cart_show_free_shipping_bar
+    assign aao_fs_threshold = settings.cart_free_shipping_threshold | times: 100 | round
+
+    if aao_fs_threshold > 0
+      assign aao_fs_total = 0
+
+      for line_item in cart.items
+        if line_item.requires_shipping
+          assign aao_fs_total = aao_fs_total | plus: line_item.final_line_price
+        endif
+      endfor
+
+      for discount_application in cart.cart_level_discount_applications
+        assign aao_fs_total = aao_fs_total | minus: discount_application.total_allocated_amount
+      endfor
+
+      if aao_fs_total < 0
+        assign aao_fs_total = 0
+      endif
+
+      assign aao_fs_progress = aao_fs_total | times: 100 | divided_by: aao_fs_threshold
+
+      if aao_fs_progress > 100
+        assign aao_fs_progress = 100
+      endif
+    endif
+  endif
+
+  # The reward is free shipping, so it only makes sense while the cart ships something (or is still empty).
+
+  assign aao_show_rewards = false
+
+  if aao_fs_threshold > 0
+    if cart.requires_shipping or cart.empty?
+      assign aao_show_rewards = true
+    endif
+  endif
+-%}
+
+{%- capture aao_rewards_bar -%}
+  {%- if aao_show_rewards -%}
+    <aao-rewards-bar class="aao-rewards" style="--aao-rewards-progress: {{ aao_fs_progress }}%">
+      {%- if cart.requires_shipping -%}
+        {%- render 'free-shipping-bar' -%}
+      {%- else -%}
+        {%- assign aao_fs_amount = aao_fs_threshold | money -%}
+        <div class="free-shipping-bar">
+          <span class="text-subdued">{{ 'cart.free_shipping_bar.limit_unreached_html' | t: remaining_amount: aao_fs_amount }}</span>
+        </div>
+      {%- endif -%}
+
+      <div class="aao-rewards__meter">
+        <div class="aao-rewards__track"><div class="aao-rewards__fill"></div></div>
+
+        {%- if section.settings.rewards_tier_label != blank -%}
+          <span class="aao-rewards__badge" title="{{ section.settings.rewards_tier_label | escape }}">
+            {%- render 'icon' with 'picto-delivery-truck', width: 15 -%}
+          </span>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.rewards_tier_label != blank -%}
+        <p class="aao-rewards__tier">{{ section.settings.rewards_tier_label }}</p>
+      {%- endif -%}
+    </aao-rewards-bar>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- assign aao_rewards_bar = aao_rewards_bar | strip -%}
+
 <cart-drawer id="cart-drawer" aria-label="{{ 'cart.general.title' | t | escape_once }}" class="cart-drawer drawer {% if cart.empty? %}drawer--center-body{% endif %} color-scheme color-scheme--{{ section.settings.color_scheme.id }}" initial-focus="false" handle-editor-events>
-  <p class="h4" slot="header">{{ 'cart.general.title' | t }}</p>
+  <p class="h4" slot="header">
+    {{- 'cart.general.title' | t -}}
+    {%- if section.settings.show_item_count_in_title and cart.item_count > 0 -%}
+      <span class="aao-cart-title-count">{{ cart.item_count }}</span>
+    {%- endif -%}
+  </p>
 
   {%- if cart.empty? -%}
-    <p class="h5 text-center">{{ 'cart.general.empty' | t }}</p>
-  {%- else -%}
-    {%- if settings.cart_show_free_shipping_bar -%}
-      {%- render 'free-shipping-bar' -%}
-    {%- endif -%}
-
-    <div class="cart-drawer__items">
-      {%- for line_item in cart.items -%}
-        {%- render 'line-item', line_item: line_item, show_quantity_selector: true -%}
-      {%- endfor -%}
+    <div class="aao-cart-empty v-stack gap-5">
+      {{ aao_rewards_bar }}
+      <p class="h5 text-center">{{ 'cart.general.empty' | t }}</p>
     </div>
-
+  {%- else -%}
     {%- liquid
+      assign aao_max_upsells = section.settings.cross_sell_max_products | default: 3
       assign cross_sell_products_count = 0
 
       for product in section.settings.cross_sell_products
@@ -24,51 +113,74 @@
           assign cross_sell_products_count = cross_sell_products_count | plus: 1
         endif
       endfor
+
+      if cross_sell_products_count > aao_max_upsells
+        assign cross_sell_products_count = aao_max_upsells
+      endif
     -%}
 
-    {%- if cross_sell_products_count > 0 -%}
-      <div class="cart-drawer__complementary-products complementary-products">
-        {%- assign carousel_id = 'complementary-products-carousel-' | append: section.id -%}
+    <div class="cart-drawer__body-inner">
+      <div class="cart-drawer__body-top">
+        {{ aao_rewards_bar }}
 
-        {%- if section.settings.cross_sell_title != blank or section.settings.cross_sell_stack_products == false and cross_sell_products_count > 1 -%}
-          <div class="complementary-products__header complementary-products__header--align-start">
-            <p class="h6">{{ section.settings.cross_sell_title }}</p>
-
-            {%- if section.settings.cross_sell_stack_products == false and cross_sell_products_count > 1 -%}
-              <carousel-navigation aria-controls="{{ carousel_id }}" class="page-dots page-dots--narrow">
-                {%- for i in (1..cross_sell_products_count) -%}
-                  <button class="relative" aria-current="{% if forloop.first %}true{% else %}false{% endif %}">
-                    <span class="sr-only">{{ 'general.accessibility.go_to_item' | t: index: forloop.index }}</span>
-                  </button>
-                {%- endfor -%}
-              </carousel-navigation>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-
-        {%- liquid
-          capture complementary_products
-            for product in section.settings.cross_sell_products
-              assign products_in_cart = cart.items | where: 'product_id', product.id
-
-              if products_in_cart.size == 0 and product.available
-                render 'product-card-horizontal', product: product, show_quick_buy: true
-              endif
-            endfor
-          endcapture
-        -%}
-
-        {%- if section.settings.cross_sell_stack_products -%}
-          <div class="complementary-products__product-list">
-            {{- complementary_products -}}
-          </div>
-        {%- else -%}
-          <scroll-carousel id="{{ carousel_id }}" class="complementary-products__product-list complementary-products__product-list--carousel scroll-area bleed snap-x">
-            {{- complementary_products -}}
-          </scroll-carousel>
-        {%- endif -%}
+        <div class="cart-drawer__items">
+          {%- for line_item in cart.items -%}
+            {%- render 'line-item', line_item: line_item, show_quantity_selector: true -%}
+          {%- endfor -%}
+        </div>
       </div>
-    {%- endif -%}
+
+      {%- if cross_sell_products_count > 0 -%}
+        <div class="cart-drawer__complementary-products complementary-products aao-cart-upsells">
+          {%- assign carousel_id = 'complementary-products-carousel-' | append: section.id -%}
+
+          {%- if section.settings.cross_sell_title != blank or section.settings.cross_sell_stack_products == false and cross_sell_products_count > 1 -%}
+            <div class="complementary-products__header complementary-products__header--align-start">
+              <p class="h6">{{ section.settings.cross_sell_title }}</p>
+
+              {%- if section.settings.cross_sell_stack_products == false and cross_sell_products_count > 1 -%}
+                <carousel-navigation aria-controls="{{ carousel_id }}" class="page-dots page-dots--narrow">
+                  {%- for i in (1..cross_sell_products_count) -%}
+                    <button class="relative" aria-current="{% if forloop.first %}true{% else %}false{% endif %}">
+                      <span class="sr-only">{{ 'general.accessibility.go_to_item' | t: index: forloop.index }}</span>
+                    </button>
+                  {%- endfor -%}
+                </carousel-navigation>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- liquid
+            assign aao_rendered_upsells = 0
+
+            capture complementary_products
+              for product in section.settings.cross_sell_products
+                if aao_rendered_upsells >= aao_max_upsells
+                  break
+                endif
+
+                assign products_in_cart = cart.items | where: 'product_id', product.id
+
+                if products_in_cart.size == 0 and product.available
+                  assign aao_rendered_upsells = aao_rendered_upsells | plus: 1
+                  render 'product-card-horizontal', product: product, show_quick_buy: true
+                endif
+              endfor
+            endcapture
+          -%}
+
+          {%- if section.settings.cross_sell_stack_products -%}
+            <div class="complementary-products__product-list">
+              {{- complementary_products -}}
+            </div>
+          {%- else -%}
+            <scroll-carousel id="{{ carousel_id }}" class="complementary-products__product-list complementary-products__product-list--carousel scroll-area bleed snap-x">
+              {{- complementary_products -}}
+            </scroll-carousel>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
 
     <div slot="footer">
       <form action="{{ routes.cart_url }}" class="cart-drawer__footer" method="POST">
@@ -125,6 +237,22 @@
           </div>
         {%- endif -%}
 
+        {%- if section.settings.show_subtotal -%}
+          <div class="aao-cart-summary">
+            {%- if cart.total_discount > 0 -%}
+              <div class="aao-cart-summary__row aao-cart-summary__row--savings">
+                <span>{{ 'cart.general.discounts' | t }}</span>
+                <span>-{{ cart.total_discount | money }}</span>
+              </div>
+            {%- endif -%}
+
+            <div class="aao-cart-summary__row aao-cart-summary__row--total">
+              <span>{{ 'cart.general.subtotal' | t }}</span>
+              <span>{{ cart.total_price | money }}</span>
+            </div>
+          </div>
+        {%- endif -%}
+
         <div class="button-group">
           {%- if section.settings.show_view_cart_button or section.settings.show_checkout_button == false -%}
             {%- assign view_cart = 'cart.general.view_cart' | t -%}
@@ -143,10 +271,220 @@
             {%- render 'button', type: 'submit', content: checkout_button, name: 'checkout', stretch: true -%}
           {%- endif -%}
         </div>
+
+        {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+          <ul class="payment-methods unstyled-list aao-cart-trust">
+            {%- for type in shop.enabled_payment_types -%}
+              <li>{{- type | payment_type_svg_tag -}}</li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
       </form>
     </div>
   {%- endif -%}
 </cart-drawer>
+
+<style>
+  /* Layout: items stay at the top, upsells hug the footer, so the drawer never shows a dead middle. */
+  .cart-drawer:not(.drawer--center-body)::part(body) {
+    align-content: stretch;
+  }
+
+  .cart-drawer__body-inner {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  .cart-drawer__body-inner > .cart-drawer__complementary-products {
+    margin-block-start: auto;
+  }
+
+  /* Rewards / free shipping progress (UpCart rewards module) */
+  .cart-drawer .aao-rewards {
+    display: block;
+    border-block-end: 1px solid rgb(var(--border-color));
+    padding-block: 0.875rem 1rem;
+    padding-inline: var(--drawer-body-padding-inline);
+    margin-inline: calc(-1 * var(--drawer-body-padding-inline));
+  }
+
+  .cart-drawer .aao-rewards .free-shipping-bar {
+    display: block;
+    font-size: var(--text-sm);
+    border-block-end-width: 0;
+    margin-inline: 0;
+    padding-inline: 0;
+    padding-block: 0 0.625rem;
+  }
+
+  .aao-rewards__meter {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .aao-rewards__track {
+    position: relative;
+    flex: 1 1 auto;
+    height: 6px;
+    background-color: #e2e2e2;
+    overflow: hidden;
+  }
+
+  .aao-rewards__fill {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--aao-rewards-progress, 0%);
+    background-color: rgb(var(--text-color));
+    transition: width 0.3s ease;
+  }
+
+  .aao-rewards__badge {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 100%;
+    color: #fff;
+    background-color: #4d4949;
+    opacity: 0.45;
+    transition: opacity 0.2s ease;
+  }
+
+  .aao-rewards[data-complete='true'] .aao-rewards__badge {
+    opacity: 1;
+  }
+
+  .aao-rewards__tier {
+    margin-block-start: 0.375rem;
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgb(var(--text-color) / 0.55);
+    text-align: end;
+  }
+
+  .aao-cart-empty {
+    width: 100%;
+  }
+
+  .aao-cart-empty .aao-rewards {
+    text-align: center;
+  }
+
+  .aao-cart-empty .aao-rewards__tier {
+    text-align: center;
+  }
+
+  .aao-cart-title-count {
+    margin-inline-start: 0.5rem;
+    color: rgb(var(--text-color) / 0.5);
+  }
+
+  .aao-cart-title-count::before {
+    content: '\2022';
+    margin-inline-end: 0.5rem;
+  }
+
+  /* Upsells (UpCart upsells module) */
+  .cart-drawer .aao-cart-upsells {
+    background-color: #f6f6f7;
+    padding-block: 1.25rem;
+    padding-inline: var(--drawer-body-padding-inline);
+  }
+
+  /* Summary (UpCart cart summary module) */
+  .aao-cart-summary {
+    display: grid;
+    row-gap: 0.25rem;
+    width: 100%;
+  }
+
+  .aao-cart-summary__row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .aao-cart-summary__row--savings {
+    font-size: var(--text-sm);
+    color: #777;
+  }
+
+  .aao-cart-summary__row--total {
+    font-size: var(--text-base);
+    font-weight: 600;
+  }
+
+  /* Trust badges (UpCart trust badges module) */
+  .cart-drawer__footer .aao-cart-trust {
+    justify-content: center;
+    gap: 0.625rem;
+    width: 100%;
+    opacity: 0.55;
+  }
+
+  .cart-drawer__footer .aao-cart-trust svg {
+    height: 20px;
+    width: auto;
+  }
+
+  /* Checkout button stays the loudest element in the drawer. */
+  .cart-drawer__footer .button-group {
+    width: 100%;
+  }
+
+  .cart-drawer__footer .button-group .button {
+    padding-block: 0.85rem;
+    font-size: var(--text-base);
+  }
+</style>
+
+<script>
+  (() => {
+    if (customElements.get('aao-rewards-bar')) return;
+
+    customElements.define(
+      'aao-rewards-bar',
+      class AaoRewardsBar extends HTMLElement {
+        connectedCallback() {
+          this.update();
+
+          const target = this.querySelector('free-shipping-bar');
+          if (!target) return;
+
+          this.observer = new MutationObserver(() => this.update());
+          this.observer.observe(target, { attributes: true, attributeFilter: ['total-price', 'threshold'] });
+        }
+
+        disconnectedCallback() {
+          if (this.observer) this.observer.disconnect();
+        }
+
+        update() {
+          const target = this.querySelector('free-shipping-bar');
+          let progress = parseFloat(this.style.getPropertyValue('--aao-rewards-progress')) || 0;
+
+          if (target) {
+            const threshold = parseFloat(target.getAttribute('threshold'));
+            const totalPrice = parseFloat(target.getAttribute('total-price'));
+
+            if (threshold > 0 && !Number.isNaN(totalPrice)) {
+              progress = Math.max(0, Math.min(100, (totalPrice / threshold) * 100));
+              this.style.setProperty('--aao-rewards-progress', `${progress}%`);
+            }
+          }
+
+          this.dataset.complete = progress >= 100 ? 'true' : 'false';
+        }
+      }
+    );
+  })();
+</script>
 
 {% schema %}
 {
@@ -170,6 +508,12 @@
     },
     {
       "type": "checkbox",
+      "id": "show_item_count_in_title",
+      "label": "Show item count in title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
       "id": "show_cart_note",
       "label": "t:sections.cart_drawer.show_cart_note",
       "default": true
@@ -184,6 +528,18 @@
       "type": "checkbox",
       "id": "show_shipping_text",
       "label": "t:sections.cart_drawer.show_shipping_text",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subtotal",
+      "label": "Show subtotal and discount rows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons below the checkout button",
       "default": true
     },
     {
@@ -206,6 +562,17 @@
     },
     {
       "type": "header",
+      "content": "Free shipping reward"
+    },
+    {
+      "type": "text",
+      "id": "rewards_tier_label",
+      "label": "Reward label",
+      "info": "Shown next to the progress bar. Leave empty to hide the progress bar reward badge.",
+      "default": "Free Shipping"
+    },
+    {
+      "type": "header",
       "content": "t:sections.cart_drawer.cross_sell_category"
     },
     {
@@ -214,6 +581,16 @@
       "label": "t:sections.cart_drawer.cross_sell_products",
       "info": "t:sections.cart_drawer.cross_sell_products_info",
       "limit": 5
+    },
+    {
+      "type": "range",
+      "id": "cross_sell_max_products",
+      "label": "Maximum products to show",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3,
+      "visible_if": "{{ section.settings.cross_sell_products != blank }}"
     },
     {
       "type": "inline_richtext",

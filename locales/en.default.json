@@ -354,6 +354,7 @@
       "continue_shopping": "Continue shopping",
       "weight": "Weight",
       "subtotal": "Subtotal",
+      "discounts": "Discounts",
       "total": "Total",
       "taxes_and_shipping_policy_at_checkout_html": "Taxes and <a href=\"{{ link }}\" class=\"link\">shipping</a> calculated at checkout",
       "taxes_included_but_shipping_at_checkout": "Tax included and shipping calculated at checkout",
@@ -377,8 +378,8 @@
       "remove_with_title": "Remove {{ title }}"
     },
     "free_shipping_bar": {
-      "limit_unreached_html": "Spend {{ remaining_amount }} more and get free shipping!",
-      "limit_reached_html": "You are eligible for free shipping."
+      "limit_unreached_html": "You're <b>{{ remaining_amount }}</b> away from free shipping!",
+      "limit_reached_html": "Free shipping unlocked!"
     },
     "shipping_estimator": {
       "estimate_shipping": "Estimate shipping",

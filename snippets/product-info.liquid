@@ -231,6 +231,11 @@ Supported variables
                   swatch_selector_style: block.settings.swatch_selector_style,
                   variant_image_options: block.settings.variant_image_options,
                   size_chart_page: block.settings.size_chart_page -%}
+
+              {%- comment -%} AAO: native size-recommendation quiz, replaces the dead paid "Fit Quiz" app. {%- endcomment -%}
+              {%- unless context == 'quick_buy' -%}
+                {%- render 'aao-size-quiz', product: product, product_form_id: product_form_id -%}
+              {%- endunless -%}
             {%- endif -%}
 
           {%- when 'product_variations' -%}

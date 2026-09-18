@@ -356,6 +356,7 @@
       "continue_shopping": "Seguir comprando",
       "weight": "Peso",
       "subtotal": "Subtotal",
+      "discounts": "Descuentos",
       "total": "Total",
       "taxes_and_shipping_policy_at_checkout_html": "Los impuestos y <a href=\"{{ link }}\" class=\"link\">gastos de envío</a> se calculan en la pantalla de pago",
       "taxes_included_but_shipping_at_checkout": "Impuesto incluido y los gastos de envío se calculan en la pantalla de pago",

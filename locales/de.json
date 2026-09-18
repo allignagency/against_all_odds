@@ -354,6 +354,7 @@
       "continue_shopping": "Weiter einkaufen",
       "weight": "Gewicht",
       "subtotal": "Zwischensumme",
+      "discounts": "Rabatte",
       "total": "Gesamtbetrag",
       "taxes_and_shipping_policy_at_checkout_html": "Steuern und <a href=\"{{ link }}\" class=\"link\">Versand</a> werden beim Checkout berechnet",
       "taxes_included_but_shipping_at_checkout": "Inklusive Steuern, Versand wird beim Checkout berechnet",

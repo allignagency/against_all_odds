@@ -353,6 +353,7 @@
       "continue_shopping": "Continua gli acquisti",
       "weight": "Peso",
       "subtotal": "Subtotale",
+      "discounts": "Sconti",
       "total": "Totale",
       "taxes_and_shipping_policy_at_checkout_html": "Imposte e <a href=\"{{ link }}\" class=\"link\">spese di spedizione</a> calcolate al momento del check-out",
       "taxes_included_but_shipping_at_checkout": "Imposte incluse e spese di spedizione calcolate al momento del check-out",
