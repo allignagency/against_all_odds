@@ -87,11 +87,14 @@ Supported variables
   {%- endcapture -%}
 
   <style>
-    .aao-sq { margin-block-start: 0.75rem; }
+    /* The trigger sits directly under the size swatches, so it has to belong to that row: same left rail, same
+       height as a swatch (45px), and enough air above it to read as the next action rather than a stray sixth
+       size. At 31px it was both visually lighter than the swatches and under the 44px touch target. */
+    .aao-sq { margin-block-start: 1rem; }
     .aao-sq__trigger {
-      display: inline-flex; align-items: center; gap: 0.5rem;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
       background: none; border: 1px solid currentColor; cursor: pointer;
-      padding: 0.5rem 0.9rem; color: inherit; font: inherit; font-size: 0.8125rem;
+      min-height: 45px; padding: 0.5rem 1.1rem; color: inherit; font: inherit; font-size: 0.8125rem;
       text-transform: uppercase; letter-spacing: 0.08em; line-height: 1;
     }
     .aao-sq__trigger:hover { background: #111; color: #fff; border-color: #111; }

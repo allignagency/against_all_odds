@@ -74,7 +74,7 @@ previously installed on the store:
 
         {%- if section.settings.rewards_tier_label != blank -%}
           <span class="aao-rewards__badge" title="{{ section.settings.rewards_tier_label | escape }}">
-            {%- render 'icon' with 'picto-delivery-truck', width: 14 -%}
+            {%- render 'icon' with 'picto-delivery-truck', width: 19 -%}
           </span>
         {%- endif -%}
       </div>
@@ -178,6 +178,81 @@ previously installed on the store:
               {{- complementary_products -}}
             </scroll-carousel>
           {%- endif -%}
+
+          {%- comment -%}
+            Data + machinery behind the inline "Add to cart" on each upsell card.
+
+            The card markup itself is the theme's `product-card-horizontal`, which we leave alone: for a
+            single-variant product it already renders a working `product-form`, and for a multi-variant one it
+            renders a button that opens the quick buy modal. We keep the single-variant path exactly as it is and
+            replace only the modal path with an inline size picker, so the shopper never leaves the drawer.
+
+            For every multi-variant upsell we render a hidden `product-form` here. Picking a size fills in its
+            variant id and submits it, which means the add goes through the theme's own ProductForm element and
+            fires the same `cart:change` / drawer refresh as any other quick add: no bespoke cart plumbing.
+
+            `aao-upsell-data` carries the variant list per product handle (id, option value, availability) plus the
+            option values already in the cart, newest last, which is what the picker uses to pre-select a size.
+          {%- endcomment -%}
+
+          {%- liquid
+            assign aao_upsell_json_parts = ''
+            assign aao_cart_option_values = '' | split: ','
+
+            for line_item in cart.items
+              assign aao_cart_option_values = aao_cart_option_values | concat: line_item.variant.options
+            endfor
+          -%}
+
+          {%- capture aao_upsell_forms -%}
+            {%- assign aao_form_count = 0 -%}
+
+            {%- for product in section.settings.cross_sell_products -%}
+              {%- if aao_form_count >= aao_max_upsells -%}
+                {%- break -%}
+              {%- endif -%}
+
+              {%- assign products_in_cart = cart.items | where: 'product_id', product.id -%}
+
+              {%- if products_in_cart.size == 0 and product.available -%}
+                {%- assign aao_form_count = aao_form_count | plus: 1 -%}
+
+                {%- capture aao_variants_json -%}
+                  {%- for variant in product.variants -%}
+                    {"id":{{ variant.id }},"title":{{ variant.title | json }},"available":{{ variant.available }}}
+                    {%- unless forloop.last -%},{%- endunless -%}
+                  {%- endfor -%}
+                {%- endcapture -%}
+
+                {%- capture aao_entry -%}
+                  {{ product.handle | json }}:{"variants":[{{ aao_variants_json | strip | strip_newlines }}]}
+                {%- endcapture -%}
+
+                {%- if aao_upsell_json_parts == blank -%}
+                  {%- assign aao_upsell_json_parts = aao_entry | strip | strip_newlines -%}
+                {%- else -%}
+                  {%- assign aao_entry = aao_entry | strip | strip_newlines -%}
+                  {%- assign aao_upsell_json_parts = aao_upsell_json_parts | append: ',' | append: aao_entry -%}
+                {%- endif -%}
+
+                {%- if product.variants.size > 1 -%}
+                  <product-form class="aao-upsell-form" data-aao-upsell-form="{{ product.handle | escape }}" hidden>
+                    {%- form 'product', product -%}
+                      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                      <input type="hidden" name="quantity" value="1">
+                      <input type="hidden" name="on_success" value="force_open_drawer">
+                    {%- endform -%}
+                  </product-form>
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+
+          {{ aao_upsell_forms }}
+
+          <script type="application/json" data-aao-upsell-data>
+            {"cartOptionValues":{{ aao_cart_option_values | json }},"products":{ {{- aao_upsell_json_parts -}} }}
+          </script>
         </div>
       {%- endif -%}
     </div>
@@ -321,13 +396,14 @@ previously installed on the store:
   .aao-rewards__meter {
     display: flex;
     align-items: center;
-    gap: 0.625rem;
+    gap: 0.75rem;
   }
 
   .aao-rewards__track {
     position: relative;
     flex: 1 1 auto;
     height: 6px;
+    border-radius: 999px;
     background-color: #e2e2e2;
     overflow: hidden;
   }
@@ -337,21 +413,26 @@ previously installed on the store:
     inset-block: 0;
     inset-inline-start: 0;
     width: var(--aao-rewards-progress, 0%);
+    border-radius: 999px;
     background-color: rgb(var(--text-color));
     transition: width 0.3s ease;
   }
 
+  /* The badge is the reward itself, so it has to read as a reward and not as a smudge at the end of the bar.
+     It sits on the same #e2e2e2 as the unfilled track (so it belongs to the meter) and carries a near-black
+     truck, which is the strongest contrast available on that grey. Once the threshold is met it flips to the
+     solid black / white treatment the checkout button uses, so "unlocked" is legible at a glance. */
   .aao-rewards__badge {
     display: grid;
     place-items: center;
     flex: 0 0 auto;
-    width: 28px;
-    height: 28px;
+    width: 38px;
+    height: 38px;
     border-radius: 100%;
-    color: #fff;
-    background-color: #4d4949;
-    opacity: 0.45;
-    transition: opacity 0.2s ease;
+    color: #1a1a1a;
+    background-color: #e2e2e2;
+    opacity: 1;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   /* The badge is a fixed circle, so the truck needs an explicit square box. The theme's generic
@@ -362,21 +443,56 @@ previously installed on the store:
   .aao-rewards__badge svg {
     display: block;
     flex: none;
+    width: 19px;
+    height: 19px;
+  }
+
+  /* The theme's global icon stroke is 1 unit on a 24 viewBox, so at 19px the truck drew at 0.79px and washed
+     out however dark we made it. Overriding the path here (CSS beats the presentation attribute) puts it at
+     ~1.5px rendered, which is what makes it read as a truck rather than a smudge. */
+  .aao-rewards__badge svg path {
+    stroke-width: 1.9;
+  }
+
+  .aao-rewards[data-complete='true'] .aao-rewards__badge {
+    color: #fff;
+    background-color: #111;
+  }
+
+  .aao-rewards__tier {
+    margin-block-start: 0.5rem;
+    font-size: 12px;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(var(--text-color) / 0.5);
+    text-align: end;
+  }
+
+  /* Quantity stepper. Same root cause as the badge above: some stylesheet on the page stretches bare svgs to
+     the width of their box, so the theme's `width: 10` plus/minus rendered at 35x25 next to a 15px digit. Both
+     axes are pinned here, and the control is sized to the drawer's own type scale instead of the theme's. */
+  .cart-drawer .quantity-selector--sm {
+    --quantity-selector-height: 32px;
+    --quantity-selector-input-width: 28px;
+  }
+
+  .cart-drawer .quantity-selector__button > .icon,
+  .cart-drawer .quantity-selector__button svg {
+    display: block;
+    flex: none;
     width: 14px;
     height: 14px;
   }
 
-  .aao-rewards[data-complete='true'] .aao-rewards__badge {
-    opacity: 1;
+  /* Matched to the 14px quantity digit: 1.4 units on a 12 viewBox lands at ~1.6px, so the plus and minus carry
+     the same visual weight as the number between them instead of the hairline the theme default draws. */
+  .cart-drawer .quantity-selector__button svg path {
+    stroke-width: 1.6;
   }
 
-  .aao-rewards__tier {
-    margin-block-start: 0.375rem;
-    font-size: var(--text-xs);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: rgb(var(--text-color) / 0.55);
-    text-align: end;
+  .cart-drawer .quantity-selector__input {
+    font-size: 14px;
   }
 
   .aao-cart-empty {
@@ -408,6 +524,78 @@ previously installed on the store:
     padding-inline: var(--drawer-body-padding-inline);
   }
 
+  .cart-drawer .aao-upsell-form {
+    display: none;
+  }
+
+  /* The theme renders the upsell's add control as an underlined text link at the narrow container size, which
+     came out louder than the product title above it and did not read as tappable. Both container-query variants
+     are pinned to one compact solid button so the card has a single, obvious action. */
+  /* No `display` here on purpose: the theme swaps the two variants with `display: none` / `block` inside a
+     container query on the card, so declaring one would show both at once. Height comes from padding instead. */
+  .cart-drawer .aao-cart-upsells [class*='horizontal-product-card__button'] {
+    width: fit-content;
+    padding-block: 0.625rem;
+    padding-inline: 0.875rem;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #111;
+    background-color: #111;
+    background-image: none;
+  }
+
+  .cart-drawer .aao-cart-upsells [class*='horizontal-product-card__button']:hover {
+    opacity: 0.85;
+  }
+
+  .cart-drawer .aao-upsell-sizes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-block-start: 0.5rem;
+  }
+
+  .cart-drawer .aao-upsell-size {
+    min-width: 34px;
+    min-height: 32px;
+    padding-inline: 0.5rem;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: #111;
+    border: 1px solid #d5d5d5;
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+  .cart-drawer .aao-upsell-size:hover:not([disabled]) {
+    border-color: #111;
+  }
+
+  .cart-drawer .aao-upsell-size:focus-visible {
+    outline: 2px solid #111;
+    outline-offset: 1px;
+  }
+
+  .cart-drawer .aao-upsell-size[data-preselected='true'] {
+    border-color: #111;
+    box-shadow: inset 0 0 0 1px #111;
+    font-weight: 600;
+  }
+
+  .cart-drawer .aao-upsell-size[disabled] {
+    color: #b5b5b5;
+    border-color: #ececec;
+    text-decoration: line-through;
+    cursor: not-allowed;
+  }
+
   /* Summary (UpCart cart summary module) */
   .aao-cart-summary {
     display: grid;
@@ -423,13 +611,24 @@ previously installed on the store:
   }
 
   .aao-cart-summary__row--savings {
-    font-size: var(--text-sm);
+    font-size: 13px;
     color: #777;
   }
 
   .aao-cart-summary__row--total {
-    font-size: var(--text-base);
+    font-size: 18px;
     font-weight: 600;
+  }
+
+  /* The footer was one flat 16px voice: order note, tax line and subtotal all shouted equally. The two
+     supporting lines drop to a caption scale so the subtotal and the checkout button own the hierarchy. */
+  .cart-drawer__footer .link-faded-reverse {
+    font-size: 13px;
+  }
+
+  .cart-drawer__footer > .v-stack .text-subdued {
+    font-size: 12px;
+    line-height: 1.5;
   }
 
   /* Trust badges (UpCart trust badges module) */
@@ -519,6 +718,177 @@ previously installed on the store:
         }
       }
     );
+  })();
+</script>
+
+<script>
+  (() => {
+    /* Inline add-to-cart for the drawer upsells.
+
+       Single-variant upsells keep the theme's own product-form submit, untouched. Multi-variant ones would
+       normally open the quick buy modal; here the button expands into size pills inside the card instead, and
+       picking a size submits the hidden product-form rendered above, so the add and the drawer refresh run
+       through the theme's ProductForm exactly like any other quick add.
+
+       The drawer is replaced wholesale every time the cart changes, so everything below is delegated from
+       `document` and nothing is bound per node. */
+    if (window.__aaoUpsellsBound) return;
+    window.__aaoUpsellsBound = true;
+
+    const UPSELLS = '.aao-cart-upsells';
+    const CARD = '.horizontal-product-card';
+    const ADD_BUTTON = '[class*="horizontal-product-card__button"]';
+
+    const readData = (upsells) => {
+      const node = upsells.querySelector('script[data-aao-upsell-data]');
+      if (!node) return null;
+
+      try {
+        return JSON.parse(node.textContent);
+      } catch (error) {
+        return null;
+      }
+    };
+
+    const handleOf = (card) => {
+      const link = card.querySelector('a[href*="/products/"]');
+      const match = link && link.getAttribute('href').match(/\/products\/([^/?#]+)/);
+      return match ? match[1] : null;
+    };
+
+    const collapse = (card) => {
+      card.querySelectorAll('.aao-upsell-sizes').forEach((node) => node.remove());
+      card.querySelectorAll(ADD_BUTTON).forEach((button) => {
+        button.hidden = false;
+        button.setAttribute('aria-expanded', 'false');
+      });
+    };
+
+    const collapseAll = (except) => {
+      document.querySelectorAll(`${UPSELLS} ${CARD}`).forEach((card) => {
+        if (card !== except) collapse(card);
+      });
+    };
+
+    /* Newest matching size in the cart wins: the shopper most likely wants the upsell in the size they just
+       picked. Nothing matches -> nothing is pre-selected, rather than guessing. */
+    const preselectedTitle = (variants, cartOptionValues) => {
+      const sellable = variants.filter((variant) => variant.available).map((variant) => variant.title);
+
+      for (let i = cartOptionValues.length - 1; i >= 0; i -= 1) {
+        const match = sellable.find(
+          (title) => String(title).toLowerCase() === String(cartOptionValues[i]).toLowerCase()
+        );
+
+        if (match) return match;
+      }
+
+      return null;
+    };
+
+    const expand = (card, entry, cartOptionValues) => {
+      collapseAll(card);
+
+      const info = card.querySelector('.horizontal-product-card__info') || card;
+      const preselected = preselectedTitle(entry.variants, cartOptionValues);
+      const group = document.createElement('div');
+
+      group.className = 'aao-upsell-sizes';
+      group.setAttribute('role', 'group');
+      group.setAttribute('aria-label', 'Choose a size');
+
+      entry.variants.forEach((variant) => {
+        const pill = document.createElement('button');
+
+        pill.type = 'button';
+        pill.className = 'aao-upsell-size';
+        pill.textContent = variant.title;
+        pill.dataset.variantId = String(variant.id);
+
+        if (!variant.available) {
+          pill.disabled = true;
+          pill.setAttribute('aria-disabled', 'true');
+        } else if (variant.title === preselected) {
+          pill.dataset.preselected = 'true';
+        }
+
+        group.appendChild(pill);
+      });
+
+      card.querySelectorAll(ADD_BUTTON).forEach((button) => {
+        button.hidden = true;
+        button.setAttribute('aria-expanded', 'true');
+      });
+
+      info.appendChild(group);
+
+      const focusTarget = group.querySelector('[data-preselected="true"]') || group.querySelector('button:not([disabled])');
+      if (focusTarget) focusTarget.focus();
+    };
+
+    const addVariant = (card, variantId) => {
+      const upsells = card.closest(UPSELLS);
+      const handle = handleOf(card);
+      const form =
+        upsells && handle
+          ? upsells.querySelector(`[data-aao-upsell-form="${CSS.escape(handle)}"] form`)
+          : null;
+
+      if (!form) return false;
+
+      const input = form.querySelector('input[name="id"]');
+      if (!input) return false;
+
+      input.value = String(variantId);
+      form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+      return true;
+    };
+
+    document.addEventListener(
+      'click',
+      (event) => {
+        const target = event.target instanceof Element ? event.target : null;
+        if (!target) return;
+
+        const pill = target.closest('.aao-upsell-size');
+
+        if (pill) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          if (pill.disabled) return;
+
+          const card = pill.closest(CARD);
+          if (card) addVariant(card, pill.dataset.variantId);
+          return;
+        }
+
+        const button = target.closest(ADD_BUTTON);
+
+        if (button && button.closest(UPSELLS)) {
+          const card = button.closest(CARD);
+          const upsells = button.closest(UPSELLS);
+          const data = readData(upsells);
+          const handle = card && handleOf(card);
+          const entry = data && handle ? data.products[handle] : null;
+
+          /* One variant: leave the theme's product-form submit alone, it already adds and refreshes. */
+          if (!entry || entry.variants.length <= 1) return;
+
+          event.preventDefault();
+          event.stopPropagation();
+          expand(card, entry, (data && data.cartOptionValues) || []);
+          return;
+        }
+
+        if (!target.closest('.aao-upsell-sizes')) collapseAll(null);
+      },
+      true
+    );
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') collapseAll(null);
+    });
   })();
 </script>
 
