@@ -459,10 +459,28 @@
   font-size: 14px;
 }
 
-/* --- write a review form ---------------------------------------------------------------------- */
+/* --- write a review form ------------------------------------------------------------------------
+   The form is Shopify's native {% form 'contact' %}, server-rendered by
+   snippets/aao-reviews-widget.liquid. It is styled to match the rest of the widget, and it is
+   fully usable with JavaScript off: the rating is a radio group, painted below in pure CSS. */
 
-.aao-reviews__form-wrap {
+.aao-reviews__form-host {
   display: none;
+  margin: 0 auto;
+}
+
+.aao-reviews__form-host[data-open='true'] {
+  display: block;
+}
+
+/* A posted or errored form must come back open. :has() does that without JavaScript; the engine
+   sets data-open="true" as the fallback for browsers that lack it. */
+.aao-reviews__form-host:has([data-aao-posted]),
+.aao-reviews__form-host:has([data-aao-errors]) {
+  display: block;
+}
+
+.aao-reviews__form-panel {
   margin: 0 7px 20px;
   padding: 20px;
   background: var(--aao-rev-card);
@@ -470,8 +488,9 @@
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
-.aao-reviews__form-wrap[data-open='true'] {
-  display: block;
+.aao-reviews__form-panel:focus,
+.aao-reviews__form-panel [tabindex='-1']:focus {
+  outline: none;
 }
 
 .aao-reviews__form-title {
@@ -480,20 +499,34 @@
   margin: 0 0 20px;                   /* [loox] .loox-dropdown li .sorting-title */
 }
 
+.aao-reviews__errors {
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  border: 1px solid #b00020;
+  border-radius: var(--aao-rev-radius);
+  background: rgba(176, 0, 32, 0.04);
+}
+
 .aao-reviews__field {
   display: block;
   margin-bottom: 14px;
+  border: 0;
+  padding: 0;
+  min-width: 0;
 }
 
-.aao-reviews__field > span {
+.aao-reviews__field > span,
+.aao-reviews__field > legend {
   display: block;
   font-size: 12px;
   line-height: 16px;
   color: var(--aao-rev-muted);
   margin-bottom: 4px;
+  padding: 0;
 }
 
-.aao-reviews__field input,
+.aao-reviews__field input[type='text'],
+.aao-reviews__field input[type='email'],
 .aao-reviews__field textarea {
   width: 100%;
   font: inherit;
@@ -516,19 +549,59 @@
   border-color: var(--aao-rev-ink);
 }
 
-.aao-reviews__field > span.aao-reviews__rating-input {
+/* --- rating radio group ---------------------------------------------------------------------
+   Stars are rendered 5 to 1 and reversed with row-reverse, so `:checked ~ label` reaches every
+   star that should also be filled. No JavaScript, and the keyboard behaviour is the browser's. */
+
+.aao-reviews__rating-input {
   display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
   gap: 2px;
   font-size: 28px;
   line-height: 0;
 }
 
-.aao-reviews__rating-input button {
+.aao-reviews__star-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.aao-reviews__rating-input label {
   cursor: pointer;
-  padding: 0;
   line-height: 0;
-  font-size: inherit;
+  color: var(--aao-rev-line);
+  transition: color 0.12s ease-in-out;
+}
+
+.aao-reviews__rating-input label .aao-star {
+  width: 1em;
+  height: 1em;
+  display: block;
+}
+
+.aao-reviews__star-input:checked ~ label {
   color: var(--aao-rev-star);
+}
+
+.aao-reviews__star-input:focus-visible + label {
+  outline: 2px solid var(--aao-rev-ink);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .aao-reviews__rating-input:hover label {
+    color: var(--aao-rev-line);
+  }
+
+  .aao-reviews__rating-input label:hover,
+  .aao-reviews__rating-input label:hover ~ label {
+    color: var(--aao-rev-star);
+  }
 }
 
 .aao-reviews__form-actions {
@@ -549,7 +622,7 @@
   color: #b00020;
 }
 
-.aao-reviews__hp {
+.aao-reviews__sr {
   position: absolute !important;
   width: 1px;
   height: 1px;

@@ -13,11 +13,31 @@ reviewer name + verified badge, star row, review body, photo thumbnails, muted d
 
 Data: the shared summary names the asset holding this product's review list (its own file, or one
 of the shared sets - see snippets/aao-reviews-boot.liquid), so the widget fetches the summary plus
-exactly one review asset. The engine merges the approved-reviews overlay from the VPS on top, then
-injects the AggregateRating / Review JSON-LD and a visually hidden text copy for crawlers.
+exactly one review asset, then injects the AggregateRating / Review JSON-LD and a visually hidden
+text copy for crawlers. Which asset a product uses is decided by data, not by Liquid, so this
+snippet deliberately does not try to name it.
 
-Which asset a product uses is decided by data, not by Liquid, so this snippet deliberately does
-not try to name it.
+********************************************
+The write-a-review form
+********************************************
+
+Submissions go through Shopify's own {% form 'contact' %}. There is no third-party backend: the
+review arrives as an email at the store's contact address, and approved ones are baked into the
+review assets by docs/reviews/split_reviews.py on the next deploy.
+
+The form is server-rendered here as a SIBLING of #aao-reviews, not inside it, because the engine
+owns that element's innerHTML and would wipe anything server-rendered into it.
+
+It works with JavaScript disabled: the rating is a real radio group and the stars are painted in
+CSS. JavaScript only opens and closes the panel and keeps the hidden subject line in step.
+
+Posting reloads the page. The form's action carries its own id as a fragment, so the browser lands
+on the confirmation rather than at the top of the product page. Shopify may show its own captcha
+interstitial first; that is native behaviour and needs nothing from us.
+
+One contact form per page: render this snippet once per PDP. The product templates use the
+"aao-reviews" SECTION; the same-named product-info block exists for flexibility, but the two must
+not both be enabled on one template.
 
 ********************************************
 Supported variables
@@ -48,9 +68,130 @@ Supported variables
     <noscript>
       <h2>{{ rv_heading }}</h2>
       <p>
-        Customer reviews for {{ rv_product.title }} need JavaScript to display.
-        <a href="{{ rv_product.url }}">Reload this page</a> with JavaScript enabled to read them.
+        Customer reviews for {{ rv_product.title }} need JavaScript to display. The review form
+        below works either way.
       </p>
     </noscript>
+  </div>
+
+  <div
+    id="aao-review-form-host"
+    class="aao-reviews aao-reviews__form-host"
+    style="max-width:{{ rv_max_width }}px;"
+    {%- comment -%}
+      `form` is only in scope inside the {% form %} block below, so the panel cannot set this
+      attribute itself. A posted or errored form stays open through the CSS :has() rule on
+      .aao-reviews__form-host, and the engine sets data-open="true" for browsers without :has().
+    {%- endcomment -%}
+    data-open="false"
+  >
+    {%- form 'contact', id: 'aao-review-form', class: 'aao-reviews__form' -%}
+      {%- if form.posted_successfully? -%}
+        <div class="aao-reviews__form-panel" role="status" tabindex="-1" data-aao-posted>
+          <h3 class="aao-reviews__form-title">Thanks for your review</h3>
+          <p class="aao-reviews__note">
+            Your review is pending. We read every one, and it will appear on this page once it has
+            been approved.
+          </p>
+        </div>
+      {%- else -%}
+        <div class="aao-reviews__form-panel">
+          <h3 class="aao-reviews__form-title">Write a review</h3>
+
+          {%- if form.errors -%}
+            <div class="aao-reviews__errors" role="alert" tabindex="-1" data-aao-errors>
+              <p class="aao-reviews__note" data-state="error">
+                {{ form.errors | default_errors }}
+              </p>
+            </div>
+          {%- endif -%}
+
+          {%- comment -%}
+            Shopify sets the email subject itself, so the recognisable marker is a hidden field.
+            Custom contact[...] fields lead the message body, so this is the first line the store
+            sees. JS rewrites {rating} when a star is chosen; without JS it keeps the default 5,
+            while contact[Review rating] below always carries the real value either way.
+          {%- endcomment -%}
+          <input
+            type="hidden"
+            name="contact[Subject]"
+            value="PRODUCT REVIEW | {{ rv_product.handle }} | 5/5"
+            data-aao-subject
+            data-template="PRODUCT REVIEW | {{ rv_product.handle }} | {rating}/5"
+          >
+          <input
+            type="hidden"
+            name="contact[Product]"
+            value="{{ rv_product.title | escape }} ({{ rv_product.handle }})"
+          >
+
+          <fieldset class="aao-reviews__field aao-reviews__rating-field">
+            <legend>Your rating</legend>
+            {%- comment -%}
+              Stars are listed 5 to 1 and laid out row-reverse, so CSS can fill the checked star
+              and every star before it with a plain sibling selector. No JavaScript involved.
+            {%- endcomment -%}
+            <div class="aao-reviews__rating-input">
+              {%- for i in (1..5) reversed -%}
+                <input
+                  type="radio"
+                  name="contact[Review rating]"
+                  id="aao-star-{{ i }}"
+                  value="{{ i }}"
+                  class="aao-reviews__star-input"
+                  {% if i == 5 %}checked required{% endif %}
+                >
+                <label for="aao-star-{{ i }}" title="{{ i }} out of 5">
+                  <span class="aao-reviews__sr">{{ i }} star{% unless i == 1 %}s{% endunless %}</span>
+                  <svg class="aao-star" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path fill="currentColor" d="M24 9.425c0 .212-.125.443-.375.693l-5.236 5.105 1.24 7.212c.01.067.015.164.015.289a.85.85 0 0 1-.151.511.51.51 0 0 1-.44.21c-.183 0-.375-.058-.577-.174L12 19.869l-6.476 3.404c-.212.115-.404.173-.577.173-.202 0-.353-.07-.454-.21a.85.85 0 0 1-.152-.511c0-.058.01-.154.03-.289l1.24-7.211-5.25-5.106C.12 9.858 0 9.628 0 9.425c0-.355.27-.577.808-.663l7.24-1.053 3.245-6.562c.183-.395.418-.592.707-.592s.524.197.707.592l3.245 6.562 7.24 1.053c.539.086.808.308.808.663Z"/>
+                  </svg>
+                </label>
+              {%- endfor -%}
+            </div>
+          </fieldset>
+
+          <label class="aao-reviews__field" for="aao-review-name">
+            <span>Name</span>
+            <input
+              type="text"
+              id="aao-review-name"
+              name="contact[name]"
+              autocomplete="name"
+              maxlength="80"
+              value="{{ form.name }}"
+              required
+            >
+          </label>
+
+          <label class="aao-reviews__field" for="aao-review-email">
+            <span>Email (not published)</span>
+            <input
+              type="email"
+              id="aao-review-email"
+              name="contact[email]"
+              autocomplete="email"
+              spellcheck="false"
+              autocapitalize="off"
+              maxlength="160"
+              value="{{ form.email }}"
+              required
+            >
+          </label>
+
+          <label class="aao-reviews__field" for="aao-review-body">
+            <span>Your review</span>
+            <textarea id="aao-review-body" name="contact[body]" maxlength="2000" required>{{ form.body }}</textarea>
+          </label>
+
+          <div class="aao-reviews__form-actions">
+            <button type="submit" class="aao-reviews__btn">Submit review</button>
+            <p class="aao-reviews__note">
+              Reviews are checked before they are published. We never publish your email address.
+            </p>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endform -%}
   </div>
 {%- endif -%}

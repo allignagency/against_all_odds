@@ -21,9 +21,10 @@ many products is stored once:
 
 All of these are produced from the harvest by docs/reviews/split_reviews.py.
 
-Endpoints live on the agency VPS:
-  submitUrl    POST {handle, rating, author, email, text} -> {"ok": true}
-  approvedUrl  GET  the same products-map schema as the harvest, merged over the baked data
+There is no backend and no third-party service. New reviews are submitted through Shopify's own
+contact form (server-rendered in snippets/aao-reviews-widget.liquid) and arrive as email at the
+store's contact address; approved ones are added to the assets above and deployed. The baked
+assets are the single source of truth for what renders.
 
 Set `inline_summary: true` when rendering to embed the summary in the page instead of fetching it.
 That removes a request on every page at the cost of ~16KB of HTML sitewide, so it is off by
@@ -46,9 +47,6 @@ default. See docs/reviews/README.md.
 {%- liquid
   assign genuine_only = false
 
-  assign submit_url = 'https://allign.agency/aao/reviews/submit'
-  assign approved_url = 'https://allign.agency/aao/reviews/approved.json'
-
   comment
     The theme's asset directory, e.g. https://cdn.shopify.com/s/files/1/.../assets/ - the engine
     builds the review-list and photo URLs from it rather than hard-coding a CDN host.
@@ -62,8 +60,6 @@ default. See docs/reviews/README.md.
   window.AAO_REVIEWS_CONFIG = {
     assetBase: {{ asset_base | json }},
     summaryUrl: {{ 'aao-reviews-summary.json' | asset_url | json }},
-    submitUrl: {{ submit_url | json }},
-    approvedUrl: {{ approved_url | json }},
     genuineOnly: {{ genuine_only | json }}
   };
 </script>
