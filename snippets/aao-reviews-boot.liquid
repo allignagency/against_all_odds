@@ -74,6 +74,11 @@ default. See docs/reviews/README.md.
     only case that needs computing, and it is computed HERE - once per page for the whole page,
     never once per card - then published as window.AAO_REVIEW_STATS for the badges to paint.
 
+    NOTE THE CAP: a fallback compute can only see the 50 entries Liquid will resolve from a
+    `list.metaobject_reference`, so for a group larger than that it is an undercount. That is one
+    more reason the derived caches are the supported path and a blank cache is a defect to fix, not
+    a mode to run in. See docs/reviews/README.md, "The 50-reference cap".
+
     The walk below reads the ~9 group metaobjects (two scalar fields each, no list resolution) and
     only resolves a group's review list when that group's cache is missing. With the migration's
     caches in place, no list is ever resolved and no <script> is emitted.

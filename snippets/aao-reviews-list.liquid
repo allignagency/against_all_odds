@@ -20,9 +20,15 @@ storefront, so the client reorders reviews by dragging. Nothing here sorts: Liqu
 array of metaobjects by a nested field value reliably, and a drag handle is a better editing
 experience than an invisible sort rule. The migration writes each list newest-first.
 
+LIQUID RESOLVES AT MOST 50 ENTRIES of a list.metaobject_reference. The largest group holds 124, so
+the cards are the first 50 and every total (count, average, histogram, JSON-LD reviewCount) comes
+from the group's derived caches instead. See the comment block in the Liquid below, and the
+"The 50-reference cap" section of docs/reviews/README.md.
+
 What the old JS did at runtime and Liquid now does at render time:
 
-  * average, review count and the 1-5 histogram  (one pass over the list)
+  * average, review count and the 1-5 histogram  (from the group caches, or one pass over the
+    resolved list for own-review products and uncached groups)
   * the first PAGE_SIZE cards visible, the rest server-rendered with `hidden` and revealed by
     assets/aao-reviews-mo.js on "Load more reviews"
   * Product / AggregateRating / Review JSON-LD, now in the HTML source instead of injected after
@@ -55,16 +61,31 @@ Supported variables
   endif
 
   comment
-    Pass 1: count, sum and histogram over the visible reviews. Liquid has no mutable arrays, so the
-    five buckets are five variables.
+    ------------------------------------------------------------------------------------------------
+    TWO SETS OF NUMBERS, AND WHY
+    ------------------------------------------------------------------------------------------------
+    Liquid resolves at most 50 entries of a `list.metaobject_reference`. The store-wide group holds
+    124 reviews, so `rv_list` is the first 50 of them and NOTHING derived from it can be trusted as
+    a total: counted from the resolved 50, the store group's histogram reads 48/2/0/0/0 instead of
+    the true 105/14/4/0/1.
+
+    So:
+      rv_resolved_*  what actually resolved. Drives the CARDS and their paging, nothing else.
+      rv_count / rv_avg / rv_b1..rv_b5
+                     the authoritative figures, taken from the group's derived caches
+                     (rating_count, rating_avg, count_1..count_5) when they are present.
+
+    Own-review products have at most 3 reviews, well inside the cap, so they have no caches and
+    compute inline. A group with blank caches also falls back to computing - correct only up to 50
+    reviews, which is the price of not maintaining them. See docs/reviews/README.md.
   endcomment
-  assign rv_count = 0
+  assign rv_resolved_count = 0
   assign rv_sum = 0
-  assign rv_b1 = 0
-  assign rv_b2 = 0
-  assign rv_b3 = 0
-  assign rv_b4 = 0
-  assign rv_b5 = 0
+  assign rv_r1 = 0
+  assign rv_r2 = 0
+  assign rv_r3 = 0
+  assign rv_r4 = 0
+  assign rv_r5 = 0
 
   if rv_list.size > 0
     for rv in rv_list
@@ -72,26 +93,51 @@ Supported variables
         continue
       endif
       assign rv_r = rv.rating.value | default: 0 | round
-      assign rv_count = rv_count | plus: 1
+      assign rv_resolved_count = rv_resolved_count | plus: 1
       assign rv_sum = rv_sum | plus: rv_r
       case rv_r
         when 5
-          assign rv_b5 = rv_b5 | plus: 1
+          assign rv_r5 = rv_r5 | plus: 1
         when 4
-          assign rv_b4 = rv_b4 | plus: 1
+          assign rv_r4 = rv_r4 | plus: 1
         when 3
-          assign rv_b3 = rv_b3 | plus: 1
+          assign rv_r3 = rv_r3 | plus: 1
         when 2
-          assign rv_b2 = rv_b2 | plus: 1
+          assign rv_r2 = rv_r2 | plus: 1
         when 1
-          assign rv_b1 = rv_b1 | plus: 1
+          assign rv_r1 = rv_r1 | plus: 1
       endcase
     endfor
   endif
 
-  assign rv_avg = 0
-  if rv_count > 0
-    assign rv_avg = rv_sum | times: 10.0 | divided_by: rv_count | round | divided_by: 10.0
+  comment
+    The caches only apply when this product is showing a GROUP. `aao_own_reviews` wins outright and
+    is always small enough to count honestly.
+  endcomment
+  assign rv_cache_count = ''
+  if rv_own == blank and rv_group != blank
+    assign rv_cache_count = rv_group.rating_count.value
+  endif
+
+  if rv_cache_count != blank
+    assign rv_count = rv_cache_count
+    assign rv_avg = rv_group.rating_avg.value | default: 0
+    assign rv_b5 = rv_group.count_5.value | default: 0
+    assign rv_b4 = rv_group.count_4.value | default: 0
+    assign rv_b3 = rv_group.count_3.value | default: 0
+    assign rv_b2 = rv_group.count_2.value | default: 0
+    assign rv_b1 = rv_group.count_1.value | default: 0
+  else
+    assign rv_count = rv_resolved_count
+    assign rv_b5 = rv_r5
+    assign rv_b4 = rv_r4
+    assign rv_b3 = rv_r3
+    assign rv_b2 = rv_r2
+    assign rv_b1 = rv_r1
+    assign rv_avg = 0
+    if rv_count > 0
+      assign rv_avg = rv_sum | times: 10.0 | divided_by: rv_count | round | divided_by: 10.0
+    endif
   endif
 
   comment
@@ -107,8 +153,9 @@ Supported variables
   data-aao-mode="metaobjects"
   data-count="{{ rv_count }}"
   data-rating="{{ rv_avg }}"
+  data-resolved="{{ rv_resolved_count }}"
 >
-  {%- if rv_count == 0 -%}
+  {%- if rv_count == 0 and rv_resolved_count == 0 -%}
     <div class="aao-reviews__header">
       <div class="aao-reviews__summary">
         <span class="aao-reviews__summary-text"><span>Be the first to review this product</span></span>
@@ -273,7 +320,12 @@ Supported variables
       <p class="aao-reviews__empty" data-aao-empty hidden>No reviews with that rating yet.</p>
     </div>
 
-    <div class="aao-reviews__more" {% if rv_count <= rv_page_size %}hidden{% endif %}>
+    {%- comment -%}
+      Driven by the number of cards actually rendered, never by rv_count: with a 124-review group
+      only 50 cards exist, and a button offering a 51st that can never arrive would be a dead
+      control. assets/aao-reviews-mo.js hides it again at the end of the resolved set.
+    {%- endcomment -%}
+    <div class="aao-reviews__more" {% if rv_resolved_count <= rv_page_size %}hidden{% endif %}>
       <button type="button">Load more reviews</button>
     </div>
 

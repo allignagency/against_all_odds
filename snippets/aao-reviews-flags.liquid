@@ -8,8 +8,9 @@ AAO REVIEWS - DATA SOURCE SWITCH
   false -> the baked JSON theme assets + assets/aao-reviews.js  (the original system, still live)
   true  -> Shopify metaobjects, server-rendered by Liquid       (the new system)
 
-Flip `use_metaobjects` to true ONCE the metaobject definitions and entries exist and the product
-metafields are populated. See docs/reviews/README.md and the migration spec.
+LIVE VALUE: true. The migration ran and metaobject mode is what the storefront serves. The JSON
+assets and assets/aao-reviews.js are kept only so this can be flipped back in an emergency; do not
+let a deploy from a stale branch push `false` back to the live theme.
 
 Why a snippet and not an `assign` in aao-reviews-boot.liquid: `{% render %}` gives a snippet an
 isolated scope, so a variable set in the boot snippet is invisible to the widget and the badge.

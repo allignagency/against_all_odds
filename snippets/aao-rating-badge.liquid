@@ -36,7 +36,12 @@ and summing them once per card would be 40 x 124 = ~5,000 metaobject loads per p
     window.AAO_REVIEW_STATS for assets/aao-reviews-mo.js to paint. Normal cost of that path: zero,
     because normally no group is missing its cache.
 
-Net effect: correctness never depends on the cache being present, and the common path never loops.
+Net effect: the common path never loops.
+
+And for any group over 50 reviews the cache is not an optimisation, it is the only correct source:
+Liquid resolves at most 50 entries of a `list.metaobject_reference`, so the fallback compute
+undercounts a 124-review group (it would read 50). Keep `rating_count` / `rating_avg` populated.
+See docs/reviews/README.md, "The 50-reference cap".
 
 ********************************************
 Supported variables
