@@ -4,35 +4,72 @@ AAO REVIEWS - page bootstrap
 ----------------------------------------------------------------------------------------------------------------------
 
 Rendered once from layout/theme.liquid. Emits the widget stylesheet, the engine and the runtime
-config. The engine bails out immediately (and never fetches the review data) on pages that hold
-neither a `.aao-reviews` widget nor a `.aao-rating` badge, so this is cheap sitewide.
+config. The engine bails out immediately (and fetches nothing) on pages that hold neither a
+`.aao-reviews` widget nor a `.aao-rating` badge, so this is cheap sitewide.
+
+Data is split across assets so no page downloads the whole corpus, and so a review set shared by
+many products is stored once:
+
+  aao-reviews-summary.json     one row per handle (~36KB). Fetched once per page that renders a
+                               rating badge or the widget. Its `src` names the asset below that
+                               holds each handle's review list.
+  aao-reviews-store.json       the store-wide showcase set Loox served on products with no reviews
+                               of their own.
+  aao-reviews-set-<hash>.json  the other shared review sets.
+  aao-reviews-p-<handle>.json  products that have a review set of their own.
+  aao-rev-<name>.jpg           review photos, re-hosted off the Loox CDN.
+
+All of these are produced from the harvest by docs/reviews/split_reviews.py.
 
 Endpoints live on the agency VPS:
   submitUrl    POST {handle, rating, author, email, text} -> {"ok": true}
-  approvedUrl  GET  the same products-map schema as assets/aao-reviews.json, merged over it
+  approvedUrl  GET  the same products-map schema as the harvest, merged over the baked data
 
-Set `inline_data: true` when rendering to embed the whole baked dataset in the page instead of
-letting the browser fetch it. That gives a server-rendered, crawlable copy of every review at the
-cost of the full JSON on every page, so it is off by default. See docs/reviews/README.md.
+Set `inline_summary: true` when rendering to embed the summary in the page instead of fetching it.
+That removes a request on every page at the cost of ~16KB of HTML sitewide, so it is off by
+default. See docs/reviews/README.md.
+{%- endcomment -%}
+
+{%- comment -%}
+  PARITY vs HONESTY - the one switch worth knowing about.
+
+  Loox padded this catalogue: of 262 products showing reviews, only 11 have a review actually
+  written about them. The other 251 display a shared "showcase" feed Loox injected. Everything
+  here defaults to reproducing that exactly, so cancelling the app changes nothing a customer can
+  see.
+
+  Set genuine_only below to true and every product shows only its own reviews instead. On today's
+  data that means 11 products with reviews and 251 showing "Be the first to review this product".
+  It is a business decision, not a technical one. See docs/reviews/README.md.
 {%- endcomment -%}
 
 {%- liquid
+  assign genuine_only = false
+
   assign submit_url = 'https://allign.agency/aao/reviews/submit'
   assign approved_url = 'https://allign.agency/aao/reviews/approved.json'
+
+  comment
+    The theme's asset directory, e.g. https://cdn.shopify.com/s/files/1/.../assets/ - the engine
+    builds the review-list and photo URLs from it rather than hard-coding a CDN host.
+  endcomment
+  assign asset_base = 'aao-reviews.css' | asset_url | split: 'aao-reviews.css' | first
 -%}
 
 {{ 'aao-reviews.css' | asset_url | stylesheet_tag }}
 
 <script>
   window.AAO_REVIEWS_CONFIG = {
-    assetUrl: {{ 'aao-reviews.json' | asset_url | json }},
+    assetBase: {{ asset_base | json }},
+    summaryUrl: {{ 'aao-reviews-summary.json' | asset_url | json }},
     submitUrl: {{ submit_url | json }},
-    approvedUrl: {{ approved_url | json }}
+    approvedUrl: {{ approved_url | json }},
+    genuineOnly: {{ genuine_only | json }}
   };
 </script>
 
-{%- if inline_data -%}
-  <script type="application/json" id="aao-reviews-data">{{ 'aao-reviews.json' | inline_asset_content }}</script>
+{%- if inline_summary -%}
+  <script type="application/json" id="aao-reviews-summary-data">{{ 'aao-reviews-summary.json' | inline_asset_content }}</script>
 {%- endif -%}
 
 <script src="{{ 'aao-reviews.js' | asset_url }}" defer></script>

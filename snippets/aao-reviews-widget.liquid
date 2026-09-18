@@ -11,9 +11,13 @@ histogram with grey progress bars, white cards with a 2px radius and a 0 0 3px s
 reviewer name + verified badge, star row, review body, photo thumbnails, muted date, and a
 "Write a review" button on the right of the header.
 
-The card list itself is built client-side from assets/aao-reviews.json (Liquid cannot parse a JSON
-asset), merged with the approved-reviews overlay from the VPS. The engine also injects the
-AggregateRating / Review JSON-LD and a visually hidden text copy of the reviews for crawlers.
+Data: the shared summary names the asset holding this product's review list (its own file, or one
+of the shared sets - see snippets/aao-reviews-boot.liquid), so the widget fetches the summary plus
+exactly one review asset. The engine merges the approved-reviews overlay from the VPS on top, then
+injects the AggregateRating / Review JSON-LD and a visually hidden text copy for crawlers.
+
+Which asset a product uses is decided by data, not by Liquid, so this snippet deliberately does
+not try to name it.
 
 ********************************************
 Supported variables
