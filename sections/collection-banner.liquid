@@ -63,6 +63,24 @@
       --content-over-media-overlay: {{ section.settings.overlay_color.rgb }} / {{ section.settings.overlay_opacity | divided_by: 100.0 }};
       --content-over-media-content-max-width: var(--container-{{ section.settings.content_width }}-max-width);
     }
+
+    {%- comment -%}
+      Legibility scrim. The banner overlay is a merchant setting and several collections run it at
+      0%, which leaves the title and description sitting on busy photography with nothing behind
+      them. This is scoped to the text block (which the theme centres in the banner) rather than to
+      the whole image, so the photography is untouched and the copy stays readable on any crop. The
+      gradient is neutral black to keep the monochrome look.
+    {%- endcomment -%}
+    #shopify-section-{{ section.id }} .content-over-media > .prose {
+      padding-block: 2rem;
+      padding-inline: 1.75rem;
+      background-image: radial-gradient(
+        ellipse 125% 110% at 50% 50%,
+        rgb(0 0 0 / 0.55) 0%,
+        rgb(0 0 0 / 0.42) 45%,
+        rgb(0 0 0 / 0) 78%
+      );
+    }
   </style>
 
   <collection-banner {% if section.settings.reveal %}reveal-on-scroll="true"{% endif %} class="collection-banner color-scheme color-scheme--{{ section.settings.color_scheme.id }}" {% if section.settings.allow_transparent_header %}allow-transparent-header{% endif %}>

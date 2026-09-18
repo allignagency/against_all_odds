@@ -204,7 +204,7 @@
         "richtext_JwWeAA": {
           "type": "richtext",
           "settings": {
-            "content": "<p><strong>AGAINST ALL ODDS IS A MINDSET</strong></p><p><strong>.</strong>Built for those shaped by where they started, but never defined by it.<br/>For the fighters, the dreamers and everyone still becoming.</p>"
+            "content": "<p><strong>AGAINST ALL ODDS IS A MINDSET</strong></p><p>Built for those shaped by where they started, but never defined by it.<br/>For the fighters, the dreamers and everyone still becoming.</p>"
           }
         }
       },

@@ -69,6 +69,21 @@
     {{ content_for_header }}
 
     {{- 'theme.css' | asset_url | stylesheet_tag: preload: true -}}
+
+    {%- comment -%}
+      Clearpay is a GBP-only product, but the storefront presents EUR (and other currencies) to
+      European visitors, where the app block still prints "4 interest-free payments of £X". The
+      app owns its own markup, so the block is skipped server side in product-info.liquid and this
+      rule is the safety net for any other placement of the same app block.
+    {%- endcomment -%}
+    {%- unless cart.currency.iso_code == 'GBP' -%}
+      <style>
+        [data-block-id*='clearpay'],
+        [id*='clearpay_on_site_messaging'] {
+          display: none !important;
+        }
+      </style>
+    {%- endunless -%}
   </head>
 
   {% liquid

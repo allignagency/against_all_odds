@@ -74,7 +74,7 @@ previously installed on the store:
 
         {%- if section.settings.rewards_tier_label != blank -%}
           <span class="aao-rewards__badge" title="{{ section.settings.rewards_tier_label | escape }}">
-            {%- render 'icon' with 'picto-delivery-truck', width: 15 -%}
+            {%- render 'icon' with 'picto-delivery-truck', width: 14 -%}
           </span>
         {%- endif -%}
       </div>
@@ -345,13 +345,25 @@ previously installed on the store:
     display: grid;
     place-items: center;
     flex: 0 0 auto;
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     border-radius: 100%;
     color: #fff;
     background-color: #4d4949;
     opacity: 0.45;
     transition: opacity 0.2s ease;
+  }
+
+  /* The badge is a fixed circle, so the truck needs an explicit square box. The theme's generic
+     .icon rule only sets `height: auto`, which leaves the rendered size at the mercy of whatever
+     width any other stylesheet (theme or app) puts on the svg: a non-uniform width/height squashes
+     the truck and spills it out of the circle. These selectors outrank the generic .icon rule. */
+  .aao-rewards__badge > .icon,
+  .aao-rewards__badge svg {
+    display: block;
+    flex: none;
+    width: 14px;
+    height: 14px;
   }
 
   .aao-rewards[data-complete='true'] .aao-rewards__badge {
@@ -441,6 +453,30 @@ previously installed on the store:
   .cart-drawer__footer .button-group .button {
     padding-block: 0.85rem;
     font-size: var(--text-base);
+  }
+
+  /* The theme's "button transition" feature inverts a solid button while it is hovered: the solid
+     gradient layer collapses to zero width and the text/border take the button background colour,
+     which reads as an outline button. Every time the drawer re-renders over AJAX (quick-adding a
+     "Perfect match" upsell removes that card and shortens the drawer) the footer slides up under a
+     stationary cursor, so the freshly inserted checkout button paints straight into that inverted
+     state and the primary CTA looks unstyled until the pointer moves.
+
+     The markup is identical on every render path (`button.button.w-full[name="checkout"]`), so the
+     fix is to pin the fill by stable structural selector for every state instead of relying on a
+     class modifier. Hover still gives feedback, via opacity rather than by dropping the fill. */
+  .cart-drawer__footer .button-group button[name='checkout'],
+  .cart-drawer__footer .button-group button[name='checkout']:hover,
+  .cart-drawer__footer .button-group button[name='checkout']:focus-visible {
+    color: rgb(var(--button-text-color));
+    border-color: rgb(var(--button-background));
+    background-image: linear-gradient(rgb(var(--button-background)), rgb(var(--button-background)));
+    background-size: 101% 101%;
+    background-position: center;
+  }
+
+  .cart-drawer__footer .button-group button[name='checkout']:not([disabled]):hover {
+    opacity: 0.85;
   }
 </style>
 

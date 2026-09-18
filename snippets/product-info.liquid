@@ -50,6 +50,17 @@ Supported variables
           endunless
         endif
 
+        # Clearpay only ever quotes in GBP. When the storefront presents another currency the app
+        # block contradicts the price shown right above it, so it is dropped entirely rather than
+        # rendered and hidden. theme.liquid carries a CSS safety net for other placements.
+        if block.type == '@app'
+          assign aao_app_block_id = block.id | downcase
+
+          if aao_app_block_id contains 'clearpay' and cart.currency.iso_code != 'GBP'
+            continue
+          endif
+        endif
+
         assign next_block_index = forloop.index0 | plus: 1
         assign next_block = filtered_blocks[next_block_index]
 
