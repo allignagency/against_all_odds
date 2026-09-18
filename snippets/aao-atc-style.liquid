@@ -113,9 +113,18 @@ Supported variables
     {%- if border_radius >= 0 %}
     border-radius: {{ border_radius }}px !important;
     {%- endif %}
+    {%- comment -%}
+      Keep the button the same size as the theme's default add-to-cart button. The Section Store app
+      block squashed it (its own small font-size/padding defaults applied whether or not the merchant
+      had set any), which is why the collection-fight-week PDPs render a small button. Prestige's
+      `.button` base rule is `padding: .65rem 1.75rem` with `font: var(--button-font)`, so that is the
+      floor here: the merchant's padding_vertical only ever overrides the vertical half, and the
+      horizontal padding and line-height always match the theme.
+    {%- endcomment -%}
     {%- if padding_vertical > 0 %}
-    padding-top: {{ padding_vertical }}px !important;
-    padding-bottom: {{ padding_vertical }}px !important;
+    padding: {{ padding_vertical }}px 1.75rem !important;
+    {%- else %}
+    padding: 0.65rem 1.75rem !important;
     {%- endif %}
     display: inline-flex !important;
     align-items: center !important;

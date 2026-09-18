@@ -1,0 +1,290 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "show_title": true,
+        "page_width": "xs"
+      }
+    },
+    "slideshow_XQKjNn": {
+      "type": "slideshow",
+      "settings": {
+        "allow_transparent_header": true,
+        "show_next_section_button": true,
+        "media_size": "lg",
+        "show_initial_transition": false,
+        "autoplay": true,
+        "autoplay_pause_on_video": true,
+        "cycle_speed": 5,
+        "background": "#000000",
+        "controls_color": "#ffffff"
+      }
+    },
+    "rich_text_i4peLb": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_6xiQgt": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "text": "Subheading"
+          }
+        },
+        "richtext_mzL7rk": {
+          "type": "richtext",
+          "settings": {
+            "content": "{{ page.content }}"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_6xiQgt",
+        "richtext_mzL7rk"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "featured_collections_rTkidr": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection_gCtaVA": {
+          "type": "collection",
+          "settings": {
+            "collection": "kids-from",
+            "products_count": 8,
+            "title": "",
+            "link_url": "shopify://collections/kids-from",
+            "link_text": "View all"
+          }
+        }
+      },
+      "block_order": [
+        "collection_gCtaVA"
+      ],
+      "name": "t:sections.featured_collections.presets.featured_collections.name",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "hide_product_information": false,
+        "stack_products": false,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": ""
+      }
+    },
+    "image_with_text_YeF9TT": {
+      "type": "image-with-text",
+      "blocks": {
+        "subheading_8mjPXQ": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "text": "Subheading"
+          }
+        },
+        "heading_PxiCYG": {
+          "type": "heading",
+          "settings": {
+            "text": "OBJECTIVE",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_4fhpfN": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_8mjPXQ",
+        "heading_PxiCYG",
+        "richtext_4fhpfN"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "reveal_on_scroll": true,
+        "image_position": "start",
+        "content_width": "sm",
+        "remove_vertical_spacing": true
+      }
+    },
+    "rich_text_w3K6jg": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_UALKgr": {
+          "type": "subheading",
+          "settings": {
+            "text": "BY AGAINSTALLODDS"
+          }
+        },
+        "heading_e6jcFq": {
+          "type": "heading",
+          "settings": {
+            "text": "<strong>COUNCIL KIDS PRESENTSKIDS FROM COV PROJECT 001 / COVENTRY</strong>",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_yP8WMF": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p><strong>THE STORY</strong><br/><br/>It was brought to our attention that a boxing club in Coventry needed help finding a new home.<br/><br/>Coventry is close to the roots of Against All Odds. Boxing is close to the heart of the brand.<br/><br/>So when we heard what was happening with Standard Triumph Recreation Club, it felt like something we couldn’t just scroll past.<br/><br/>A few people had already started pushing the story and bringing attention to the club. They got the ball rolling. We’ve now <br/>stepped in to add what we can, the brand, the platform, the designs, and the community around Against All Odds.<br/><br/>The aim is simple: raise money, raise awareness, and help give the club the best possible chance of being rehomed.<br/><br/>This project is built around two T-shirts.<br/><br/><strong>KIDS FROM COV</strong> is for the city. For the people from Coventry.<br/>For the ones who know what it means to come from there.<br/><br/><strong>COUNCIL KIDS</strong> is for everyone who connects with the message.<br/><br/>You don’t have to be from Coventry to support the project. You just have to understand why places like this matter.<br/><br/>Because boxing clubs are not just buildings.<br/>They are places where kids find discipline, confidence, routine, friendship and direction. They are places that keep <br/>people grounded. Places that give young people somewhere to go, someone to believe in them, and something to belong to.<br/><br/>And too often, these are the places that get forgotten.<br/><br/>Where councils, systems and people in power have looked the other way, Against All Odds is choosing not to.<br/><br/>We’re not pretending we can fix everything. But we can do something.<br/><br/>And this is your chance to do something too.<br/><br/>By supporting this drop, you are helping raise funds towards rehoming the club. You are supporting a city, <br/>a boxing community, a local club, and the young people who still need places like this to exist.<br/><br/>People talk about wanting to help communities. This is a real way to do it.<br/><br/>Buy the tee. Share the story. Back the project. Be part of something that actually moves.<br/><br/><strong>For the kids.<br/>For the clubs.<br/>For the fighters.<br/>For the community.<br/><br/>Against All Odds.</strong></p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_UALKgr",
+        "heading_e6jcFq",
+        "richtext_yP8WMF"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "image_with_text_overlay_wricWp": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_KBahhp": {
+          "type": "heading",
+          "settings": {
+            "text": "Image with text overlay",
+            "heading_tag": "h4"
+          }
+        }
+      },
+      "block_order": [
+        "heading_KBahhp"
+      ],
+      "disabled": true,
+      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
+      "settings": {
+        "color_scheme": "",
+        "image_size": "auto",
+        "image": "shopify://shop_images/STORY1.webp",
+        "mobile_image": "shopify://shop_images/STORY_c5c01bf3-28f6-40e4-a543-a1eb5fea0be5.webp",
+        "allow_transparent_header": false,
+        "reveal_on_scroll": true,
+        "remove_vertical_spacing": true,
+        "content_width": "md",
+        "mobile_text_position": "place-self-center text-center",
+        "desktop_text_position": "sm:place-self-center sm:text-center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "image_with_text_block_jJkAVF": {
+      "type": "image-with-text-block",
+      "blocks": {
+        "subheading_FMWGYK": {
+          "type": "subheading",
+          "settings": {
+            "text": "Image with text block"
+          }
+        },
+        "richtext_K4yXqP": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Add your own custom content to give more information about your store, availability details...</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_FMWGYK",
+        "richtext_K4yXqP"
+      ],
+      "disabled": true,
+      "name": "t:sections.image_with_text_block.presets.image_with_text_block.name",
+      "settings": {
+        "color_scheme": "",
+        "image_size": "lg",
+        "content_width": "sm",
+        "enable_parallax": true,
+        "remove_vertical_spacing": true
+      }
+    },
+    "slideshow_QkM44h": {
+      "type": "slideshow",
+      "blocks": {
+        "image_hARUpn": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_16_2026_at_09_24_28_PM.png",
+            "mobile_image": "shopify://shop_images/ChatGPT_Image_Jul_16_2026_at_09_12_29_PM_9d0e7e21-aa27-4034-8f3f-8a0810150401.png",
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(NaN, NaN, NaN, 0), rgba(4, 4, 4, 0.65) 100%)"
+          }
+        }
+      },
+      "block_order": [
+        "image_hARUpn"
+      ],
+      "name": "t:sections.slideshow.presets.slideshow.name",
+      "settings": {
+        "allow_transparent_header": true,
+        "show_next_section_button": true,
+        "media_size": "auto",
+        "show_initial_transition": false,
+        "autoplay": true,
+        "autoplay_pause_on_video": true,
+        "cycle_speed": 5,
+        "background": "#000000",
+        "controls_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "slideshow_XQKjNn",
+    "rich_text_i4peLb",
+    "featured_collections_rTkidr",
+    "image_with_text_YeF9TT",
+    "rich_text_w3K6jg",
+    "image_with_text_overlay_wricWp",
+    "image_with_text_block_jJkAVF",
+    "slideshow_QkM44h"
+  ]
+}

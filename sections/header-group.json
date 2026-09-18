@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "Header group",
@@ -8,7 +17,7 @@
         "message-1": {
           "type": "message",
           "settings": {
-            "text": "FREE SHIPPING ON ORDERS OVER £100"
+            "text": "STILL CHASING - GET EARLY ACCESS"
           }
         }
       },
@@ -16,7 +25,7 @@
         "message-1"
       ],
       "settings": {
-        "color_scheme": "scheme-2",
+        "color_scheme": "scheme-3",
         "enable_sticky": true,
         "autoplay": true,
         "cycle_speed": 5,
@@ -29,6 +38,7 @@
       "blocks": {
         "mega_menu_G7Bd6k": {
           "type": "mega_menu",
+          "disabled": true,
           "settings": {
             "menu_item": "JNJNKJN",
             "images_position": "right",
@@ -38,8 +48,7 @@
             "image_2_heading": "",
             "image_2_text": "",
             "image_2_link": ""
-          },
-          "disabled": true
+          }
         }
       },
       "block_order": [
