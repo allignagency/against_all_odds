@@ -1,0 +1,63 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+AAO REVIEWS (section)
+----------------------------------------------------------------------------------------------------------------------
+
+Drops the native reviews widget into a product template at the position the Loox
+"loox-dynamic-section" app block used to occupy. See snippets/aao-reviews-widget.liquid.
+{%- endcomment -%}
+
+<div class="color-scheme color-scheme--{{ section.settings.color_scheme.id }} section-spacing{% if section.settings.bordered %} bordered-section{% endif %}">
+  <div class="container">
+    {%- render 'aao-reviews-widget',
+      product: product,
+      heading: section.settings.heading,
+      max_width: section.settings.max_width
+    -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Reviews (AAO)",
+  "class": "shopify-section--aao-reviews",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Customer Reviews"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "min": 600,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 1080
+    },
+    {
+      "type": "checkbox",
+      "id": "bordered",
+      "label": "Show section border",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:global.colors.scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews (AAO)"
+    }
+  ]
+}
+{% endschema %}

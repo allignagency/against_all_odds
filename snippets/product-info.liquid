@@ -572,6 +572,26 @@ Supported variables
 
           {%- when 'aao-atc-style' -%}
             {%- render 'aao-atc-style', block: block, product_form_id: product_form_id -%}
+
+          {%- comment -%}
+            AAO native reviews, replacing the Loox app blocks.
+            "aao-rating"  = the small stars + count under the title (was "loox-rating").
+            "aao-reviews" = the full reviews widget (was "loox-dynamic-section").
+          {%- endcomment -%}
+          {%- when 'aao-rating' -%}
+            {%- render 'aao-rating-badge',
+              product: product,
+              link_to_reviews: block.settings.link_to_reviews,
+              hide_count: block.settings.hide_count,
+              show_empty: block.settings.show_empty
+            -%}
+
+          {%- when 'aao-reviews' -%}
+            {%- render 'aao-reviews-widget',
+              product: product,
+              heading: block.settings.heading,
+              max_width: block.settings.max_width
+            -%}
         {%- endcase -%}
       {%- endcapture -%}
       

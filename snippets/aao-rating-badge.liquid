@@ -1,0 +1,41 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+AAO RATING BADGE
+----------------------------------------------------------------------------------------------------------------------
+
+Native replacement for the Loox "loox-rating" widget (the small stars + review count under a
+product title on the PDP, and under the price on every collection card).
+
+Product cards render dozens of times per page, so this snippet server-renders nothing but an empty
+span carrying the handle. assets/aao-reviews.js parses the review dataset ONCE per page and
+hydrates every badge from that single parsed object.
+
+********************************************
+Supported variables
+********************************************
+
+* product: the product whose rating to show. Required.
+* link_to_reviews: when true, wrap the badge in an anchor to #aao-reviews (PDP use).
+* hide_count: when true, show the stars only.
+* show_empty: when true, keep the element in the layout for products with no reviews.
+* style: optional extra inline CSS, e.g. 'margin-top:4px;'.
+{%- endcomment -%}
+
+{%- if product != blank -%}
+  {%- capture aao_badge -%}
+    <span
+      class="aao-rating"
+      data-handle="{{ product.handle }}"
+      data-product-id="{{ product.id }}"
+      {% if hide_count %}data-hide-count="true"{% endif %}
+      {% if show_empty %}data-show-empty="true"{% endif %}
+      {% if style != blank %}style="{{ style }}"{% endif %}
+    ></span>
+  {%- endcapture -%}
+
+  {%- if link_to_reviews -%}
+    <a href="#aao-reviews" class="aao-rating-link" aria-label="Scroll to reviews">{{ aao_badge }}</a>
+  {%- else -%}
+    {{ aao_badge }}
+  {%- endif -%}
+{%- endif -%}

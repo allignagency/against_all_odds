@@ -78,20 +78,12 @@
             "heading_tag": "h3"
           }
         },
-        "loox_reviews_loox_rating_Jph4X9": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-rating/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "disabled": false,
+        "aao_rating": {
+          "type": "aao-rating",
           "settings": {
-            "contentSize": 14,
-            "pattern": "",
-            "hideText": false,
-            "alignment": "",
-            "layout": "",
-            "textColor": "",
-            "starColor": "",
-            "showAllReviews": false,
-            "looxOpenFloatingWidget": false,
-            "emptyRatingWidget": false
+            "link_to_reviews": true,
+            "hide_count": false,
+            "show_empty": false
           }
         },
         "price": {
@@ -379,7 +371,7 @@
         "accordion_7ziYbi",
         "accordion_kr4yep",
         "title",
-        "loox_reviews_loox_rating_Jph4X9",
+        "aao_rating",
         "price",
         "da6b0d65452c043b",
         "b215bd2b7603fc90",
@@ -498,30 +490,12 @@
       }
     },
     "173593565665a6d37f": {
-      "type": "apps",
-      "blocks": {
-        "loox_reviews_loox_dynamic_section_hh9UCM": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "settings": {
-            "reviews_to_display": "",
-            "default_tab": "automatic",
-            "only_photos": false,
-            "aggregated": false,
-            "limit": 25,
-            "hide_thumbnails": false,
-            "maxwidth": 1080,
-            "is_sample": false
-          }
-        }
-      },
-      "block_order": [
-        "loox_reviews_loox_dynamic_section_hh9UCM"
-      ],
+      "type": "aao-reviews",
       "settings": {
-        "color_scheme": "",
-        "separate_section_with_border": true,
-        "remove_vertical_spacing": false,
-        "remove_horizontal_spacing": false
+        "heading": "Customer Reviews",
+        "max_width": 1080,
+        "bordered": true,
+        "color_scheme": "scheme-1"
       }
     },
     "related-products": {

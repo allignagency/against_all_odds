@@ -1,0 +1,645 @@
+/* ---------------------------------------------------------------------------------------------
+   AAO NATIVE REVIEWS
+   ---------------------------------------------------------------------------------------------
+   Visual clone of the Loox reviews widget that this replaces.
+
+   Values below marked [loox] are transcribed verbatim from the live Loox widget iframe stylesheet
+   (https://loox.io/widget/v-OorfUjQM/reviews/<product_id>) captured 2026-09-18, so the swap is a
+   like-for-like replacement rather than a redesign.
+
+   The one deliberate change: Loox painted stars #EBBF20 (gold). AAO is a strict monochrome brand,
+   so --aao-rev-star defaults to near-black. Set it to #EBBF20 to get the exact Loox look back.
+   --------------------------------------------------------------------------------------------- */
+
+.aao-reviews {
+  --aao-rev-star: #111111;            /* [loox] was #EBBF20 */
+  --aao-rev-ink: #282828;             /* [loox] .summary colour */
+  --aao-rev-muted: #73777b;           /* [loox] .block.time / .item-reply */
+  --aao-rev-line: #e8e8e8;            /* [loox] .header-btn border */
+  --aao-rev-hairline: #dedede;        /* [loox] #header border-bottom */
+  --aao-rev-card: #ffffff;            /* [loox] #grid .grid-item background */
+  --aao-rev-card-hover: #f8f8f8;      /* [loox] #grid .grid-item:hover */
+  --aao-rev-track: rgba(0, 0, 0, 0.04); /* [loox] .loox-progress */
+  --aao-rev-bar: #7b7b7b;             /* [loox] .loox-progress-value */
+  --aao-rev-radius: 2px;              /* [loox] #grid .grid-item border-radius */
+
+  display: block;
+  margin: 0 auto;
+  max-width: 1080px;                  /* [loox] block setting maxwidth: 1080 */
+  color: var(--aao-rev-ink);
+  font-size: 14px;
+  line-height: 1.42857143;            /* [loox] body */
+  box-sizing: border-box;
+}
+
+.aao-reviews *,
+.aao-reviews *::before,
+.aao-reviews *::after {
+  box-sizing: border-box;
+}
+
+.aao-reviews button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  margin: 0;
+}
+
+/* --- stars ------------------------------------------------------------------------------------
+   [loox] two stacked <symbol>s (solid + outline) clipped by --lx-rating-percent. Same technique
+   here, same path data, so half stars render identically. */
+
+.aao-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;                           /* [loox] inline style on the star row */
+  line-height: 0;
+  color: var(--aao-rev-star);
+}
+
+.aao-star {
+  display: block;
+  width: 1em;
+  height: 1em;
+  flex: none;
+}
+
+.aao-star .aao-star__fill {
+  --aao-star-gap: calc(100% - var(--aao-star-pct, 0%));
+  clip-path: inset(0 var(--aao-star-gap, 0) 0 0);
+}
+
+.aao-star .aao-star__line {
+  clip-path: inset(0 0 0 var(--aao-star-pct, 0%));
+}
+
+/* --- header ----------------------------------------------------------------------------------- */
+
+.aao-reviews__header {
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px auto 7px;              /* [loox] #header */
+  padding: 0 7px 7px;                 /* [loox] #header */
+  border-bottom: solid 1px var(--aao-rev-hairline);
+  position: relative;
+}
+
+.aao-reviews__summary {
+  flex: 1;
+  display: flex;
+  min-width: 0;
+}
+
+.aao-reviews__summary-btn {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  overflow: hidden;
+  user-select: none;
+  padding: 0;
+}
+
+.aao-reviews__summary-stars {
+  margin-right: 10px;                 /* [loox] inline style */
+  font-size: 19px;                    /* [loox] #header .text-large */
+}
+
+.aao-reviews__summary-text {
+  display: inline-flex;
+  overflow: hidden;
+  font-size: 16px;                    /* [loox] .summary-text */
+  align-items: center;
+}
+
+.aao-reviews__summary-text > span {
+  margin-right: 8px;                  /* [loox] .summary-text span */
+  font-size: 16px;
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.aao-reviews__chevron {
+  align-self: center;
+  display: inline-flex;
+  line-height: 0;
+}
+
+.aao-reviews__chevron svg {
+  transition: transform 0.2s ease-in-out;
+}
+
+.aao-reviews__header[data-dist-open='true'] .aao-reviews__chevron svg {
+  transform: rotate(180deg);
+}
+
+.aao-reviews__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* [loox] .header-btn / .lx-btn / #header #write */
+.aao-reviews__btn {
+  font-size: 16px;
+  border: 1px solid var(--aao-rev-line);
+  border-radius: var(--aao-rev-radius);
+  height: 40px;
+  padding: 4px 14px;
+  cursor: pointer;
+  color: #000;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.aao-reviews__btn:hover,
+.aao-reviews__btn:focus {
+  background: var(--aao-rev-line);
+  color: #000;
+  outline: 0;
+}
+
+/* --- rating distribution ---------------------------------------------------------------------- */
+
+.aao-reviews__dist {
+  display: none;
+  width: 100%;
+  order: 3;
+  padding: 16px 4px 4px;
+}
+
+.aao-reviews__header[data-dist-open='true'] .aao-reviews__dist {
+  display: block;
+}
+
+.aao-reviews__dist-avg {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;                          /* [loox] inline style */
+  font-size: 32px;                    /* [loox] inline style */
+  margin-bottom: 8px;
+  color: var(--aao-rev-star);
+}
+
+.aao-reviews__dist-avg > span {
+  color: var(--aao-rev-ink);
+}
+
+.aao-reviews__dist table {
+  width: 100%;
+  border-spacing: 0 6px;              /* [loox] inline style */
+  border-collapse: separate;
+}
+
+.aao-reviews__dist-row {
+  cursor: pointer;
+  border-radius: 4px;                 /* [loox] .rating-dist-row */
+}
+
+.aao-reviews__dist-row[aria-disabled='true'] {
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .aao-reviews__dist-row:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+}
+
+.aao-reviews__dist-row[aria-pressed='true'] {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.aao-reviews__dist-row td:first-child {
+  padding-left: 4px;
+}
+
+.aao-reviews__dist-row td.aao-reviews__dist-bar {
+  padding: 6px 10px;
+  width: 100%;
+}
+
+.aao-reviews__dist-count {
+  padding-right: 4px;
+  text-align: left;
+  font-size: 14px;                    /* [loox] .reviews-num */
+  white-space: nowrap;
+}
+
+/* [loox] .loox-progress / .loox-progress-value */
+.aao-reviews__progress {
+  width: 100%;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--aao-rev-track);
+  overflow: hidden;
+}
+
+.aao-reviews__progress > span {
+  display: block;
+  background: var(--aao-rev-bar);
+  border-radius: 2px;
+  height: 10px;
+  animation: aao-rev-grow 0.6s ease forwards;
+  transform-origin: left center;
+}
+
+@keyframes aao-rev-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* --- grid -------------------------------------------------------------------------------------
+   [loox] #grid .grid-item-wrap is a float grid: 100% / 50% / 33.33% / 25% at 320 / 480 / 920 /
+   1150. Same breakpoints here, implemented with CSS grid so the cards equalise height. */
+
+.aao-reviews__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0 auto;
+  padding: 0 0 20px;                  /* [loox] #grid */
+}
+
+@media (min-width: 480px) {
+  .aao-reviews__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 920px) {
+  .aao-reviews__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1150px) {
+  .aao-reviews__grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.aao-review {
+  margin: 7px;                        /* [loox] .grid-item */
+  background: var(--aao-rev-card);
+  color: #000;
+  overflow: hidden;
+  border-radius: var(--aao-rev-radius);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2); /* [loox] #grid .grid-item */
+  display: flex;
+  flex-direction: column;
+  transition: background 0.2s ease-in-out;
+}
+
+.aao-review:hover {
+  background: var(--aao-rev-card-hover);
+}
+
+.aao-review__main {
+  padding: 16px;                      /* [loox] font-size-medium .main */
+  display: flex;
+  flex-direction: column;
+}
+
+.aao-review__title {
+  font-weight: bold;
+  font-size: 16px;                    /* [loox] .grid-item .title, medium */
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+
+.aao-review__verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px !important;         /* [loox] .grid-item .title span */
+  line-height: 16px !important;
+  font-weight: 400;
+  color: var(--aao-rev-muted);
+}
+
+.aao-review__verified svg {
+  display: block;
+  width: 14px !important;             /* [loox] .grid-item .title svg */
+  height: 14px !important;
+}
+
+.aao-review__stars {
+  padding: 12px 0 8px;                /* [loox] .grid-item .stars, medium */
+  line-height: 0;
+  font-size: 12px;                    /* [loox] star svg is 12px at medium */
+}
+
+.aao-review__time {
+  color: var(--aao-rev-muted);        /* [loox] .grid-item .block.time */
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16px;
+  padding: 4px 0 0;
+}
+
+.aao-review__text {
+  font-size: 16px;                    /* [loox] .main-text, medium */
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0;
+  white-space: pre-wrap;              /* [loox] .pre-wrap */
+  overflow-wrap: anywhere;
+}
+
+/* --- photos ----------------------------------------------------------------------------------- */
+
+.aao-review__photos {
+  display: flex;
+  gap: 8px;                           /* [loox] .item-img */
+  flex-wrap: wrap;
+  margin-top: 12px;                   /* [loox] .has-img .item-img margin-top */
+}
+
+.aao-review__photo {
+  position: relative;
+  display: block;
+  padding: 0;
+  cursor: zoom-in;                    /* [loox] .grid-item .item-img .action */
+  overflow: hidden;
+  border-radius: var(--aao-rev-radius);
+  flex: 0 0 auto;
+  width: 72px;
+  aspect-ratio: 1 / 1;
+  background: #f0f0f0;                /* [loox] .grid-item background-color */
+}
+
+.aao-review__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.01);             /* [loox] .image-aspect-ratio-wrapper img */
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.aao-review:hover .aao-review__photo img {
+  opacity: 0.9;                       /* [loox] .grid-item:hover .item-img img */
+}
+
+/* [loox] .item-img .multi-photo-badge */
+.aao-review__photo-more {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  border-radius: 90px;
+  opacity: 0.8;
+  background: #fff;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 4px;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* --- load more -------------------------------------------------------------------------------- */
+
+.aao-reviews__more {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+.aao-reviews__more[hidden] {
+  display: none;
+}
+
+.aao-reviews__more button {
+  border: 1px solid var(--aao-rev-line);
+  border-radius: var(--aao-rev-radius); /* [loox] .header-btn, #loadMore */
+  padding: 9px 14px;                  /* [loox] .load-more-button-size-medium */
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  cursor: pointer;
+  color: #000;
+  transition: background 0.2s ease-in-out;
+}
+
+.aao-reviews__more button:hover,
+.aao-reviews__more button:focus {
+  background: var(--aao-rev-line);
+  outline: 0;
+}
+
+.aao-reviews__empty {
+  padding: 24px 7px;
+  color: var(--aao-rev-muted);
+  font-size: 14px;
+}
+
+/* --- write a review form ---------------------------------------------------------------------- */
+
+.aao-reviews__form-wrap {
+  display: none;
+  margin: 0 7px 20px;
+  padding: 20px;
+  background: var(--aao-rev-card);
+  border-radius: var(--aao-rev-radius);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.aao-reviews__form-wrap[data-open='true'] {
+  display: block;
+}
+
+.aao-reviews__form-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 20px;                   /* [loox] .loox-dropdown li .sorting-title */
+}
+
+.aao-reviews__field {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.aao-reviews__field > span {
+  display: block;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--aao-rev-muted);
+  margin-bottom: 4px;
+}
+
+.aao-reviews__field input,
+.aao-reviews__field textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 14px;
+  color: var(--aao-rev-ink);
+  background: #fff;
+  border: 1px solid var(--aao-rev-line);
+  border-radius: var(--aao-rev-radius);
+  padding: 9px 12px;
+}
+
+.aao-reviews__field textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.aao-reviews__field input:focus,
+.aao-reviews__field textarea:focus {
+  outline: 0;
+  border-color: var(--aao-rev-ink);
+}
+
+.aao-reviews__field > span.aao-reviews__rating-input {
+  display: inline-flex;
+  gap: 2px;
+  font-size: 28px;
+  line-height: 0;
+}
+
+.aao-reviews__rating-input button {
+  cursor: pointer;
+  padding: 0;
+  line-height: 0;
+  font-size: inherit;
+  color: var(--aao-rev-star);
+}
+
+.aao-reviews__form-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.aao-reviews__note {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--aao-rev-muted);
+  margin: 0;
+}
+
+.aao-reviews__note[data-state='error'] {
+  color: #b00020;
+}
+
+.aao-reviews__hp {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* --- lightbox --------------------------------------------------------------------------------- */
+
+.aao-reviews-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.aao-reviews-lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.aao-reviews-lightbox__close,
+.aao-reviews-lightbox__nav {
+  position: absolute;
+  background: none;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  line-height: 1;
+  padding: 8px 14px;
+}
+
+.aao-reviews-lightbox__close {
+  top: 10px;
+  right: 10px;
+  font-size: 30px;                    /* [loox] .close-btn */
+}
+
+.aao-reviews-lightbox__nav {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 40px;
+}
+
+.aao-reviews-lightbox__nav[data-dir='prev'] { left: 4px; }
+.aao-reviews-lightbox__nav[data-dir='next'] { right: 4px; }
+
+.aao-reviews-lightbox__caption {
+  position: absolute;
+  bottom: 14px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #fff;
+  font-size: 13px;
+  padding: 0 24px;
+}
+
+/* --- SEO block (rendered for crawlers, hidden from sighted users) ------------------------------ */
+
+.aao-reviews__seo {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: -1px;
+}
+
+/* --- product-card rating badge ---------------------------------------------------------------- */
+
+.aao-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;                           /* [loox] .rtl.loox-rating span padding-right:5px */
+  line-height: 1;
+  font-size: 14px;                    /* [loox] data-content-size="14" on the rating block */
+  color: inherit;
+}
+
+.aao-rating:empty {
+  display: none;
+}
+
+.aao-rating .aao-stars {
+  font-size: 1em;
+}
+
+.aao-rating__count {
+  font-size: 0.92em;
+}
+
+a.aao-rating-link,
+a.aao-rating-link:visited,
+a.aao-rating-link:hover {
+  text-decoration: none;              /* [loox] a[href='#looxReviewsFrame'] */
+  color: inherit;
+}

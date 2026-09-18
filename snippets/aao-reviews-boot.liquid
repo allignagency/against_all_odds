@@ -1,0 +1,38 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+AAO REVIEWS - page bootstrap
+----------------------------------------------------------------------------------------------------------------------
+
+Rendered once from layout/theme.liquid. Emits the widget stylesheet, the engine and the runtime
+config. The engine bails out immediately (and never fetches the review data) on pages that hold
+neither a `.aao-reviews` widget nor a `.aao-rating` badge, so this is cheap sitewide.
+
+Endpoints live on the agency VPS:
+  submitUrl    POST {handle, rating, author, email, text} -> {"ok": true}
+  approvedUrl  GET  the same products-map schema as assets/aao-reviews.json, merged over it
+
+Set `inline_data: true` when rendering to embed the whole baked dataset in the page instead of
+letting the browser fetch it. That gives a server-rendered, crawlable copy of every review at the
+cost of the full JSON on every page, so it is off by default. See docs/reviews/README.md.
+{%- endcomment -%}
+
+{%- liquid
+  assign submit_url = 'https://allign.agency/aao/reviews/submit'
+  assign approved_url = 'https://allign.agency/aao/reviews/approved.json'
+-%}
+
+{{ 'aao-reviews.css' | asset_url | stylesheet_tag }}
+
+<script>
+  window.AAO_REVIEWS_CONFIG = {
+    assetUrl: {{ 'aao-reviews.json' | asset_url | json }},
+    submitUrl: {{ submit_url | json }},
+    approvedUrl: {{ approved_url | json }}
+  };
+</script>
+
+{%- if inline_data -%}
+  <script type="application/json" id="aao-reviews-data">{{ 'aao-reviews.json' | inline_asset_content }}</script>
+{%- endif -%}
+
+<script src="{{ 'aao-reviews.js' | asset_url }}" defer></script>

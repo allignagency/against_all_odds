@@ -3806,6 +3806,62 @@ quick buy information in a template, that will be extracted in JS, which ensures
           "default": "#999999"
         }
       ]
+    },
+    {
+      "type": "aao-rating",
+      "name": "Review rating (AAO)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Stars and review count from the native review data (assets/aao-reviews.json plus approved submissions). Replaces the Loox rating block."
+        },
+        {
+          "type": "checkbox",
+          "id": "link_to_reviews",
+          "label": "Scroll to the reviews widget when clicked",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_count",
+          "label": "Hide the review count",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_empty",
+          "label": "Keep the space when a product has no reviews",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "aao-reviews",
+      "name": "Reviews widget (AAO)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Full reviews widget. Replaces the Loox reviews block. Usually placed as its own section below the product instead of inside this list."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Customer Reviews"
+        },
+        {
+          "type": "range",
+          "id": "max_width",
+          "label": "Maximum width",
+          "min": 600,
+          "max": 1400,
+          "step": 20,
+          "unit": "px",
+          "default": 1080
+        }
+      ]
     }
   ]
 }

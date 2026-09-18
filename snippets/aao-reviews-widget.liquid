@@ -1,0 +1,52 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+AAO REVIEWS WIDGET
+----------------------------------------------------------------------------------------------------------------------
+
+Native replacement for the Loox "loox-dynamic-section" app block (#looxReviews / #looxReviewsFrame).
+
+Look and behaviour are transcribed from the live Loox widget (see the [loox] notes in
+assets/aao-reviews.css): summary header with the star row and review count, collapsible rating
+histogram with grey progress bars, white cards with a 2px radius and a 0 0 3px shadow, bold
+reviewer name + verified badge, star row, review body, photo thumbnails, muted date, and a
+"Write a review" button on the right of the header.
+
+The card list itself is built client-side from assets/aao-reviews.json (Liquid cannot parse a JSON
+asset), merged with the approved-reviews overlay from the VPS. The engine also injects the
+AggregateRating / Review JSON-LD and a visually hidden text copy of the reviews for crawlers.
+
+********************************************
+Supported variables
+********************************************
+
+* product: the product to show reviews for. Defaults to the page's product.
+* heading: optional heading text. Defaults to "Customer Reviews".
+* max_width: optional px width of the widget. Defaults to 1080 (the Loox block's setting).
+{%- endcomment -%}
+
+{%- liquid
+  assign rv_product = product
+  assign rv_heading = heading | default: 'Customer Reviews'
+  assign rv_max_width = max_width | default: 1080
+-%}
+
+{%- if rv_product != blank -%}
+  <div
+    id="aao-reviews"
+    class="aao-reviews"
+    style="max-width:{{ rv_max_width }}px;"
+    data-handle="{{ rv_product.handle }}"
+    data-product-id="{{ rv_product.id }}"
+    data-product-title="{{ rv_product.title | escape }}"
+    data-product-url="{{ shop.url }}{{ rv_product.url }}"
+    data-heading="{{ rv_heading | escape }}"
+  >
+    <noscript>
+      <h2>{{ rv_heading }}</h2>
+      <p>
+        Customer reviews for {{ rv_product.title }} need JavaScript to display.
+        <a href="{{ rv_product.url }}">Reload this page</a> with JavaScript enabled to read them.
+      </p>
+    </noscript>
+  </div>
+{%- endif -%}

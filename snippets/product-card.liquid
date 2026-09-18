@@ -202,15 +202,18 @@ Supported variables
     {%- endif -%}
 
     {%- comment -%}
-      The theme's native rating is intentionally NOT rendered here. Loox (below) is the
-      live review source and carries the real review counts; rendering both produced two
-      different star rows with conflicting numbers on every card.
+      The theme's native rating is intentionally NOT rendered here. The AAO reviews dataset
+      (below) is the live review source and carries the real review counts; rendering both
+      produced two different star rows with conflicting numbers on every card.
     {%- endcomment -%}
     {%- if false -%}
       {%- render 'product-rating', product: product, show_empty: settings.show_product_rating_if_empty, display_mode: settings.product_rating_mode -%}
     {%- endif -%}
 
-    {%- comment -%} Loox review stars on collection cards: the loox-inject app embed populates these .loox-rating elements (ratings always shown; review quality handled via Loox product grouping) {%- endcomment -%}
-    <div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}" style="margin-top:4px;line-height:1;"></div>
+    {%- comment -%}
+      AAO native review stars on collection cards. Renders an empty span; assets/aao-reviews.js
+      parses the dataset once per page and hydrates every badge from it.
+    {%- endcomment -%}
+    {%- render 'aao-rating-badge', product: product, style: 'margin-top:4px;line-height:1;' -%}
   </div>
 </product-card>

@@ -125,6 +125,12 @@
       {%- endif -%}
     </main>
 
+    {%- comment -%}
+      AAO native reviews. Replaces the Loox app: loads the widget stylesheet, engine and endpoint
+      config once per page. The engine no-ops on pages with no review widget or rating badge.
+    {%- endcomment -%}
+    {%- render 'aao-reviews-boot' -%}
+
     {%- comment -%} AAO 24 hour sale popup, self-expiring 2026-08-01 10:00 BST {%- endcomment -%}
     {%- unless request.page_type == 'password' -%}
       {%- render 'aao-sale-popup' -%}
