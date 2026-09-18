@@ -290,12 +290,22 @@ Supported variables
       </div>
     {%- endif -%}
 
-    {%- if s.fourth_title != blank -%}
+    {%- comment -%}
+      fourth_icon / fourth_title / fourth_sub_title no longer exist as schema settings: the
+      main-product schema had to be cut under Shopify's 64KB section schema limit, and no AAO
+      product template ever set them. The app default for the fourth card is "empty", so the
+      defaults below reproduce it exactly and the card stays unrendered. Re-add the three settings
+      to the schema (and free the bytes elsewhere) if a fourth card is ever wanted.
+    {%- endcomment -%}
+    {%- assign fourth_title = s.fourth_title | default: '' -%}
+    {%- assign fourth_sub_title = s.fourth_sub_title | default: '' -%}
+    {%- assign fourth_icon = s.fourth_icon | default: 'none' -%}
+    {%- if fourth_title != blank -%}
       <div class="aao-bb__card aao-bb__card--fourth">
-        <div class="aao-bb__icon">{%- render 'aao-ss-icon', icon: s.fourth_icon -%}</div>
+        <div class="aao-bb__icon">{%- render 'aao-ss-icon', icon: fourth_icon -%}</div>
         <div class="aao-bb__content">
-          <p class="aao-bb__title">{{ s.fourth_title }}</p>
-          {%- if s.fourth_sub_title != blank -%}<p class="aao-bb__subtitle">{{ s.fourth_sub_title }}</p>{%- endif -%}
+          <p class="aao-bb__title">{{ fourth_title }}</p>
+          {%- if fourth_sub_title != blank -%}<p class="aao-bb__subtitle">{{ fourth_sub_title }}</p>{%- endif -%}
         </div>
       </div>
     {%- endif -%}
