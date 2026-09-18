@@ -1,0 +1,33 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+AAO REVIEWS - DATA SOURCE SWITCH
+----------------------------------------------------------------------------------------------------------------------
+
+*** THIS FILE HOLDS THE ONE SWITCH THAT DECIDES WHERE REVIEWS COME FROM. ***
+
+  false -> the baked JSON theme assets + assets/aao-reviews.js  (the original system, still live)
+  true  -> Shopify metaobjects, server-rendered by Liquid       (the new system)
+
+Flip `use_metaobjects` to true ONCE the metaobject definitions and entries exist and the product
+metafields are populated. See docs/reviews/README.md and the migration spec.
+
+Why a snippet and not an `assign` in aao-reviews-boot.liquid: `{% render %}` gives a snippet an
+isolated scope, so a variable set in the boot snippet is invisible to the widget and the badge.
+A snippet's OUTPUT, however, can be captured by any caller:
+
+    {%- capture aao_mode -%}{%- render 'aao-reviews-flags' -%}{%- endcapture -%}
+    {%- if aao_mode contains 'metaobjects' -%} ... {%- endif -%}
+
+so this file stays the single source of truth for all three snippets.
+
+Emits exactly one word and nothing else. Do not add markup here.
+{%- endcomment -%}
+{%- liquid
+  assign use_metaobjects = true
+
+  if use_metaobjects
+    echo 'metaobjects'
+  else
+    echo 'json'
+  endif
+-%}

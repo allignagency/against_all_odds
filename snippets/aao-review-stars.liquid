@@ -1,0 +1,42 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+AAO REVIEW STARS
+----------------------------------------------------------------------------------------------------------------------
+
+Server-rendered copy of starsHTML() in assets/aao-reviews.js: five stacked fill/outline stars,
+each clipped by the --aao-star-pct custom property, using the same Loox path data. Output is
+byte-comparable with what the JS engine produces, so assets/aao-reviews.css needs no changes.
+
+Loox snapped each star to empty / half / full; starPct() does the same and so does this.
+
+********************************************
+Supported variables
+********************************************
+
+* rating: number, 0-5. Required (0 renders five empty stars).
+* label:  optional aria-label. Defaults to "<rating> out of 5 stars".
+{%- endcomment -%}
+
+{%- liquid
+  assign st_rating = rating | default: 0 | times: 1.0
+  assign st_label = label
+
+  if st_label == blank
+    assign st_round = st_rating | times: 10 | round | divided_by: 10.0
+    assign st_label = st_round | append: ' out of 5 stars'
+  endif
+-%}
+<span class="aao-stars" role="img" aria-label="{{ st_label | escape }}">
+  {%- for i in (1..5) -%}
+    {%- liquid
+      assign st_d = st_rating | minus: i | plus: 1
+      assign st_pct = 0
+      if st_d >= 0.75
+        assign st_pct = 100
+      elsif st_d >= 0.25
+        assign st_pct = 50
+      endif
+    -%}
+    <svg class="aao-star" viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="--aao-star-pct:{{ st_pct }}%"><path class="aao-star__fill" fill="currentColor" d="M24 9.425c0 .212-.125.443-.375.693l-5.236 5.105 1.24 7.212c.01.067.015.164.015.289a.85.85 0 0 1-.151.511.51.51 0 0 1-.44.21c-.183 0-.375-.058-.577-.174L12 19.869l-6.476 3.404c-.212.115-.404.173-.577.173-.202 0-.353-.07-.454-.21a.85.85 0 0 1-.152-.511c0-.058.01-.154.03-.289l1.24-7.211-5.25-5.106C.12 9.858 0 9.628 0 9.425c0-.355.27-.577.808-.663l7.24-1.053 3.245-6.562c.183-.395.418-.592.707-.592s.524.197.707.592l3.245 6.562 7.24 1.053c.539.086.808.308.808.663Z"/><path class="aao-star__line" fill="currentColor" d="m16.399 14.574 4.413-4.283-6.086-.894L12 3.887l-2.726 5.51-6.086.894L7.6 14.574l-1.053 6.072L12 17.776l5.438 2.87-1.039-6.072ZM24 9.425c0 .212-.125.443-.375.693l-5.236 5.105 1.24 7.212c.01.067.015.164.015.289 0 .48-.197.72-.591.72-.183 0-.375-.057-.577-.172L12 19.867l-6.476 3.404c-.212.115-.404.173-.577.173-.202 0-.353-.07-.454-.21a.85.85 0 0 1-.152-.511c0-.058.01-.154.03-.289l1.24-7.211-5.25-5.106C.12 9.858 0 9.628 0 9.425c0-.355.27-.577.808-.663l7.24-1.053 3.245-6.562c.183-.395.418-.592.707-.592s.524.197.707.592l3.245 6.562 7.24 1.053c.539.086.808.308.808.663Z"/></svg>
+  {%- endfor -%}
+</span>

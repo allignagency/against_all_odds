@@ -54,25 +54,45 @@ Supported variables
   assign rv_max_width = max_width | default: 1080
 -%}
 
+{%- comment -%}
+  Which data source is live is decided in ONE place: snippets/aao-reviews-flags.liquid. `render`
+  scopes are isolated, so the flag is read by capturing that snippet's output.
+{%- endcomment -%}
+{%- capture rv_mode -%}{%- render 'aao-reviews-flags' -%}{%- endcapture -%}
+
 {%- if rv_product != blank -%}
-  <div
-    id="aao-reviews"
-    class="aao-reviews"
-    style="max-width:{{ rv_max_width }}px;"
-    data-handle="{{ rv_product.handle }}"
-    data-product-id="{{ rv_product.id }}"
-    data-product-title="{{ rv_product.title | escape }}"
-    data-product-url="{{ shop.url }}{{ rv_product.url }}"
-    data-heading="{{ rv_heading | escape }}"
-  >
-    <noscript>
-      <h2>{{ rv_heading }}</h2>
-      <p>
-        Customer reviews for {{ rv_product.title }} need JavaScript to display. The review form
-        below works either way.
-      </p>
-    </noscript>
-  </div>
+  {%- if rv_mode contains 'metaobjects' -%}
+    {%- comment -%}
+      Metaobject mode: the whole list is server-rendered, including the JSON-LD. No data-handle
+      attribute, so the legacy engine in assets/aao-reviews.js would ignore this element even if it
+      were loaded. Behaviour (load more, histogram filter, lightbox, form toggle) comes from
+      assets/aao-reviews-mo.js, which the boot snippet loads instead.
+    {%- endcomment -%}
+    {%- render 'aao-reviews-list',
+      product: rv_product,
+      heading: rv_heading,
+      max_width: rv_max_width
+    -%}
+  {%- else -%}
+    <div
+      id="aao-reviews"
+      class="aao-reviews"
+      style="max-width:{{ rv_max_width }}px;"
+      data-handle="{{ rv_product.handle }}"
+      data-product-id="{{ rv_product.id }}"
+      data-product-title="{{ rv_product.title | escape }}"
+      data-product-url="{{ shop.url }}{{ rv_product.url }}"
+      data-heading="{{ rv_heading | escape }}"
+    >
+      <noscript>
+        <h2>{{ rv_heading }}</h2>
+        <p>
+          Customer reviews for {{ rv_product.title }} need JavaScript to display. The review form
+          below works either way.
+        </p>
+      </noscript>
+    </div>
+  {%- endif -%}
 
   <div
     id="aao-review-form-host"

@@ -44,28 +44,110 @@ default. See docs/reviews/README.md.
   It is a business decision, not a technical one. See docs/reviews/README.md.
 {%- endcomment -%}
 
-{%- liquid
-  assign genuine_only = false
-
-  comment
-    The theme's asset directory, e.g. https://cdn.shopify.com/s/files/1/.../assets/ - the engine
-    builds the review-list and photo URLs from it rather than hard-coding a CDN host.
-  endcomment
-  assign asset_base = 'aao-reviews.css' | asset_url | split: 'aao-reviews.css' | first
--%}
+{%- comment -%}
+  WHERE THE DATA COMES FROM is decided in snippets/aao-reviews-flags.liquid - one boolean,
+  `use_metaobjects`, false today. It lives in its own snippet because `render` scopes are isolated
+  and the widget and the badge have to read the same value; they capture that snippet's output the
+  same way this one does. Everything below branches on it.
+{%- endcomment -%}
+{%- capture aao_mode -%}{%- render 'aao-reviews-flags' -%}{%- endcapture -%}
 
 {{ 'aao-reviews.css' | asset_url | stylesheet_tag }}
 
-<script>
-  window.AAO_REVIEWS_CONFIG = {
-    assetBase: {{ asset_base | json }},
-    summaryUrl: {{ 'aao-reviews-summary.json' | asset_url | json }},
-    genuineOnly: {{ genuine_only | json }}
-  };
-</script>
+{%- if aao_mode contains 'metaobjects' -%}
+  {%- comment -%}
+    ------------------------------------------------------------------------------------------------
+    METAOBJECT MODE
+    ------------------------------------------------------------------------------------------------
+    Reviews are server-rendered from metaobjects (see snippets/aao-reviews-list.liquid and
+    snippets/aao-rating-badge.liquid), so nothing is fetched and the legacy engine is not loaded.
+    assets/aao-reviews-mo.js only supplies behaviour: load more, histogram filter, photo lightbox,
+    and the write-a-review panel toggle.
 
-{%- if inline_summary -%}
-  <script type="application/json" id="aao-reviews-summary-data">{{ 'aao-reviews-summary.json' | inline_asset_content }}</script>
+    THE ONE EXPENSIVE THING, AND WHY IT USUALLY COSTS NOTHING
+    --------------------------------------------------------
+    A rating badge on a product card needs its group's average and count. Averaging a 124-review
+    group per card would be thousands of metaobject loads per collection page, so `aao_review_group`
+    carries derived `rating_avg` / `rating_count` fields and the badge just reads them.
+
+    A group whose `rating_count` is blank (created by hand in the admin, cache never filled) is the
+    only case that needs computing, and it is computed HERE - once per page for the whole page,
+    never once per card - then published as window.AAO_REVIEW_STATS for the badges to paint.
+
+    The walk below reads the ~9 group metaobjects (two scalar fields each, no list resolution) and
+    only resolves a group's review list when that group's cache is missing. With the migration's
+    caches in place, no list is ever resolved and no <script> is emitted.
+  {%- endcomment -%}
+  {%- liquid
+    assign aao_stats = ''
+    assign aao_groups = shop.metaobjects.aao_review_group.values
+  -%}
+
+  {%- for aao_g in aao_groups -%}
+    {%- if aao_g.rating_count.value != blank -%}
+      {%- continue -%}
+    {%- endif -%}
+    {%- liquid
+      assign aao_n = 0
+      assign aao_sum = 0
+      for aao_rv in aao_g.reviews.value
+        if aao_rv.hidden.value == true
+          continue
+        endif
+        assign aao_n = aao_n | plus: 1
+        assign aao_sum = aao_sum | plus: aao_rv.rating.value
+      endfor
+
+      assign aao_a = 0
+      if aao_n > 0
+        assign aao_a = aao_sum | times: 10.0 | divided_by: aao_n | round | divided_by: 10.0
+      endif
+
+      capture aao_row
+        echo aao_g.system.handle | json
+        echo ':{"avg":'
+        echo aao_a
+        echo ',"count":'
+        echo aao_n
+        echo '}'
+      endcapture
+
+      if aao_stats != blank
+        assign aao_stats = aao_stats | append: ','
+      endif
+      assign aao_stats = aao_stats | append: aao_row
+    -%}
+  {%- endfor -%}
+
+  {%- if aao_stats != blank -%}
+    <script>
+      window.AAO_REVIEW_STATS = { {{ aao_stats }} };
+    </script>
+  {%- endif -%}
+
+  <script src="{{ 'aao-reviews-mo.js' | asset_url }}" defer></script>
+{%- else -%}
+  {%- liquid
+    assign genuine_only = false
+
+    comment
+      The theme's asset directory, e.g. https://cdn.shopify.com/s/files/1/.../assets/ - the engine
+      builds the review-list and photo URLs from it rather than hard-coding a CDN host.
+    endcomment
+    assign asset_base = 'aao-reviews.css' | asset_url | split: 'aao-reviews.css' | first
+  -%}
+
+  <script>
+    window.AAO_REVIEWS_CONFIG = {
+      assetBase: {{ asset_base | json }},
+      summaryUrl: {{ 'aao-reviews-summary.json' | asset_url | json }},
+      genuineOnly: {{ genuine_only | json }}
+    };
+  </script>
+
+  {%- if inline_summary -%}
+    <script type="application/json" id="aao-reviews-summary-data">{{ 'aao-reviews-summary.json' | inline_asset_content }}</script>
+  {%- endif -%}
+
+  <script src="{{ 'aao-reviews.js' | asset_url }}" defer></script>
 {%- endif -%}
-
-<script src="{{ 'aao-reviews.js' | asset_url }}" defer></script>

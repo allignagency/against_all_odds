@@ -6,9 +6,37 @@ AAO RATING BADGE
 Native replacement for the Loox "loox-rating" widget (the small stars + review count under a
 product title on the PDP, and under the price on every collection card).
 
-Product cards render dozens of times per page, so this snippet server-renders nothing but an empty
-span carrying the handle. assets/aao-reviews.js parses the review dataset ONCE per page and
-hydrates every badge from that single parsed object.
+Two data sources, selected by snippets/aao-reviews-flags.liquid:
+
+  json         legacy. Server-renders an empty span carrying the handle; assets/aao-reviews.js
+               parses aao-reviews-summary.json ONCE per page and hydrates every badge from it.
+
+  metaobjects  server-renders the stars and the count, no JavaScript involved.
+
+********************************************
+PERFORMANCE - why this does not average 124 reviews per card
+********************************************
+
+A collection page renders ~40 cards. Resolving a group's 124 `list.metaobject_reference` entries
+and summing them once per card would be 40 x 124 = ~5,000 metaobject loads per page. So:
+
+  * `aao_review_group` carries two derived fields, `rating_avg` and `rating_count`, written by the
+    migration alongside the reviews. A badge pointing at a group reads those two fields and
+    renders. Cost per card: ONE metaobject load, no list resolution, no loop. 40 cards on a
+    collection page = 40 cheap reads, which is the same order as any other product metafield the
+    card already reads.
+
+  * `aao_own_reviews` products (11 of them, 1-3 reviews each) are summed inline. The list is tiny
+    by construction and there is nothing to cache.
+
+  * If a group's `rating_count` is blank - the client created a group by hand and did not fill the
+    derived fields - the badge falls back to a hook (`data-aao-group`) instead of guessing. The
+    expensive average is then computed exactly ONCE per page, in snippets/aao-reviews-boot.liquid,
+    which walks only the groups that are actually missing their cache and publishes the result as
+    window.AAO_REVIEW_STATS for assets/aao-reviews-mo.js to paint. Normal cost of that path: zero,
+    because normally no group is missing its cache.
+
+Net effect: correctness never depends on the cache being present, and the common path never loops.
 
 ********************************************
 Supported variables
@@ -21,19 +49,85 @@ Supported variables
 * style: optional extra inline CSS, e.g. 'margin-top:4px;'.
 {%- endcomment -%}
 
+{%- capture bd_mode -%}{%- render 'aao-reviews-flags' -%}{%- endcapture -%}
+
 {%- if product != blank -%}
   {%- capture aao_badge -%}
-    <span
-      class="aao-rating"
-      data-handle="{{ product.handle }}"
-      data-product-id="{{ product.id }}"
-      {% if hide_count %}data-hide-count="true"{% endif %}
-      {% if show_empty %}data-show-empty="true"{% endif %}
-      {% if style != blank %}style="{{ style }}"{% endif %}
-    ></span>
+    {%- if bd_mode contains 'metaobjects' -%}
+      {%- liquid
+        assign bd_own = product.metafields.custom.aao_own_reviews.value
+        assign bd_group = product.metafields.custom.aao_review_group.value
+
+        assign bd_avg = 0
+        assign bd_count = 0
+        assign bd_pending = ''
+
+        if bd_own != blank and bd_own.size > 0
+          assign bd_sum = 0
+          for bd_r in bd_own
+            if bd_r.hidden.value == true
+              continue
+            endif
+            assign bd_count = bd_count | plus: 1
+            assign bd_sum = bd_sum | plus: bd_r.rating.value
+          endfor
+          if bd_count > 0
+            assign bd_avg = bd_sum | times: 10.0 | divided_by: bd_count | round | divided_by: 10.0
+          endif
+        elsif bd_group != blank
+          assign bd_cached = bd_group.rating_count.value
+          if bd_cached == blank
+            assign bd_pending = bd_group.system.handle
+          else
+            assign bd_count = bd_cached
+            assign bd_avg = bd_group.rating_avg.value | default: 0
+          endif
+        endif
+
+        assign bd_show_count = true
+        if hide_count
+          assign bd_show_count = false
+        endif
+        assign bd_label = bd_avg | append: ' out of 5 stars'
+      -%}
+
+      {%- if bd_pending != blank -%}
+        {%- comment -%} group with no derived cache: painted by assets/aao-reviews-mo.js {%- endcomment -%}
+        <span
+          class="aao-rating"
+          data-aao-group="{{ bd_pending }}"
+          {% if hide_count %}data-hide-count="true"{% endif %}
+          {% if show_empty %}data-show-empty="true"{% endif %}
+          {% if style != blank %}style="{{ style }}"{% endif %}
+        ></span>
+      {%- elsif bd_count > 0 -%}
+        <span
+          class="aao-rating"
+          data-rating="{{ bd_avg }}"
+          data-count="{{ bd_count }}"
+          {% if style != blank %}style="{{ style }}"{% endif %}
+        >
+          {%- render 'aao-review-stars', rating: bd_avg, label: bd_label -%}
+          {%- if bd_show_count -%}<span class="aao-rating__count">({{ bd_count }})</span>{%- endif -%}
+        </span>
+      {%- elsif show_empty -%}
+        <span class="aao-rating"{% if style != blank %} style="{{ style }}"{% endif %}></span>
+      {%- endif -%}
+    {%- else -%}
+      <span
+        class="aao-rating"
+        data-handle="{{ product.handle }}"
+        data-product-id="{{ product.id }}"
+        {% if hide_count %}data-hide-count="true"{% endif %}
+        {% if show_empty %}data-show-empty="true"{% endif %}
+        {% if style != blank %}style="{{ style }}"{% endif %}
+      ></span>
+    {%- endif -%}
   {%- endcapture -%}
 
-  {%- if link_to_reviews -%}
+  {%- assign aao_badge = aao_badge | strip -%}
+
+  {%- if aao_badge != blank and link_to_reviews -%}
     <a href="#aao-reviews" class="aao-rating-link" aria-label="Scroll to reviews">{{ aao_badge }}</a>
   {%- else -%}
     {{ aao_badge }}
