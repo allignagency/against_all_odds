@@ -512,6 +512,9 @@ Supported variables
         resultPanel.innerHTML = '';
         formPanel.hidden = false;
         foot.hidden = false;
+        // "Start over" means over: clear every answer, not just the step position.
+        formPanel.querySelectorAll('input[type="number"]').forEach(function (inp) { inp.value = ''; });
+        errorEl.textContent = '';
         showStep(1);
       }
 
