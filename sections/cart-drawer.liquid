@@ -456,12 +456,9 @@ previously installed on the store:
     stroke-width: 1.9;
   }
 
-  .aao-rewards[data-complete='true'] .aao-rewards__badge {
-    color: #141414;
-    background-color: #e2e2e2;
-    outline: 2px solid #141414;
-    outline-offset: -2px;
-  }
+  /* No complete-state variant. The light-grey-with-outline treatment read as a broken or disabled control rather
+     than an unlocked reward, so both states now use the one solid ink badge above; the tier label under the meter
+     is what says whether free shipping is unlocked. */
 
   .aao-rewards__tier {
     margin-block-start: 0.5rem;

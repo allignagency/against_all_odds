@@ -98,25 +98,54 @@ Supported variables
       text-transform: uppercase; letter-spacing: 0.08em; line-height: 1;
     }
     .aao-sq__trigger:hover { background: #111; color: #fff; border-color: #111; }
+
+    /* The overlay is moved to <body> on init (see the portal note in the script), because inside the PDP it sat
+       under a transformed / sticky ancestor and no z-index could lift it over the sticky add-to-cart bar.
+       Theme stacking for reference: sticky bar 3, header 4, announcement bar 5, drawers/modals/popover 999,
+       skip link 9999, PhotoSwipe 100000, and the sale popup + Loox at 2147483000. This sits one above the lot. */
     .aao-sq__overlay {
-      position: fixed; inset: 0; z-index: 10001; background: rgba(0, 0, 0, 0.72);
+      position: fixed; inset: 0; z-index: 2147483001; background: rgba(0, 0, 0, 0.5);
       display: flex; align-items: center; justify-content: center; padding: 16px;
+      overscroll-behavior: contain;
     }
     .aao-sq__overlay[hidden] { display: none; }
+
+    /* A column with its own scroller: the head (title + close) and the foot (Back / Skip / Next) stay put and the
+       middle scrolls, so the close affordance can never be scrolled off and long result copy never pushes it away. */
     .aao-sq__dialog {
-      background: #fff; color: #111; width: 100%; max-width: 460px; max-height: 88vh;
-      overflow: auto; padding: 28px 24px 24px; position: relative; text-align: start;
+      background: #fff; color: #111; width: 100%; max-width: 520px; max-height: 85vh;
+      display: flex; flex-direction: column; position: relative; text-align: start;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
     }
+    .aao-sq__head {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 20px 24px 14px; border-block-end: 1px solid #ededed; flex: 0 0 auto;
+    }
+    .aao-sq__body { flex: 1 1 auto; overflow: auto; -webkit-overflow-scrolling: touch; padding: 20px 24px 22px; }
+    .aao-sq__foot {
+      flex: 0 0 auto; display: flex; gap: 8px; align-items: stretch;
+      padding: 14px 24px 20px; border-block-start: 1px solid #ededed;
+    }
+    .aao-sq__foot[hidden] { display: none; }
     .aao-sq__close {
-      position: absolute; inset-block-start: 6px; inset-inline-end: 10px;
       background: none; border: 0; cursor: pointer; font-size: 26px; line-height: 1; color: #111;
+      padding: 0 4px; margin: -4px -4px 0 0;
     }
-    .aao-sq__title { margin: 0 0 4px; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .aao-sq__title { margin: 0; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.06em; }
     .aao-sq__sub { margin: 0 0 18px; font-size: 0.8125rem; color: #6b6b6b; }
+
+    .aao-sq__progress { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-block-end: 16px; }
+    .aao-sq__count { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b6b; }
+    .aao-sq__dots { display: flex; gap: 6px; }
+    .aao-sq__dots i { display: block; width: 8px; height: 8px; border-radius: 100%; background: #ddd; }
+    .aao-sq__dots i[data-on] { background: #111; }
+    .aao-sq__q { margin: 0 0 14px; font-size: 1.0625rem; line-height: 1.35; }
+    .aao-sq__step[hidden] { display: none; }
+
     .aao-sq__units { display: flex; gap: 0; margin-block-end: 18px; border: 1px solid #ddd; width: fit-content; }
     .aao-sq__units button {
       background: none; border: 0; cursor: pointer; font: inherit; font-size: 0.75rem;
-      padding: 6px 14px; text-transform: uppercase; letter-spacing: 0.06em; color: #6b6b6b;
+      padding: 8px 16px; text-transform: uppercase; letter-spacing: 0.06em; color: #6b6b6b;
     }
     .aao-sq__units button[aria-pressed='true'] { background: #111; color: #fff; }
     .aao-sq__field { margin-block-end: 16px; }
@@ -125,14 +154,15 @@ Supported variables
       color: #6b6b6b; margin-block-end: 6px; padding: 0;
     }
     .aao-sq__inputs { display: flex; gap: 8px; }
+    /* 1rem keeps iOS from zooming the viewport when the field takes focus inside the sheet. */
     .aao-sq__field input {
-      width: 100%; padding: 9px 10px; border: 1px solid #ddd; background: #fff; color: #111;
-      font: inherit; font-size: 0.9375rem; border-radius: 0; -moz-appearance: textfield;
+      width: 100%; padding: 11px 12px; border: 1px solid #ddd; background: #fff; color: #111;
+      font: inherit; font-size: 1rem; border-radius: 0; -moz-appearance: textfield;
     }
     .aao-sq__field input:focus-visible { outline: 2px solid #111; outline-offset: 1px; }
     .aao-sq__fit { display: flex; gap: 8px; flex-wrap: wrap; border: 0; padding: 0; margin: 0 0 16px; }
     .aao-sq__fit label {
-      flex: 1 1 0; min-width: 0; text-align: center; border: 1px solid #ddd; padding: 9px 6px; cursor: pointer;
+      flex: 1 1 0; min-width: 0; text-align: center; border: 1px solid #ddd; padding: 12px 6px; cursor: pointer;
       font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em;
     }
     .aao-sq__fit input { position: absolute; width: 1px; height: 1px; opacity: 0; }
@@ -149,6 +179,9 @@ Supported variables
       padding: 10px; margin-block-start: 8px; font: inherit; font-size: 0.75rem;
       text-transform: uppercase; letter-spacing: 0.08em;
     }
+    .aao-sq__foot .aao-sq__submit { flex: 1 1 auto; width: auto; }
+    .aao-sq__foot .aao-sq__ghost { flex: 0 0 auto; width: auto; margin: 0; padding: 12px 18px; }
+    .aao-sq__foot .aao-sq__ghost[hidden] { display: none; }
     .aao-sq__error { margin: 0 0 12px; font-size: 0.8125rem; color: #111; font-weight: 700; }
     .aao-sq__error:empty { display: none; }
     .aao-sq__size { font-size: 3rem; line-height: 1; margin: 4px 0 10px; letter-spacing: 0.02em; }
@@ -158,6 +191,15 @@ Supported variables
     .aao-sq__fine { margin: 14px 0 0; font-size: 0.6875rem; color: #8a8a8a; line-height: 1.5; }
     .aao-sq__list { margin: 0 0 14px; padding-inline-start: 18px; font-size: 0.875rem; }
     .aao-sq__list li { margin-block-end: 6px; }
+
+    /* Phone: bottom sheet. The head and foot are already pinned, so only the geometry changes. */
+    @media screen and (max-width: 600px) {
+      .aao-sq__overlay { align-items: flex-end; padding: 0; }
+      .aao-sq__dialog { max-width: none; max-height: 92vh; }
+      .aao-sq__head { padding: 18px 18px 12px; }
+      .aao-sq__body { padding: 18px 18px 20px; }
+      .aao-sq__foot { padding: 12px 18px calc(18px + env(safe-area-inset-bottom, 0px)); }
+    }
   </style>
 
   <div class="aao-sq" id="{{ sq_uid | escape }}">
@@ -167,62 +209,91 @@ Supported variables
 
     <div class="aao-sq__overlay" hidden>
       <div class="aao-sq__dialog" role="dialog" aria-modal="true" aria-labelledby="{{ sq_uid | escape }}-title">
-        <button type="button" class="aao-sq__close" aria-label="{{ 'general.accessibility.close' | t | escape }}">&times;</button>
-
-        <h2 class="aao-sq__title" id="{{ sq_uid | escape }}-title">Find my size</h2>
-
-        <div class="aao-sq__panel" data-panel="form">
-          <p class="aao-sq__sub">Three questions and we will point you at a size. Metric or imperial, your call.</p>
-
-          <div class="aao-sq__units" role="group" aria-label="Units">
-            <button type="button" data-units="metric" aria-pressed="true">cm / kg</button>
-            <button type="button" data-units="imperial" aria-pressed="false">ft / lb</button>
-          </div>
-
-          <p class="aao-sq__error" data-error role="alert"></p>
-
-          <div class="aao-sq__field" data-field="height-metric">
-            <label for="{{ sq_uid | escape }}-h-cm">Height (cm)</label>
-            <input type="number" id="{{ sq_uid | escape }}-h-cm" inputmode="numeric" min="120" max="220" step="1" autocomplete="off">
-          </div>
-
-          <div class="aao-sq__field" data-field="height-imperial" hidden>
-            <span class="aao-sq__legend" id="{{ sq_uid | escape }}-h-i-label">Height (ft / in)</span>
-            <div class="aao-sq__inputs">
-              <input type="number" id="{{ sq_uid | escape }}-h-ft" inputmode="numeric" min="4" max="7" step="1" aria-label="Height in feet" autocomplete="off">
-              <input type="number" id="{{ sq_uid | escape }}-h-in" inputmode="numeric" min="0" max="11" step="1" aria-label="Height in inches" autocomplete="off">
-            </div>
-          </div>
-
-          <div class="aao-sq__field" data-field="weight">
-            <label for="{{ sq_uid | escape }}-w" data-label-metric="Weight (kg)" data-label-imperial="Weight (lb)">Weight (kg)</label>
-            <input type="number" id="{{ sq_uid | escape }}-w" inputmode="numeric" min="30" max="450" step="1" autocomplete="off">
-          </div>
-
-          <fieldset class="aao-sq__fit">
-            <legend class="aao-sq__legend">How do you want it to sit?</legend>
-
-            <label>
-              <input type="radio" name="{{ sq_uid | escape }}-fit" value="fitted"><span>Fitted</span>
-            </label>
-            <label>
-              <input type="radio" name="{{ sq_uid | escape }}-fit" value="regular" checked><span>Regular</span>
-            </label>
-            <label>
-              <input type="radio" name="{{ sq_uid | escape }}-fit" value="relaxed"><span>Relaxed</span>
-            </label>
-          </fieldset>
-
-          <div class="aao-sq__field" data-field="chest">
-            <label for="{{ sq_uid | escape }}-chest" data-label-metric="Chest around, if you know it (cm) &ndash; optional" data-label-imperial="Chest around, if you know it (in) &ndash; optional">Chest around, if you know it (cm) &ndash; optional</label>
-            <input type="number" id="{{ sq_uid | escape }}-chest" inputmode="numeric" min="20" max="200" step="0.5" autocomplete="off">
-          </div>
-
-          <button type="button" class="aao-sq__submit">Get my size</button>
-          <p class="aao-sq__fine">We use your height and weight to estimate your chest. A tape measure around the fullest part of your chest is always more accurate, so use the optional field if you have one to hand.</p>
+        <div class="aao-sq__head">
+          <h2 class="aao-sq__title" id="{{ sq_uid | escape }}-title">Find my size</h2>
+          <button type="button" class="aao-sq__close" aria-label="{{ 'general.accessibility.close' | t | escape }}">&times;</button>
         </div>
 
-        <div class="aao-sq__panel" data-panel="result" hidden></div>
+        <div class="aao-sq__body">
+          <div class="aao-sq__panel" data-panel="form">
+            <div class="aao-sq__progress">
+              <span class="aao-sq__count" data-count aria-live="polite">Step 1 of 4</span>
+              <span class="aao-sq__dots" aria-hidden="true">
+                <i data-dot="1" data-on></i><i data-dot="2"></i><i data-dot="3"></i><i data-dot="4"></i>
+              </span>
+            </div>
+
+            <p class="aao-sq__error" data-error role="alert"></p>
+
+            <section class="aao-sq__step" data-step="1">
+              <p class="aao-sq__q">How tall are you?</p>
+
+              <div class="aao-sq__units" role="group" aria-label="Units">
+                <button type="button" data-units="metric" aria-pressed="true">cm / kg</button>
+                <button type="button" data-units="imperial" aria-pressed="false">ft / lb</button>
+              </div>
+
+              <div class="aao-sq__field" data-field="height-metric">
+                <label for="{{ sq_uid | escape }}-h-cm">Height (cm)</label>
+                <input type="number" id="{{ sq_uid | escape }}-h-cm" inputmode="numeric" min="120" max="220" step="1" autocomplete="off">
+              </div>
+
+              <div class="aao-sq__field" data-field="height-imperial" hidden>
+                <span class="aao-sq__legend" id="{{ sq_uid | escape }}-h-i-label">Height (ft / in)</span>
+                <div class="aao-sq__inputs">
+                  <input type="number" id="{{ sq_uid | escape }}-h-ft" inputmode="numeric" min="4" max="7" step="1" aria-label="Height in feet" autocomplete="off">
+                  <input type="number" id="{{ sq_uid | escape }}-h-in" inputmode="numeric" min="0" max="11" step="1" aria-label="Height in inches" autocomplete="off">
+                </div>
+              </div>
+            </section>
+
+            <section class="aao-sq__step" data-step="2" hidden>
+              <p class="aao-sq__q">And your weight?</p>
+
+              <div class="aao-sq__field" data-field="weight">
+                <label for="{{ sq_uid | escape }}-w" data-label-metric="Weight (kg)" data-label-imperial="Weight (lb)">Weight (kg)</label>
+                <input type="number" id="{{ sq_uid | escape }}-w" inputmode="numeric" min="30" max="450" step="1" autocomplete="off">
+              </div>
+            </section>
+
+            <section class="aao-sq__step" data-step="3" hidden>
+              <p class="aao-sq__q">How do you want it to sit?</p>
+
+              <fieldset class="aao-sq__fit">
+                <legend class="aao-sq__legend">Preferred fit</legend>
+
+                <label>
+                  <input type="radio" name="{{ sq_uid | escape }}-fit" value="fitted"><span>Fitted</span>
+                </label>
+                <label>
+                  <input type="radio" name="{{ sq_uid | escape }}-fit" value="regular" checked><span>Regular</span>
+                </label>
+                <label>
+                  <input type="radio" name="{{ sq_uid | escape }}-fit" value="relaxed"><span>Relaxed</span>
+                </label>
+              </fieldset>
+            </section>
+
+            <section class="aao-sq__step" data-step="4" hidden>
+              <p class="aao-sq__q">Know your chest measurement?</p>
+
+              <div class="aao-sq__field" data-field="chest">
+                <label for="{{ sq_uid | escape }}-chest" data-label-metric="Chest around (cm) &ndash; optional" data-label-imperial="Chest around (in) &ndash; optional">Chest around (cm) &ndash; optional</label>
+                <input type="number" id="{{ sq_uid | escape }}-chest" inputmode="decimal" min="20" max="200" step="0.5" autocomplete="off">
+              </div>
+
+              <p class="aao-sq__fine">We estimate your chest from your height and weight. A tape measure around the fullest part of your chest is always more accurate, so fill this in if you have one to hand. Otherwise skip it.</p>
+            </section>
+          </div>
+
+          <div class="aao-sq__panel" data-panel="result" hidden></div>
+        </div>
+
+        <div class="aao-sq__foot" data-foot>
+          <button type="button" class="aao-sq__ghost" data-action="back" hidden>Back</button>
+          <button type="button" class="aao-sq__ghost" data-action="skip" hidden>Skip</button>
+          <button type="button" class="aao-sq__submit" data-action="next">Next</button>
+        </div>
       </div>
     </div>
   </div>
@@ -270,17 +341,35 @@ Supported variables
       if (!root) return;
 
       var overlay = root.querySelector('.aao-sq__overlay');
-      var dialog = root.querySelector('.aao-sq__dialog');
-      var trigger = root.querySelector('.aao-sq__trigger');
-      var formPanel = root.querySelector('[data-panel="form"]');
-      var resultPanel = root.querySelector('[data-panel="result"]');
-      var errorEl = root.querySelector('[data-error]');
-      if (!overlay || !dialog || !trigger || !formPanel || !resultPanel) return;
+      if (!overlay) return;
 
+      /* Portal. On the PDP the quiz renders inside the sticky product-info column, so the overlay inherited an
+         ancestor stacking context and the theme's sticky add-to-cart bar (position:fixed) painted over it no
+         matter how high its own z-index went. As a direct child of <body> it competes on the page's root
+         stacking context, where its z-index actually counts. Done once at init, not per open. */
+      if (overlay.parentNode !== document.body) document.body.appendChild(overlay);
+
+      var dialog = overlay.querySelector('.aao-sq__dialog');
+      var trigger = root.querySelector('.aao-sq__trigger');
+      var formPanel = overlay.querySelector('[data-panel="form"]');
+      var resultPanel = overlay.querySelector('[data-panel="result"]');
+      var errorEl = overlay.querySelector('[data-error]');
+      var foot = overlay.querySelector('[data-foot]');
+      var countEl = overlay.querySelector('[data-count]');
+      var backBtn = overlay.querySelector('[data-action="back"]');
+      var skipBtn = overlay.querySelector('[data-action="skip"]');
+      var nextBtn = overlay.querySelector('[data-action="next"]');
+      if (!dialog || !trigger || !formPanel || !resultPanel || !foot) return;
+
+      var stepEls = [].slice.call(overlay.querySelectorAll('.aao-sq__step'));
+      var LAST_STEP = stepEls.length; // 4
+      var current = 1;
       var units = 'metric';
       var lastFocused = null;
+      var scrollLock = null;
 
-      function q(sel) { return root.querySelector(sel); }
+      function q(sel) { return overlay.querySelector(sel); }
+      function byId(suffix) { return document.getElementById(CONFIG.rootId + suffix); }
       function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
       function round1(n) { return Math.round(n * 10) / 10; }
       function norm(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
@@ -306,26 +395,59 @@ Supported variables
 
       function focusables() {
         return [].slice.call(dialog.querySelectorAll('button, input, [href], select, textarea, [tabindex]:not([tabindex="-1"])'))
-          .filter(function (el) { return el.offsetParent !== null && !el.disabled; });
+          .filter(function (el) { return el.offsetParent !== null && !el.disabled && !el.closest('[hidden]'); });
+      }
+
+      function lockScroll() {
+        if (scrollLock !== null) return;
+        scrollLock = { overflow: document.body.style.overflow, touch: document.body.style.touchAction };
+        document.body.style.overflow = 'hidden';
+        document.body.style.touchAction = 'none';
+      }
+
+      function unlockScroll() {
+        if (scrollLock === null) return;
+        document.body.style.overflow = scrollLock.overflow;
+        document.body.style.touchAction = scrollLock.touch;
+        scrollLock = null;
       }
 
       function open() {
         lastFocused = document.activeElement;
         overlay.hidden = false;
+        lockScroll();
         document.addEventListener('keydown', onKeydown, true);
-        var f = focusables();
-        if (f.length) f[0].focus();
+
+        if (!usable) {
+          // No chart for this garment: say so straight away rather than asking four questions we cannot use.
+          show(noChartHtml());
+          return;
+        }
+        restart();
       }
 
       function close() {
         overlay.hidden = true;
+        unlockScroll();
         document.removeEventListener('keydown', onKeydown, true);
         if (lastFocused && lastFocused.focus) lastFocused.focus();
       }
 
       function onKeydown(event) {
         if (overlay.hidden) return;
+
         if (event.key === 'Escape') { event.preventDefault(); close(); return; }
+
+        // Enter advances the wizard, but only from a field. On a button it has to stay the button's own activation.
+        if (event.key === 'Enter') {
+          var t = event.target;
+          if (t && t.closest && t.closest('button, a')) return;
+          if (formPanel.hidden) return;
+          event.preventDefault();
+          next();
+          return;
+        }
+
         if (event.key !== 'Tab') return;
         var f = focusables();
         if (!f.length) return;
@@ -335,20 +457,119 @@ Supported variables
       }
 
       trigger.addEventListener('click', open);
-      root.querySelector('.aao-sq__close').addEventListener('click', close);
+      overlay.querySelector('.aao-sq__close').addEventListener('click', close);
       overlay.addEventListener('mousedown', function (event) { if (event.target === overlay) close(); });
+
+      /* ------------------------------------------------------------------ wizard */
+
+      function stepEl(n) { return overlay.querySelector('.aao-sq__step[data-step="' + n + '"]'); }
+
+      function focusStep(n) {
+        var el = stepEl(n);
+        if (!el) return;
+
+        // Visible text fields first (the imperial pair is hidden in metric mode and the other way round), then the
+        // checked fit radio, then whatever control the step does have.
+        var visible = [].slice.call(el.querySelectorAll('input, button')).filter(function (c) {
+          return !c.disabled && !c.closest('[hidden]');
+        });
+        var target = null;
+        for (var i = 0; i < visible.length; i++) {
+          if (visible[i].tagName === 'INPUT' && visible[i].type !== 'radio') { target = visible[i]; break; }
+        }
+        if (!target) target = el.querySelector('input[type="radio"]:checked');
+        if (!target) target = visible[0];
+
+        if (target && target.focus) {
+          try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); }
+        }
+      }
+
+      function showStep(n, focus) {
+        current = n;
+        errorEl.textContent = '';
+
+        stepEls.forEach(function (el) {
+          el.hidden = el.getAttribute('data-step') !== String(n);
+        });
+
+        countEl.textContent = 'Step ' + n + ' of ' + LAST_STEP;
+        [].slice.call(overlay.querySelectorAll('.aao-sq__dots i')).forEach(function (dot) {
+          if (Number(dot.getAttribute('data-dot')) <= n) dot.setAttribute('data-on', '');
+          else dot.removeAttribute('data-on');
+        });
+
+        backBtn.hidden = n === 1;
+        skipBtn.hidden = n !== LAST_STEP;
+        nextBtn.textContent = n === LAST_STEP ? 'Get my size' : 'Next';
+
+        overlay.querySelector('.aao-sq__body').scrollTop = 0;
+        if (focus !== false) focusStep(n);
+      }
+
+      function restart() {
+        resultPanel.hidden = true;
+        resultPanel.innerHTML = '';
+        formPanel.hidden = false;
+        foot.hidden = false;
+        showStep(1);
+      }
+
+      // Returns an error string, or null when the step may be left.
+      function validateStep(n) {
+        var v = readInputs();
+
+        if (n === 1) {
+          if (!isFinite(v.heightCm) || v.heightCm < 120 || v.heightCm > 220) {
+            return 'Enter a height between 120 and 220 cm (4ft and 7ft 3in).';
+          }
+        }
+        if (n === 2) {
+          if (!isFinite(v.weightKg) || v.weightKg < 35 || v.weightKg > 200) {
+            return 'Enter a weight between 35 and 200 kg (77 and 440 lb).';
+          }
+        }
+        if (n === 4) {
+          if (v.chestCm !== null && (v.chestCm < 60 || v.chestCm > 180)) {
+            return 'That chest measurement looks off. Measure around the fullest part of your chest, or leave it blank.';
+          }
+        }
+        return null;
+      }
+
+      function next() {
+        var problem = validateStep(current);
+        if (problem) { errorEl.textContent = problem; focusStep(current); return; }
+
+        if (current < LAST_STEP) { showStep(current + 1); return; }
+        submit();
+      }
+
+      function back() {
+        if (current <= 1) return;
+        showStep(current - 1);
+      }
+
+      nextBtn.addEventListener('click', next);
+      backBtn.addEventListener('click', back);
+      skipBtn.addEventListener('click', function () {
+        var chestField = byId('-chest');
+        if (chestField) chestField.value = '';
+        errorEl.textContent = '';
+        submit();
+      });
 
       /* ------------------------------------------------------------------ units */
 
-      function setUnits(next) {
-        if (next === units) return;
-        var hCm = q('[data-field="height-metric"] input');
-        var hFt = q('#' + CSS.escape(CONFIG.rootId + '-h-ft'));
-        var hIn = q('#' + CSS.escape(CONFIG.rootId + '-h-in'));
-        var weight = q('#' + CSS.escape(CONFIG.rootId + '-w'));
-        var chest = q('#' + CSS.escape(CONFIG.rootId + '-chest'));
+      function setUnits(nextUnits) {
+        if (nextUnits === units) return;
+        var hCm = byId('-h-cm');
+        var hFt = byId('-h-ft');
+        var hIn = byId('-h-in');
+        var weight = byId('-w');
+        var chest = byId('-chest');
 
-        if (next === 'imperial') {
+        if (nextUnits === 'imperial') {
           var cm = parseFloat(hCm.value);
           if (isFinite(cm) && cm > 0) {
             var totalIn = cm / 2.54;
@@ -364,19 +585,21 @@ Supported variables
           if (chest.value !== '') chest.value = round1(parseFloat(chest.value) * 2.54);
         }
 
-        units = next;
-        q('[data-field="height-metric"]').hidden = next !== 'metric';
-        q('[data-field="height-imperial"]').hidden = next !== 'imperial';
+        units = nextUnits;
+        q('[data-field="height-metric"]').hidden = nextUnits !== 'metric';
+        q('[data-field="height-imperial"]').hidden = nextUnits !== 'imperial';
 
-        [].slice.call(root.querySelectorAll('[data-label-metric]')).forEach(function (label) {
-          label.innerHTML = next === 'metric' ? label.getAttribute('data-label-metric') : label.getAttribute('data-label-imperial');
+        [].slice.call(overlay.querySelectorAll('[data-label-metric]')).forEach(function (label) {
+          label.innerHTML = nextUnits === 'metric' ? label.getAttribute('data-label-metric') : label.getAttribute('data-label-imperial');
         });
-        [].slice.call(root.querySelectorAll('.aao-sq__units button')).forEach(function (b) {
+        [].slice.call(overlay.querySelectorAll('.aao-sq__units button')).forEach(function (b) {
           b.setAttribute('aria-pressed', String(b.getAttribute('data-units') === next));
         });
+
+        if (current === 1) focusStep(1);
       }
 
-      [].slice.call(root.querySelectorAll('.aao-sq__units button')).forEach(function (b) {
+      [].slice.call(overlay.querySelectorAll('.aao-sq__units button')).forEach(function (b) {
         b.addEventListener('click', function () { setUnits(b.getAttribute('data-units')); });
       });
 
@@ -386,20 +609,20 @@ Supported variables
         var heightCm, weightKg, chestCm = null;
 
         if (units === 'metric') {
-          heightCm = parseFloat(q('#' + CSS.escape(CONFIG.rootId + '-h-cm')).value);
+          heightCm = parseFloat(byId('-h-cm').value);
         } else {
-          var ft = parseFloat(q('#' + CSS.escape(CONFIG.rootId + '-h-ft')).value);
-          var inches = parseFloat(q('#' + CSS.escape(CONFIG.rootId + '-h-in')).value) || 0;
+          var ft = parseFloat(byId('-h-ft').value);
+          var inches = parseFloat(byId('-h-in').value) || 0;
           heightCm = isFinite(ft) ? (ft * 12 + inches) * 2.54 : NaN;
         }
 
-        weightKg = parseFloat(q('#' + CSS.escape(CONFIG.rootId + '-w')).value);
+        weightKg = parseFloat(byId('-w').value);
         if (units === 'imperial' && isFinite(weightKg)) weightKg = weightKg / 2.20462;
 
-        var rawChest = parseFloat(q('#' + CSS.escape(CONFIG.rootId + '-chest')).value);
+        var rawChest = parseFloat(byId('-chest').value);
         if (isFinite(rawChest) && rawChest > 0) chestCm = units === 'imperial' ? rawChest * 2.54 : rawChest;
 
-        var fitEl = root.querySelector('input[name="' + CONFIG.rootId + '-fit"]:checked');
+        var fitEl = overlay.querySelector('input[name="' + CONFIG.rootId + '-fit"]:checked');
         return { heightCm: heightCm, weightKg: weightKg, chestCm: chestCm, fit: fitEl ? fitEl.value : 'regular' };
       }
 
@@ -474,6 +697,8 @@ Supported variables
         resultPanel.innerHTML = html;
         formPanel.hidden = true;
         resultPanel.hidden = false;
+        foot.hidden = true;
+        overlay.querySelector('.aao-sq__body').scrollTop = 0;
 
         var selectBtn = resultPanel.querySelector('[data-action="select"]');
         if (selectBtn) {
@@ -494,14 +719,10 @@ Supported variables
         if (guideBtn) guideBtn.addEventListener('click', openSizeGuide);
 
         var restartBtn = resultPanel.querySelector('[data-action="restart"]');
-        if (restartBtn) {
-          restartBtn.addEventListener('click', function () {
-            resultPanel.hidden = true;
-            formPanel.hidden = false;
-            var f = focusables();
-            if (f.length) f[0].focus();
-          });
-        }
+        if (restartBtn) restartBtn.addEventListener('click', restart);
+
+        var closeBtn = resultPanel.querySelector('[data-action="close"]');
+        if (closeBtn) closeBtn.addEventListener('click', close);
 
         var heading = resultPanel.querySelector('[data-focus]');
         if (heading) heading.focus();
@@ -524,7 +745,7 @@ Supported variables
           + '<li><strong>C &ndash; sleeve:</strong> shoulder seam to cuff.</li>'
           + '</ul>'
           + guideButton()
-          + '<button type="button" class="aao-sq__ghost" data-action="restart">Back</button>';
+          + '<button type="button" class="aao-sq__ghost" data-action="' + (usable ? 'restart' : 'close') + '">' + (usable ? 'Back' : 'Close') + '</button>';
       }
 
       function resultHtml(data) {
@@ -588,7 +809,7 @@ Supported variables
         return html;
       }
 
-      root.querySelector('.aao-sq__submit').addEventListener('click', function () {
+      function submit() {
         errorEl.textContent = '';
 
         if (!usable) { show(noChartHtml()); return; }
@@ -596,14 +817,17 @@ Supported variables
         var input = readInputs();
 
         if (!isFinite(input.heightCm) || input.heightCm < 120 || input.heightCm > 220) {
+          showStep(1);
           errorEl.textContent = 'Enter a height between 120 and 220 cm (4ft and 7ft 3in).';
           return;
         }
         if (!isFinite(input.weightKg) || input.weightKg < 35 || input.weightKg > 200) {
+          showStep(2);
           errorEl.textContent = 'Enter a weight between 35 and 200 kg (77 and 440 lb).';
           return;
         }
         if (input.chestCm !== null && (input.chestCm < 60 || input.chestCm > 180)) {
+          showStep(4);
           errorEl.textContent = 'That chest measurement looks off. Measure around the fullest part of your chest, or leave it blank.';
           return;
         }
@@ -619,7 +843,7 @@ Supported variables
           fit: input.fit,
           pickResult: pickResult
         }));
-      });
+      }
     })();
   </script>
 {%- endif -%}
